@@ -39,6 +39,12 @@ export const RegistroNutricionista=(props)=>{
           <TextInput placeholder="  E-mail" placeholderTextColor={"white"}></TextInput>
         </View>
         <View style={styles.inputRegistro}>
+          <TextInput  placeholder="  Fecha de nacimiento (formato dd/mm/aaaa)" placeholderTextColor={"white"}></TextInput>
+        </View>
+        <View style={styles.inputRegistro}>
+          <TextInput keyboardType="number-pad" placeholder="  DNI" placeholderTextColor={"white"}></TextInput>
+        </View>
+        <View style={styles.inputRegistro}>
           <TextInput keyboardType="number-pad" placeholder="  Matricula Nacional" placeholderTextColor={"white"}></TextInput>
         </View>
         <View style={styles.inputRegistro}>
