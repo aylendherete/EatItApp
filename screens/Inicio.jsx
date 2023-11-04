@@ -11,7 +11,8 @@ import {
   Text,
   View,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  Alert
 } from 'react-native';
 
 
@@ -20,16 +21,16 @@ export const Inicio=(props)=> {
   const [contrasenia, setContrasenia]= React.useState("");
   console.log(JSON.stringify(props))
 
-  async function handleLogin(email, contrasenia, loginFunction){
+  async function handleLogin(email, contrasenia){
 
-    console.log(email)
-    console.log(contrasenia)
     try{
       const loginCheck= await fetch('http://localhost:3000/paciente/login?email='+email+'&contrasenia='+contrasenia)
       
     if (loginCheck.ok){
       let data= await loginCheck.json()
-      loginFunction (data.id)
+      if(data.esAdmin==false){
+        console.log("es paciente")
+      }
     }
     else{
       Alert.alert("No se encontro el usuario")
