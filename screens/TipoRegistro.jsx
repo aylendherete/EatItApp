@@ -20,7 +20,7 @@ export const TipoRegistro=(props)=>{
           <View style={styles.fondoVerde}></View>
           <View style={styles.fondoVerdeClaro}>
             <View style={styles.botonTipo}><TouchableOpacity onPress={()=>props.navigation.navigate('RegistroNutricionista')}><Text style={styles.textoTipo}>Soy nutricionista</Text></TouchableOpacity></View>
-            <View style={styles.botonTipo}><TouchableOpacity onPress={()=>props.navigation.navigate('elegirNutricionista')}><Text style={styles.textoTipo}>Soy paciente</Text></TouchableOpacity></View>  
+            <View style={styles.botonTipo}><TouchableOpacity onPress={()=>props.navigation.navigate('ElegirNutricionista')}><Text style={styles.textoTipo}>Soy paciente</Text></TouchableOpacity></View>  
           </View>
             
         </View>

@@ -15,7 +15,6 @@ import {
   Alert
 } from 'react-native';
 
-
 export const Inicio=(props)=> {
   const [email,setEmail]=React.useState("");
   const [contrasenia, setContrasenia]= React.useState("");
@@ -24,18 +23,24 @@ export const Inicio=(props)=> {
   async function handleLogin(email, contrasenia){
 
     try{
-      const loginCheck= await fetch('http://localhost:3000/paciente/login?email='+email+'&contrasenia='+contrasenia)
-      
-    if (loginCheck.ok){
-      let data= await loginCheck.json()
-      if(data.esAdmin==false){
-        console.log("es paciente")
+      const loginCheckPaciente= await fetch('http://localhost:3000/paciente/login?email='+email+'&contrasenia='+contrasenia)
+      const loginCheckNutricionista= await fetch('http://localhost:3000/nutricionista/login?email='+email+'&contrasenia='+contrasenia)
+
+      if (loginCheckPaciente.ok ){
+        let data= await loginCheckPaciente.json();
+        console.log("entra paciente");
+        return props.navigation.navigate("Paciente");
+        
+      }else if(loginCheckNutricionista.ok){
+        let data=await loginCheckNutricionista.json();
+        console.log("entra nutricionista");
+        return props.navigation.navigate("Nutricionista");
+
       }
-    }
-    else{
-      Alert.alert("No se encontro el usuario")
-      console.log(loginCheck.status)
-    }
+      else{
+        Alert.alert("No se encontro el usuario")
+        console.log(loginCheckNutricionista.status)
+      }
   }
   catch(e){
     console.log(e);
@@ -54,7 +59,7 @@ export const Inicio=(props)=> {
           <TextInput placeholder="  contraseña" placeholderTextColor={"black"} onChangeText={setContrasenia} secureTextEntry={true}></TextInput>
         </View>
         <TouchableOpacity onPress={()=>props.navigation.navigate('TipoRegistro')}><Text style={styles.textoRegistro}>¿No tienes una cuenta? Registrate</Text></TouchableOpacity>
-        <View style={styles.botonIniciarSesion}><TouchableOpacity onPress={()=>handleLogin(email, contrasenia, props.loginFn)}><Text style={styles.textoBotonIniciarSesion}>Iniciar Sesion</Text></TouchableOpacity></View>
+        <View style={styles.botonIniciarSesion}><TouchableOpacity onPress={()=>handleLogin(email, contrasenia)}><Text style={styles.textoBotonIniciarSesion}>Iniciar Sesion</Text></TouchableOpacity></View>
       </View>
       
     </View>

@@ -14,7 +14,7 @@ import {
   ScrollView
 } from 'react-native';
 
-export const elegirNutricionista=(props)=>{
+export const ElegirNutricionista=(props)=>{
     return(
     
         <View style={styles.fondoVerde}>
