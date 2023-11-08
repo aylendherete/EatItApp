@@ -87,7 +87,17 @@ export const TurnosPaciente=(props)=>{
       useNativeDriver: true,
     }).start(() => setShowAlert(false));
   };
-  
+
+
+  const fadeOutReservarTurno = () => {
+      Animated.timing(opacity, {
+        toValue: 0,
+        duration: 150,
+        easing: Easing.linear,
+        useNativeDriver: true,
+      }).start(() => setShowAlert(false));
+      return(props.navigation.navigate('CalendarioPaciente'));
+    };
 
   const fadeOut = () => {
       Animated.timing(opacity, {
@@ -172,7 +182,7 @@ export const TurnosPaciente=(props)=>{
             <View style={{ alignItems:"center"}}>
             <Text  style={{fontSize:24, color:"white", margin:5, textAlign:"center", fontWeight:"500", margin:10}}>¿Deseas reservar ese turno para una cita con tu nutricionista?</Text>
             </View>
-            <TouchableOpacity onPress={fadeOutTurno}>
+            <TouchableOpacity onPress={fadeOutReservarTurno}>
               <Text style={{fontSize:20, color:"white", backgroundColor:"#52B69A", textAlign:"center", padding:10, borderRadius:15, margin:15}}>Reservar</Text>
             </TouchableOpacity> 
             <TouchableOpacity onPress={fadeOutTurno}>
