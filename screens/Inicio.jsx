@@ -53,10 +53,10 @@ export const Inicio=(props)=> {
       <View style={styles.fondoBlanco}>
         <Text style={styles.textoBienvenido}>¡Bienvenido!</Text>
         <View style={styles.textoInputInicioSesion}>
-          <TextInput placeholder="  e-mail" placeholderTextColor={"black"} onChangeText={setEmail}></TextInput>
+          <TextInput placeholder="  e-mail" placeholderTextColor={"black"} onChangeText={setEmail} color={"black"}></TextInput>
         </View>
         <View style={styles.textoInputInicioSesion}>
-          <TextInput placeholder="  contraseña" placeholderTextColor={"black"} onChangeText={setContrasenia} secureTextEntry={true}></TextInput>
+          <TextInput placeholder="  contraseña" placeholderTextColor={"black"} onChangeText={setContrasenia}  color={"black"} secureTextEntry={true}></TextInput>
         </View>
         <TouchableOpacity onPress={()=>props.navigation.navigate('TipoRegistro')}><Text style={styles.textoRegistro}>¿No tienes una cuenta? Registrate</Text></TouchableOpacity>
         <View style={styles.botonIniciarSesion}><TouchableOpacity onPress={()=>handleLogin(email, contrasenia)}><Text style={styles.textoBotonIniciarSesion}>Iniciar Sesion</Text></TouchableOpacity></View>
@@ -108,6 +108,7 @@ const styles=StyleSheet.create({
     fontWeight:'bold',
     backgroundColor:"#99D98C",
     borderRadius:20,
-    margin:15
+    margin:15,
+    padding:20
   }
 })
