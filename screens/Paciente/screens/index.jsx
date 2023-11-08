@@ -6,6 +6,7 @@ import { RegistroTipoAgua } from "./RegistroTipoAgua";
 import { RegistroTipoActividad } from "./RegistroTipoActividad";
 import { MiPerfil } from "./MiPerfil";
 import { RegistroComentado } from "./RegistroComentado";
+import { TurnosPaciente } from "./TurnosPaciente";
 
 export{
     RegistroComida,
@@ -15,5 +16,6 @@ export{
     RegistroTipoAgua,
     RegistroTipoActividad,
     MiPerfil,
-    RegistroComentado
+    RegistroComentado,
+    TurnosPaciente
 }
