@@ -24,27 +24,27 @@ export const ElegirNutricionista=(props)=>{
         <View style={styles.fondoVerdeClaro}>
             
             <ScrollView>
-            <View style={{backgroundColor:"#52B69A",borderRadius:10, padding:20, margin:15}}><TouchableOpacity onPress={()=>props.navigation.navigate('RegistroPaciente')}>
+            <View style={{backgroundColor:"#52B69A",borderRadius:10, padding:20, margin:15}}><TouchableOpacity onPress={()=>props.navigation.navigate('Paciente')}>
                 <Text style={{color:"white", fontSize:25, fontWeight:"bold"}}>Pepe Perez</Text>
                 <Text style={{color:"white", fontWeight:"300", fontSize:15}}>turno mas reciente: 19/10/2023</Text>
                 </TouchableOpacity>
             </View>
-            <View style={{backgroundColor:"#52B69A",borderRadius:10, padding:20, margin:15}}><TouchableOpacity onPress={()=>props.navigation.navigate('RegistroPaciente')}>
+            <View style={{backgroundColor:"#52B69A",borderRadius:10, padding:20, margin:15}}><TouchableOpacity onPress={()=>props.navigation.navigate('Paciente')}>
                 <Text style={{color:"white", fontSize:25, fontWeight:"bold"}}>Pepe Perez</Text>
                 <Text style={{color:"white", fontWeight:"300", fontSize:15}}>turno mas reciente: 19/10/2023</Text>
                 </TouchableOpacity>
             </View>
-            <View style={{backgroundColor:"#52B69A",borderRadius:10, padding:20, margin:15}}><TouchableOpacity onPress={()=>props.navigation.navigate('RegistroPaciente')}>
+            <View style={{backgroundColor:"#52B69A",borderRadius:10, padding:20, margin:15}}><TouchableOpacity onPress={()=>props.navigation.navigate('Paciente')}>
                 <Text style={{color:"white", fontSize:25, fontWeight:"bold"}}>Pepe Perez</Text>
                 <Text style={{color:"white", fontWeight:"300", fontSize:15}}>turno mas reciente: 19/10/2023</Text>
                 </TouchableOpacity>
             </View>
-            <View style={{backgroundColor:"#52B69A",borderRadius:10, padding:20, margin:15}}><TouchableOpacity onPress={()=>props.navigation.navigate('RegistroPaciente')}>
+            <View style={{backgroundColor:"#52B69A",borderRadius:10, padding:20, margin:15}}><TouchableOpacity onPress={()=>props.navigation.navigate('Paciente')}>
                 <Text style={{color:"white", fontSize:25, fontWeight:"bold"}}>Pepe Perez</Text>
                 <Text style={{color:"white", fontWeight:"300", fontSize:15}}>turno mas reciente: 19/10/2023</Text>
                 </TouchableOpacity>
             </View>
-            <View style={{backgroundColor:"#52B69A",borderRadius:10, padding:20, margin:15}}><TouchableOpacity onPress={()=>props.navigation.navigate('RegistroPaciente')}>
+            <View style={{backgroundColor:"#52B69A",borderRadius:10, padding:20, margin:15}}><TouchableOpacity onPress={()=>props.navigation.navigate('Paciente')}>
                 <Text style={{color:"white", fontSize:25, fontWeight:"bold"}}>Pepe Perez</Text>
                 <Text style={{color:"white", fontWeight:"300", fontSize:15}}>turno mas reciente: 19/10/2023</Text>
                 </TouchableOpacity>

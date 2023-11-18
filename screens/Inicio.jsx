@@ -29,7 +29,7 @@ export const Inicio=(props)=> {
       if (loginCheckPaciente.ok ){
         let data= await loginCheckPaciente.json();
         console.log("entra paciente");
-        return props.navigation.navigate("Paciente");
+        return props.navigation.navigate("ElegirNutricionista");
         
       }else if(loginCheckNutricionista.ok){
         let data=await loginCheckNutricionista.json();
