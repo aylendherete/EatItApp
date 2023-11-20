@@ -5,15 +5,17 @@
  * @format
  */
 
-import React, {useState} from 'react';
+import React, {useRef} from 'react';
 import {
   StyleSheet,
   Text,
   View,
   TextInput,
   TouchableOpacity,
-  Alert
+  Alert, Image,
+  
 } from 'react-native';
+
 
 export const Inicio=(props)=> {
   const [email,setEmail]=React.useState("");
@@ -49,8 +51,17 @@ export const Inicio=(props)=> {
 
   return(
     <View style={styles.fondoVerde}>
-      <View style={styles.fondoVerde}></View>
+      
+      <View style={styles.fondoVerde}>
+        <View style={{flex: 1,justifyContent: 'center',alignItems: 'center',}}>
+          <Image
+              source={require('./imgs/logo.png')} // Ruta de la imagen en la carpeta assets
+              style={{alignSelf: 'center', width: 150, height: 150, marginTop:70}}
+            />
+        </View>
+      </View>
       <View style={styles.fondoBlanco}>
+        
         <Text style={styles.textoBienvenido}>¡Bienvenido!</Text>
         <View style={styles.textoInputInicioSesion}>
           <TextInput placeholder="  e-mail" placeholderTextColor={"black"} onChangeText={setEmail} color={"black"}></TextInput>
@@ -67,6 +78,8 @@ export const Inicio=(props)=> {
 }
 
 const styles=StyleSheet.create({
+
+  
   fondoVerde:{
     backgroundColor:'#99D98C',
     flex:1

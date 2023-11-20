@@ -5,10 +5,11 @@ import {
   View,
   TouchableOpacity,
   Modal,
-  Animated, Easing,
+  Animated, Easing, Platform
   
 } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
+import DateTimePicker from '@react-native-community/datetimepicker'
 
 
 
@@ -44,6 +45,28 @@ export const RegistroTipoComida=(props)=>{
     fadeOut();
     return(props.navigation.navigate('RegistroComida'))
   };
+
+  
+  const [date, setDate] = useState(new Date());
+  const [showPicker, setShowPicker] = useState(false);
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShowPicker(Platform.OS === 'android' ? false : showPicker); // Oculta el selector en iOS
+    setDate(currentDate);
+  };
+
+  const showDatepicker = () => {
+    setShowPicker(true);
+  };
+  
+  const obtenerHora = () => {
+    
+    const hora = date.getHours();
+    const minutos = date.getMinutes();
+    return `${hora}:${minutos < 10 ? '0' : ''}${minutos}`;
+  };
+  
   return(
     <View style={styles.fondoVerde}>
       <View>
@@ -55,7 +78,14 @@ export const RegistroTipoComida=(props)=>{
         </View>
         <View>
           <TextInput  style={styles.botonTipoRegistroComida} placeholder="Descripcion" placeholderTextColor={"black"}></TextInput>
-          <TextInput  style={styles.botonTipoRegistroComida} placeholder="Hora" placeholderTextColor={"black"}></TextInput>
+          <TouchableOpacity  style={styles.botonTipoRegistroComida} onPress={showDatepicker}><Text style={{color:"black", textAlign:"center",fontSize:20, fontWeight:"600"}}>Seleccionar hora: {obtenerHora()}</Text></TouchableOpacity>
+          {showPicker && (<DateTimePicker
+              value={date}
+              mode="time" // Puedes usar 'date' para solo fecha o 'time' para solo hora
+              is24Hour={true}
+              display="default"
+              onChange={onChange}
+          />)}
           <TextInput  style={styles.botonTipoRegistroComida} placeholder="Foto" placeholderTextColor={"black"}></TextInput>
           
         </View>

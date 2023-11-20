@@ -169,18 +169,44 @@ export const CalendarioPaciente=(props)=>{
           <Text style={styles.bannerPaciente}>Paciente</Text>
         </View>
         <View style={{flex:4}}>
+        
         <View style={styles.container}>
-          <Calendar
-            onDayPress={onDayPress}
-            markedDates={{
-              [selectedDate]: { selected: true, selectedColor: '#52B69A' },
-            }}
-            hideExtraDays={true}
-          />
+          <ScrollView>
+            <Calendar
+              onDayPress={onDayPress}
+              markedDates={{
+                [selectedDate]: { selected: true, selectedColor: '#52B69A' },
+              }}
+              hideExtraDays={true}
+            />
+
+            <TouchableOpacity onPress={()=>props.navigation.navigate('TurnosPaciente')}><Text style={{backgroundColor:"#52B69A",color:"white", textAlign:"center", fontWeight:"bold", fontSize:25, margin:50,padding:15, borderRadius:10}}>¡Pedi un turno!</Text></TouchableOpacity>
+            
+
+            <View>
+              <Text style={{color:"white", fontWeight:"300", fontSize:20, backgroundColor:"#76C893", padding:15, borderRadius:5}}>Comentarios previos de tu nutricionista</Text>
+              <ScrollView>
+              <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
+              <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
+              <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
+              <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
+              <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
+              <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
+              <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
+              <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
+              <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
+
+              </ScrollView>
+          </View>
+          </ScrollView>
+          
           
         </View>
-        <TouchableOpacity onPress={()=>props.navigation.navigate('TurnosPaciente')}><Text style={{backgroundColor:"#52B69A",color:"white", textAlign:"center", fontWeight:"bold", fontSize:25, margin:60,padding:15, borderRadius:10}}>¡Pedi un turno!</Text></TouchableOpacity>
+
         </View>
+        
+        
+    
         <Modal visible={showAlert} transparent animationType='none'>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}
          >

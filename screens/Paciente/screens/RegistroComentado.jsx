@@ -25,7 +25,7 @@ export const RegistroComentado =(props)=>{
               <ScrollView>
                 <View > 
                   <Text style={styles.textoTipoRegistroPaciente}>Comida</Text>
-                  <Text style={styles.textoRegistroPaciente}>Milanesa con puré de papas {'\n'}13:30 hs{'\n'}FOTO</Text>  
+                  <Text style={styles.textoRegistroPaciente}>Milanesa con puré de papa {'\n'}13:30 hs{'\n'}FOTO</Text>  
                 </View>
                 <View>
                   <Text style={styles.comentarioRegistro}> Nutricionista: Añadir mas fruta!</Text>
@@ -80,8 +80,10 @@ const styles=StyleSheet.create({
     },
     comentarioRegistro:{
         backgroundColor:"white",
+        fontSize:30,
         color:"black",
         fontSize:15,
+        padding:15,
         margin:25,
         borderRadius:15,
         textAlign:"center",
