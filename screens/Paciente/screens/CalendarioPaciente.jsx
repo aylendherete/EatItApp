@@ -227,25 +227,25 @@ export const CalendarioPaciente=(props)=>{
                 
                 <ScrollView > 
                     <TouchableOpacity onPress={onTurnoPress}>
-                    <Text style={styles.registroDiario}>Cita con nutricionista {'\n'}A las 19:00hs</Text>
+                    <Text style={styles.registroDiario}>Cita con nutricionista a las 19:00hs</Text>
 
                     </TouchableOpacity>     
                     <TouchableOpacity onPress={onRegistroComidaPress}>
-                      <Text style={styles.registroDiario}>Registro de Comida{'\n'}A las 18:00hs </Text>
+                      <Text style={styles.registroDiario}>Registro de Comida a las 18:00hs </Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={onRegistroActividadPress}>
-                      <Text style={styles.registroDiario}>Registro de Actividad{'\n'}A las 15:00hs </Text>
+                      <Text style={styles.registroDiario}>Registro de Actividad a las 15:00hs </Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={onRegistroAguaPress}>
-                      <Text style={styles.registroDiario}>Registro de Agua{'\n'}A las 18:10hs </Text>
+                      <Text style={styles.registroDiario}>Registro de Agua a las 18:10hs </Text>
                     </TouchableOpacity>
                 
                     <TouchableOpacity onPress={onRegistroComidaPress}>
-                      <Text style={styles.registroDiario}>Registro de Comida{'\n'}A las 12:00hs </Text>
+                      <Text style={styles.registroDiario}>Registro de Comida a las 12:00hs </Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={onRegistroComidaPress}>
-                      <Text style={styles.registroDiario}>Registro de Comida{'\n'}A las 10:00hs </Text>
+                      <Text style={styles.registroDiario}>Registro de Comida a las 10:00hs </Text>
                     </TouchableOpacity>
 
                     
@@ -253,7 +253,7 @@ export const CalendarioPaciente=(props)=>{
                 </ScrollView>
             </View>
             <TouchableOpacity onPress={fadeOut}>
-              <Text style={{fontSize:20, color:"white", backgroundColor:"#52B69A", textAlign:"center", padding:10, borderRadius:15, margin:15}}>Guardar</Text>
+              <Text style={{fontSize:20, color:"white", backgroundColor:"#52B69A", textAlign:"center", padding:10, borderRadius:15, margin:15}}>Cerrar</Text>
             </TouchableOpacity> 
 
             </Animated.View>
@@ -279,6 +279,8 @@ export const CalendarioPaciente=(props)=>{
             <View style={{ alignItems:"center"}}>
             <Text  style={{fontSize:24, color:"white", margin:5, textAlign:"center", fontWeight:"500"}}>Turno el dia {[selectedDate]}</Text>
             <TouchableOpacity onPress={fadeOutTurno}><Text style={{fontSize:20, color:"white", backgroundColor:"#52B69A", textAlign:"center", padding:10, borderRadius:15, margin:15, fontWeight:"500"}}>Cancelar Turno</Text></TouchableOpacity>
+            <TouchableOpacity onPress={fadeOutTurno}><Text style={{fontSize:20, color:"white", backgroundColor:"#52B69A", textAlign:"center", padding:10, borderRadius:15, margin:15, fontWeight:"400"}}>Cerrar</Text></TouchableOpacity>
+            
             </View>
 
             </Animated.View>
