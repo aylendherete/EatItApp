@@ -5,7 +5,7 @@
  * @format
  */
 
-import React from 'react';
+import React,{useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -16,10 +16,24 @@ import {
 } from 'react-native';
 
 
+import DateTimePicker from '@react-native-community/datetimepicker'
+
 
 
 export const RegistroNutricionista=(props)=>{
+  
+  const [date, setDate] = useState(new Date());
+  const [showPicker, setShowPicker] = useState(false);
 
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShowPicker(Platform.OS === 'android' ? false : showPicker); // Oculta el selector en iOS
+    setDate(currentDate);
+  };
+
+  const showDatepicker = () => {
+    setShowPicker(true);
+  };
   return(
     
   <View style={styles.fondoVerde}>
@@ -38,9 +52,18 @@ export const RegistroNutricionista=(props)=>{
         <View style={styles.inputRegistro}>
           <TextInput placeholder="  E-mail" placeholderTextColor={"white"}></TextInput>
         </View>
-        <View style={styles.inputRegistro}>
-          <TextInput  placeholder="  Fecha de nacimiento (formato dd/mm/aaaa)" placeholderTextColor={"white"}></TextInput>
-        </View>
+
+
+        <TouchableOpacity  style={styles.inputRegistro} onPress={showDatepicker}><Text style={{backgroundColor:"#B5E48C",borderRadius:20, flex:0.3,margin:15, color:"white"}}>Seleccionar fecha de nacimiento  {date.toDateString()}</Text></TouchableOpacity>
+          {showPicker && (<DateTimePicker
+              value={date}
+              mode="date" // Puedes usar 'date' para solo fecha o 'time' para solo hora
+              is24Hour={true}
+              display="default"
+              onChange={onChange}
+          />)}
+
+        
         <View style={styles.inputRegistro}>
           <TextInput keyboardType="number-pad" placeholder="  DNI" placeholderTextColor={"white"}></TextInput>
         </View>

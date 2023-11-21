@@ -8,12 +8,18 @@ import {
   Animated, Easing
 } from 'react-native';
 
+import DateTimePicker from '@react-native-community/datetimepicker'
 
 import { TextInput } from 'react-native-gesture-handler';
 
 export const RegistroTipoActividad=(props)=>{
   const [showAlert, setShowAlert] = useState(false);
   const opacity = useRef(new Animated.Value(0)).current;
+
+
+    
+
+  
 
   const fadeIn = () => {
     Animated.timing(opacity, {
@@ -44,6 +50,31 @@ export const RegistroTipoActividad=(props)=>{
     fadeOut();
     return(props.navigation.navigate('RegistroComida'))
   };
+
+
+
+
+  const [date, setDate] = useState(new Date());
+  const [showPicker, setShowPicker] = useState(false);
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShowPicker(Platform.OS === 'android' ? false : showPicker); // Oculta el selector en iOS
+    setDate(currentDate);
+  };
+
+  const showDatepicker = () => {
+    setShowPicker(true);
+  };
+  
+  const obtenerHora = () => {
+    
+    const hora = date.getHours();
+    const minutos = date.getMinutes();
+    return `${hora}:${minutos < 10 ? '0' : ''}${minutos}`;
+  };
+
+
   return(
     <View style={styles.fondoVerde}>
       <View>
@@ -55,8 +86,18 @@ export const RegistroTipoActividad=(props)=>{
         </View>
         <View>
           <TextInput  style={styles.botonTipoRegistroComida} placeholder='Descripcion' placeholderTextColor={"black"}></TextInput>
-          <TextInput  style={styles.botonTipoRegistroComida} placeholder='Hora inicio' placeholderTextColor={"black"}></TextInput>
-          <TextInput  style={styles.botonTipoRegistroComida} placeholder='Tiempo total' placeholderTextColor={"black"}></TextInput>
+          
+          <View>
+          <TouchableOpacity  style={styles.botonTipoRegistroComida} onPress={showDatepicker}><Text style={{color:"black", textAlign:"center",fontSize:20, fontWeight:"600"}}>Seleccionar hora de inicio: {obtenerHora()}</Text></TouchableOpacity>
+          {showPicker && (<DateTimePicker
+              value={date}
+              mode="time" // Puedes usar 'date' para solo fecha o 'time' para solo hora
+              is24Hour={true}
+              display="default"
+              onChange={onChange}
+          />)}
+        </View>
+          <TextInput  style={styles.botonTipoRegistroComida} placeholder='Tiempo total' placeholderTextColor={"black"} keyboardType="number-pad"></TextInput>
           
         </View>
         <TouchableOpacity onPress={handleShowAlert} style={{backgroundColor:"#52B69A",borderRadius:30, padding:20, margin:25}}><Text style={{fontSize:25,textAlign:"center", fontWeight:"bold", color:"white"}}>Añadir registro</Text></TouchableOpacity>

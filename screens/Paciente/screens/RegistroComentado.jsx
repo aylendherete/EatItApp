@@ -3,7 +3,7 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity
+  Image
 } from 'react-native';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
 
@@ -25,7 +25,17 @@ export const RegistroComentado =(props)=>{
               <ScrollView>
                 <View > 
                   <Text style={styles.textoTipoRegistroPaciente}>Comida</Text>
-                  <Text style={styles.textoRegistroPaciente}>Milanesa con puré de papa {'\n'}13:30 hs{'\n'}FOTO</Text>  
+                  <View style={{ backgroundColor:"#52B69A", padding:25,textAlign:'center', margin:20, borderRadius:5}}>
+                    <Text style={styles.textoRegistroPaciente}>Milanesa con puré de papa {'\n'}13:30 hs</Text> 
+                    <View>
+                      <Image
+                        source={require('../../imgs/milanga.jpeg')}
+                        style={{alignSelf: 'center', width: 280, height: 200, borderWidth: 1,borderColor: 'black'}}
+
+                      />
+                    </View> 
+                  </View>
+    
                 </View>
                 <View>
                   <Text style={styles.comentarioRegistro}> Nutricionista: Añadir mas fruta!</Text>
@@ -74,13 +84,13 @@ const styles=StyleSheet.create({
       fontWeight:"600",
       padding:25,
       textAlign:'center',
-      fontSize:15,
+      fontSize:20,
       margin:20,
       borderRadius:5
     },
     comentarioRegistro:{
         backgroundColor:"white",
-        fontSize:30,
+
         color:"black",
         fontSize:15,
         padding:15,
