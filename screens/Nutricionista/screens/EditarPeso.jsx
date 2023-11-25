@@ -5,12 +5,24 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
+  Image,
   TextInput,
   Modal,
   Animated, Easing
 } from 'react-native';
 
+import { ScatterChart } from 'react-native-svg-charts';
+
 export const EditarPeso=(props)=>{
+
+  const dataScatter = [
+    { x: 1, y: 10 },
+    { x: 2, y: 15 },
+    { x: 3, y: 20 },
+    { x: 4, y: 25 },
+  ];
+
+
   const [showAlert, setShowAlert] = useState(false);
   const opacity = useRef(new Animated.Value(0)).current;
 
@@ -56,9 +68,13 @@ export const EditarPeso=(props)=>{
                 <Text style={styles.textoNombreApellidoPaciente}>Nombre Apellido</Text>
             </View>
             <View>
-                <Text style={{color:"black", fontWeight:"bold", textAlign:"center", fontSize:20, margin:15}}>CAMBIAR PESO</Text>
-                <TextInput keyboardType="decimal-pad" style ={styles.botonCambiarPaciente} placeholder="Peso actual 65kg" placeholderTextColor={"black"}></TextInput>
+                <ScrollView>
+                  <Text style={{color:"black", fontWeight:"bold", textAlign:"center", fontSize:20, margin:15}}>CAMBIAR PESO</Text>
+                  <TextInput keyboardType="decimal-pad" style ={styles.botonCambiarPaciente} placeholder="Peso actual 65kg" placeholderTextColor={"black"}></TextInput>
+                  <Image source={require("../../imgs/graficoPeso.png")} style={{alignSelf:"center",width:330, height:160}}></Image>
                 
+                
+                </ScrollView>
             </View>
             <TouchableOpacity  onPress={handleShowAlert} style={{backgroundColor:"#52B69A",borderRadius:30, padding:20, margin:25}}><Text style={{fontSize:25,textAlign:"center", fontWeight:"bold", color:"white"}}>Guardar cambios</Text></TouchableOpacity>
             <Modal visible={showAlert} transparent animationType="none">
