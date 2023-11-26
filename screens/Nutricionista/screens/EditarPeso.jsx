@@ -11,17 +11,19 @@ import {
   Animated, Easing
 } from 'react-native';
 
-import { ScatterChart } from 'react-native-svg-charts';
+import { LineChart } from 'react-native-chart-kit';
+import { Dimensions } from 'react-native';
+
 
 export const EditarPeso=(props)=>{
 
-  const dataScatter = [
-    { x: 1, y: 10 },
-    { x: 2, y: 15 },
-    { x: 3, y: 20 },
-    { x: 4, y: 25 },
-  ];
-
+  const data = {
+    datasets: [
+      {
+        data: [65, 75, 80, 72,73,72,69], // Pesos en el eje Y
+      },
+    ],
+  };
 
   const [showAlert, setShowAlert] = useState(false);
   const opacity = useRef(new Animated.Value(0)).current;
@@ -69,14 +71,45 @@ export const EditarPeso=(props)=>{
             </View>
             <View>
                 <ScrollView>
-                  <Text style={{color:"black", fontWeight:"bold", textAlign:"center", fontSize:20, margin:15}}>CAMBIAR PESO</Text>
+                  <Text style={{color:"black", fontWeight:"bold", textAlign:"center", fontSize:20, margin:5}}>CAMBIAR PESO</Text>
                   <TextInput keyboardType="decimal-pad" style ={styles.botonCambiarPaciente} placeholder="Peso actual 65kg" placeholderTextColor={"black"}></TextInput>
-                  <Image source={require("../../imgs/graficoPeso.png")} style={{alignSelf:"center",width:330, height:160}}></Image>
-                
-                
+
+                  <LineChart
+                    data={data}
+                    width="300"
+                    height={220}
+                    yAxisSuffix="kg"
+                    chartConfig={{
+                      backgroundGradientFrom: 'rgba(255, 255, 255, 0)', // Fondo transparente (blanco con opacidad 0)
+                      backgroundGradientTo: 'rgba(255, 255, 255, 0)',
+                      barPercentage: 1.3,
+                       // optional, defaults to 2dp
+                      color: (opacity = 1) => `rgba(1, 122, 205, 1)`,
+                      labelColor: (opacity = 1) => `rgba(0, 0, 0, 1)`,
+
+                    }}
+
+                    propsForDots={{
+                      r: "6", // Tamaño del punto
+                      strokeWidth: "2", // Ancho del borde del punto
+                      stroke: "#52B69A", // Color del borde del punto
+                      fill: "#52B69A", // Color de relleno del punto
+                    }}
+                    propsForBackgroundLines={{
+                      strokeWidth: 1,
+                      stroke: '#52B69A',
+                      strokeDasharray: '0',
+                    }}
+                    style={{
+                      margin:5,
+                      padding:5,
+                      alignSelf:"center"
+                    }}
+                  />
+                  <TouchableOpacity  onPress={handleShowAlert} style={{backgroundColor:"#52B69A",borderRadius:30, padding:15, marginTop:5}}><Text style={{fontSize:25,textAlign:"center", fontWeight:"bold", color:"white"}}>Guardar cambios</Text></TouchableOpacity>
                 </ScrollView>
             </View>
-            <TouchableOpacity  onPress={handleShowAlert} style={{backgroundColor:"#52B69A",borderRadius:30, padding:20, margin:25}}><Text style={{fontSize:25,textAlign:"center", fontWeight:"bold", color:"white"}}>Guardar cambios</Text></TouchableOpacity>
+           
             <Modal visible={showAlert} transparent animationType="none">
               <View style={{flex:1, justifyContent:"center", alignContent:"center",alignItems: 'center', backgroundColor: 'rgba(0, 0, 0)'}}>
                 <Animated.View

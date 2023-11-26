@@ -90,7 +90,7 @@ export const PerfilPaciente=(props)=>{
             </View>
             <ScrollView>
               <View>
-                  <View><TouchableOpacity onPress={()=>props.navigation.navigate('Peso')} style={styles.botonDescripcionPaciente}><Text style={styles.textoDescripcionPaciente}>Peso actual</Text></TouchableOpacity></View>
+                  <View><TouchableOpacity onPress={()=>props.navigation.navigate('EditarPeso')} style={styles.botonDescripcionPaciente}><Text style={styles.textoDescripcionPaciente}>Peso actual</Text></TouchableOpacity></View>
                   <View><TouchableOpacity onPress={()=>props.navigation.navigate('Objetivo')} style={styles.botonDescripcionPaciente}><Text style={styles.textoDescripcionPaciente}>Objetivo</Text></TouchableOpacity></View>
                   <View><TouchableOpacity onPress={()=>props.navigation.navigate('Antecedentes')} style={styles.botonDescripcionPaciente}><Text style={styles.textoDescripcionPaciente}>Antecedentes</Text></TouchableOpacity></View>
                   

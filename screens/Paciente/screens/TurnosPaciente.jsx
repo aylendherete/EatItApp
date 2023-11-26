@@ -7,8 +7,7 @@ import {
     View,
     TouchableOpacity,
     ScrollView,
-    Modal,
-    Animated, Easing,
+    Modal,Animated, Easing
   } from 'react-native';
 
   LocaleConfig.locales['es'] = {
@@ -248,5 +247,5 @@ const styles=StyleSheet.create({
       padding:15,
       margin:5,
       
-  }
+  },
 })
