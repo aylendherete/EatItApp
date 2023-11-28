@@ -77,7 +77,7 @@ export  const CalendarioNutricionista=(props)=> {
 
         <View style={styles.fondoVerde}>
         <View>
-          <Text style={styles.bannerPaciente}>Paciente</Text>
+          <Text style={styles.bannerPaciente}>Nutricionista</Text>
         </View>
         <View style={{flex:4}}>
         <View style={styles.container}>

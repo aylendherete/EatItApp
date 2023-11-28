@@ -7,6 +7,8 @@ import { EditarPeso } from "./EditarPeso";
 import { EditarObjetivo } from "./EditarObjetivo";
 import { EditarAntecedentes } from "./EditarAntecedentes";
 import { CalendarioNutricionista } from "./CalendarioNutricionista";
+import { HistorialComentarios} from "./HistorialComentarios";
+import { HistorialRegistros } from "./HistorialRegistros";
 
 export{NotificacionesPaciente,
     MisPacientes,
@@ -16,5 +18,7 @@ export{NotificacionesPaciente,
     EditarPeso,
     EditarObjetivo,
     EditarAntecedentes,
-    CalendarioNutricionista
+    CalendarioNutricionista,
+    HistorialComentarios,
+    HistorialRegistros
 }

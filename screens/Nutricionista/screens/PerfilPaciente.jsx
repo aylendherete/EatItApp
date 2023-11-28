@@ -93,7 +93,9 @@ export const PerfilPaciente=(props)=>{
                   <View><TouchableOpacity onPress={()=>props.navigation.navigate('EditarPeso')} style={styles.botonDescripcionPaciente}><Text style={styles.textoDescripcionPaciente}>Peso actual</Text></TouchableOpacity></View>
                   <View><TouchableOpacity onPress={()=>props.navigation.navigate('Objetivo')} style={styles.botonDescripcionPaciente}><Text style={styles.textoDescripcionPaciente}>Objetivo</Text></TouchableOpacity></View>
                   <View><TouchableOpacity onPress={()=>props.navigation.navigate('Antecedentes')} style={styles.botonDescripcionPaciente}><Text style={styles.textoDescripcionPaciente}>Antecedentes</Text></TouchableOpacity></View>
-                  
+                  <View><TouchableOpacity onPress={()=>props.navigation.navigate('TabHistorial')} style={styles.botonDescripcionPaciente}><Text style={styles.textoDescripcionPaciente}>Historial</Text></TouchableOpacity></View>
+
+
                   <Text style={{color:"white", fontWeight:"300", fontSize:20, backgroundColor:"#76C893", padding:15,margin:20, borderRadius:5}}>Comentarios previos</Text>
                   <ScrollView>
                     <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>

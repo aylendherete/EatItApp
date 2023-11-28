@@ -15,15 +15,25 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Image } from 'react-native';
 import {Icon} from 'react-native-elements';
 import { AnalisisRegistroPaciente, CalendarioNutricionista, EditarAntecedentes, EditarObjetivo, EditarPeso, MiPerfil, MisPacientes, NotificacionesPaciente, PerfilPaciente } from './screens';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { HistorialComentarios, HistorialRegistros} from './screens';
 
+const TTab = createMaterialTopTabNavigator();
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-function StackNavigatorEditarValorPaciente(){
-  <Stack.Navigator>
-      <Stack.Screen name="PerfilPaciente" component={PerfilPaciente} options={{headerShown:false}}></Stack.Screen>
-      <Stack.Screen name="EditarPeso" component={EditarPeso} options={{headerShown:false}}></Stack.Screen>
-  </Stack.Navigator>
+function TabHistorial(){
+
+  return(
+    <TTab.Navigator
+    screenOptions={{
+      style: { display: 'none' }, // Oculta la barra superior del Top Tab Navigator
+    }}
+  >
+    <TTab.Screen name="HistorialRegistros" component={HistorialRegistros} />
+    <TTab.Screen name="HistorialComentario" component={HistorialComentarios} />
+  </TTab.Navigator>
+  );
 }
 
 function StackNavigatorPacientes(){
@@ -34,6 +44,7 @@ function StackNavigatorPacientes(){
       <Stack.Screen name="EditarPeso" component={EditarPeso} options={{headerShown:false}}></Stack.Screen>
       <Stack.Screen name="EditarObjetivo" component={EditarObjetivo} options={{headerShown:false}}></Stack.Screen>
       <Stack.Screen name="EditarAntecedentes" component={EditarAntecedentes} options={{headerShown:false}}></Stack.Screen>
+      <Stack.Screen name="TabHistorial" component={TabHistorial} options={{headerShown:false}}></Stack.Screen>
     </Stack.Navigator>
   )
 }
