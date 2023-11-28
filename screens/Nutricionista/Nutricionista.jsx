@@ -26,7 +26,7 @@ function TabHistorial(){
 
   return(
     <TTab.Navigator
-    screenOptions={{
+    tabBarOptions={{
       style: { display: 'none' }, // Oculta la barra superior del Top Tab Navigator
     }}
   >
