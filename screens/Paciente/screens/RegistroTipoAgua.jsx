@@ -17,6 +17,11 @@ export const RegistroTipoAgua=(props)=>{
   const incrementCount = () => {
     setCount(count + 1);
   };
+  const decrementCount = () => {
+    if (count>0){
+      setCount(count -1);
+    }
+  };
 
   const countml=count*250;
 
@@ -61,10 +66,12 @@ export const RegistroTipoAgua=(props)=>{
         <View>
           <Text style={styles.textoTipoRegistroComida}>Agua</Text>
         </View>
-        <View>
+        <View >
           <View><Text style={styles.textoCantidadVasos}>Cantidad de vasos {count} ({countml} ml)</Text></View>
-          <View style={{alignItems:"center"}}><TouchableOpacity onPress={incrementCount} style={{backgroundColor:"white",height:45,width:45, borderRadius:50, justifyContent:"center"}}><Text style={{color:"black",textAlign:"center",fontSize:35, fontWeight:"500"}} >+</Text></TouchableOpacity></View>
-
+          <View style={{flexDirection: 'row',justifyContent:"center"}}>
+            <View style={{}}><TouchableOpacity onPress={incrementCount} style={{backgroundColor:"white",height:45,width:45, borderRadius:50, justifyContent:"center",margin:10}}><Text style={{color:"black",textAlign:"center",fontSize:35, fontWeight:"500"}} >+</Text></TouchableOpacity></View>
+            <View style={{}}><TouchableOpacity onPress={decrementCount} style={{backgroundColor:"white",height:45,width:45, borderRadius:50, justifyContent:"center",margin:10}}><Text style={{color:"black",textAlign:"center",fontSize:35, fontWeight:"500"}} >-</Text></TouchableOpacity></View>
+            </View>
         </View>
         <TouchableOpacity onPress={handleShowAlert} style={{backgroundColor:"#52B69A",borderRadius:30, padding:20, margin:25}}><Text style={{fontSize:25,textAlign:"center", fontWeight:"bold", color:"white"}}>Añadir registro</Text></TouchableOpacity>
         <Modal visible={showAlert} transparent animationType="none">
