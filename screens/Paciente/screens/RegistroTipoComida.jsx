@@ -5,7 +5,7 @@ import {
   View,
   TouchableOpacity,
   Modal,
-  Animated, Easing, Platform, Image
+  Animated, Easing, Platform, Image,ScrollView
   
 } from 'react-native';
 
@@ -14,9 +14,11 @@ import DateTimePicker from '@react-native-community/datetimepicker'
 
 import * as Animatable from 'react-native-animatable';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import { error } from 'console';
 
 export const RegistroTipoComida=(props)=>{
   const [showAlert, setShowAlert] = useState(false);
+  const [showAlertImage, setShowAlertImage] = useState(false);
   const opacity = useRef(new Animated.Value(0)).current;
 
   
@@ -52,7 +54,10 @@ export const RegistroTipoComida=(props)=>{
     fadeIn();
   };
 
-  
+  const handleShowAlertImage=()=>{
+    setShowAlertImage(true);
+    fadeIn();
+  }
 
   
   const [date, setDate] = useState(new Date());
@@ -78,9 +83,19 @@ export const RegistroTipoComida=(props)=>{
   [pickedImageURI,setPickedImageURI]=useState(null);
 
   const handlePickImage=async()=>{
+    fadeOut()
+    setShowAlertImage(false)
     const test=await launchImageLibrary()
     setPickedImageURI(test.assets[0].uri);
   }
+  const handleShootPhoto=async()=>{
+    fadeOut()
+    setShowAlertImage(false);
+    const test1 =await launchCamera({cameraType:"back",saveToPhotos:true})
+    setPickedImageURI(test1.assets[0].uri)
+    
+  }
+
   return(
     <View style={styles.fondoVerde}>
       <View>
@@ -90,11 +105,11 @@ export const RegistroTipoComida=(props)=>{
         <View>
           <Text style={styles.textoTipoRegistroComida}>Comida</Text>
         </View>
-        <View>
+        <ScrollView>
           <TextInput  style={styles.botonTipoRegistroComida} placeholder="Descripcion" placeholderTextColor={"black"}></TextInput>
           <TouchableOpacity  style={styles.botonTipoRegistroComida} onPress={showDatepicker}>
             <Text style={{color:"black", textAlign:"center",fontSize:20, fontWeight:"600"}}>Seleccionar hora: {obtenerHora()}</Text>
-            </TouchableOpacity>
+          </TouchableOpacity>
           {showPicker && (<DateTimePicker
               value={date}
               mode="time" // Puedes usar 'date' para solo fecha o 'time' para solo hora
@@ -102,17 +117,19 @@ export const RegistroTipoComida=(props)=>{
               display="default"
               onChange={onChange}
           />)}
-          <TextInput  style={styles.botonTipoRegistroComida} placeholder="Foto" placeholderTextColor={"black"}></TextInput>
-          
-        </View>
-        <TouchableOpacity onPress={handlePickImage}>
-          <Text>PRUEBA IMAGEN</Text>
-        </TouchableOpacity>
-        {pickedImageURI&&<Image source={{uri:pickedImageURI}} style={{width:200,heigh:200}}/>}    
 
-        <TouchableOpacity onPress={handleShowAlert} style={styles.botonAñadirRegistro}>
-          <Text style={styles.textoBotonAñadirRegistro}>Añadir registro</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.botonTipoRegistroComida} onPress={handleShowAlertImage}>
+            <Text style={{color:"black", textAlign:"center",fontSize:20, fontWeight:"600"}}>Cargar foto</Text>
+          </TouchableOpacity>
+
+          {pickedImageURI&&<View style={{alignItems:"center", justifyContent:"center"}}><Image source={{uri:pickedImageURI}} style={{width:325, height:325,borderColor:"white",borderWidth:5,borderRadius:15}}/></View>} 
+          <TouchableOpacity onPress={handleShowAlert} style={styles.botonAñadirRegistro}>
+            <Text style={styles.textoBotonAñadirRegistro}>Añadir registro</Text>
+          </TouchableOpacity>   
+
+        </ScrollView>
+        
+        
         
         <Modal visible={showAlert} transparent animationType="slide">
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0)' }}>
@@ -127,6 +144,21 @@ export const RegistroTipoComida=(props)=>{
           </Animated.View>
           </View>
         </Modal>
+
+        <Modal visible={showAlertImage} transparent animationType="slide">
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0)' }}>
+            <Animated.View style={{backgroundColor:"#76C893",  padding: 25,  borderRadius: 15, opacity:opacity}}>
+              
+              <TouchableOpacity onPress={handlePickImage}>
+                <Text style={styles.botonAlertaAñadirRegistro}>Añadir desde galeria</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={handleShootPhoto}>
+                <Text style={styles.botonAlertaAñadirRegistro}>Sacar foto</Text>
+              </TouchableOpacity>
+          </Animated.View>
+          </View>
+        </Modal>
+
         <Modal visible={showTick} transparent >
           <View style={{backgroundColor:"green",}} >
             <Animatable.View animation="zoomIn" duration={1000} >
@@ -168,7 +200,7 @@ const styles=StyleSheet.create({
   },
   botonTipoRegistroComida:{
     backgroundColor:"white", 
-    margin:35, 
+    margin:30, 
     padding:10, 
     borderRadius:30,
     color:"black", 
