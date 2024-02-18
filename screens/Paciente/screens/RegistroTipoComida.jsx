@@ -13,7 +13,7 @@ import { TextInput } from 'react-native-gesture-handler';
 import DateTimePicker from '@react-native-community/datetimepicker'
 
 import * as Animatable from 'react-native-animatable';
-
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 export const RegistroTipoComida=(props)=>{
   const [showAlert, setShowAlert] = useState(false);
@@ -75,6 +75,12 @@ export const RegistroTipoComida=(props)=>{
     return `${hora}:${minutos < 10 ? '0' : ''}${minutos}`;
   };
   
+  [pickedImageURI,setPickedImageURI]=useState(null);
+
+  const handlePickImage=async()=>{
+    const test=await launchImageLibrary()
+    setPickedImageURI(test.assets[0].uri);
+  }
   return(
     <View style={styles.fondoVerde}>
       <View>
@@ -99,6 +105,11 @@ export const RegistroTipoComida=(props)=>{
           <TextInput  style={styles.botonTipoRegistroComida} placeholder="Foto" placeholderTextColor={"black"}></TextInput>
           
         </View>
+        <TouchableOpacity onPress={handlePickImage}>
+          <Text>PRUEBA IMAGEN</Text>
+        </TouchableOpacity>
+        {pickedImageURI&&<Image source={{uri:pickedImageURI}} style={{width:200,heigh:200}}/>}    
+
         <TouchableOpacity onPress={handleShowAlert} style={styles.botonAñadirRegistro}>
           <Text style={styles.textoBotonAñadirRegistro}>Añadir registro</Text>
         </TouchableOpacity>
