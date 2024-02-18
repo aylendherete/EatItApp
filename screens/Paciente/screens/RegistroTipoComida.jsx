@@ -46,7 +46,6 @@ export const RegistroTipoComida=(props)=>{
       easing: Easing.linear,
       useNativeDriver: true,
     }).start(() => setShowAlert(false));
-    return(props.navigation.navigate('RegistroComida'))
   };
   const handleShowAlert = () => {
     setShowAlert(true);
@@ -104,9 +103,9 @@ export const RegistroTipoComida=(props)=>{
           <Text style={styles.textoBotonAñadirRegistro}>Añadir registro</Text>
         </TouchableOpacity>
         
-        <Modal visible={showAlert} transparent animationType="none">
+        <Modal visible={showAlert} transparent animationType="slide">
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0)' }}>
-            <Animated.View style={styles.fondoAlerta}>
+            <Animated.View style={{backgroundColor:"#76C893",  padding: 25,  borderRadius: 15, opacity:opacity}}>
               <Text  style={styles.textoAlertaAñadirRegistro}>¿Deseas añadir este registro?</Text>
               <TouchableOpacity onPress={handleButtonClick}>
                 <Text style={styles.botonAlertaAñadirRegistro}>Guardar</Text>
@@ -181,7 +180,7 @@ const styles=StyleSheet.create({
     backgroundColor:"#76C893", 
     padding: 25, 
     borderRadius: 15,
-    opacity: opacity
+    
   },
   textoAlertaAñadirRegistro:{
     fontSize:25, 
