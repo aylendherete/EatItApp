@@ -9,6 +9,7 @@ import {
   
 } from 'react-native';
 
+
 import { TextInput } from 'react-native-gesture-handler';
 import DateTimePicker from '@react-native-community/datetimepicker'
 
@@ -90,11 +91,30 @@ export const RegistroTipoComida=(props)=>{
     setShowAlertImage(false)
   }
   const handleShootPhoto=async()=>{
-    const permission= await PermissionsAndroid.launchCamera()
-    console.log(permission);
-    const test=await launchCamera({saveToPhotos:true});
-    setPickedImageURI(test.assets[0].uri);
-    setShowPicker(false)
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.CAMERA,
+          {
+            title: 'Cool Photo App Camera Permission',
+            message:
+              'Cool Photo App needs access to your camera ' +
+              'so you can take awesome pictures.',
+            buttonNeutral: 'Ask Me Later',
+            buttonNegative: 'Cancel',
+            buttonPositive: 'OK',
+          },
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          console.log('You can use the camera');
+          const test=await launchCamera({saveToPhotos:true});
+          setPickedImageURI(test.assets[0].uri);
+          setShowAlertImage(false)
+        } else {
+          console.log('Camera permission denied');
+        }
+      } catch (err) {
+        console.warn(err);
+      }
     
   }
 
