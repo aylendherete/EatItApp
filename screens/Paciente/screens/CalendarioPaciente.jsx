@@ -141,6 +141,7 @@ export const CalendarioPaciente=(props)=>{
   }
 
   const fadeOutTurno = () => {
+    setShowAlert(false)
     Animated.timing(opacity, {
       toValue: 0,
       duration: 350,
@@ -165,13 +166,12 @@ export const CalendarioPaciente=(props)=>{
     };
   return(
       <View style={styles.fondoVerde}>
-        <View>
-          <Text style={styles.bannerPaciente}>Paciente</Text>
-        </View>
+        
         <View style={{flex:4}}>
         
         <View style={styles.container}>
           <ScrollView>
+            <Text style={{color:"white", fontWeight:"200", fontSize:25, margin:10}}>Tu calendario</Text>
             <Calendar
               onDayPress={onDayPress}
               markedDates={{
@@ -183,21 +183,6 @@ export const CalendarioPaciente=(props)=>{
             <TouchableOpacity onPress={()=>props.navigation.navigate('TurnosPaciente')}><Text style={{backgroundColor:"#52B69A",color:"white", textAlign:"center", fontWeight:"bold", fontSize:25, margin:50,padding:15, borderRadius:10}}>¡Pedi un turno!</Text></TouchableOpacity>
             
 
-            <View>
-              <Text style={{color:"white", fontWeight:"300", fontSize:20, backgroundColor:"#76C893", padding:15, borderRadius:5}}>Comentarios previos de tu nutricionista</Text>
-              <ScrollView>
-              <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
-              <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
-              <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
-              <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
-              <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
-              <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
-              <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
-              <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
-              <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
-
-              </ScrollView>
-          </View>
           </ScrollView>
           
           
@@ -207,7 +192,7 @@ export const CalendarioPaciente=(props)=>{
         
         
     
-        <Modal visible={showAlert} transparent animationType='none'>
+        <Modal visible={showAlert} transparent animationType='slide'>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}
          >
             <Animated.View style={{
@@ -261,7 +246,7 @@ export const CalendarioPaciente=(props)=>{
         </View>
         </Modal>
 
-        <Modal visible={showAlertTurno} transparent animationType='none'>
+        <Modal visible={showAlertTurno} transparent animationType='slide'>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}
          >
             <Animated.View style={{
@@ -287,7 +272,7 @@ export const CalendarioPaciente=(props)=>{
 
         </View>
         </Modal>
-        <Modal visible={showAlertRegistroComida} transparent animationType='none'>
+        <Modal visible={showAlertRegistroComida} transparent animationType='slide'>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}
          >
             <Animated.View style={{
@@ -316,7 +301,7 @@ export const CalendarioPaciente=(props)=>{
         </View>
         </Modal>
 
-        <Modal visible={showAlertRegistroActividad} transparent animationType='none'>
+        <Modal visible={showAlertRegistroActividad} transparent animationType='slide'>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}
          >
             <Animated.View style={{
@@ -346,7 +331,7 @@ export const CalendarioPaciente=(props)=>{
         </View>
         </Modal>
 
-        <Modal visible={showAlertRegistroAgua} transparent animationType='none'>
+        <Modal visible={showAlertRegistroAgua} transparent animationType='slide'>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}
          >
             <Animated.View style={{

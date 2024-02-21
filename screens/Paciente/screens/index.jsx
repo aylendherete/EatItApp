@@ -7,7 +7,8 @@ import { RegistroTipoActividad } from "./RegistroTipoActividad";
 import { MiPerfil } from "./MiPerfil";
 import { RegistroComentado } from "./RegistroComentado";
 import { TurnosPaciente } from "./TurnosPaciente";
-
+import { ResumenPaciente } from "./ResumenPaciente";
+import { DatosPaciente } from "./DatosPaciente";
 export{
     RegistroComida,
     NotificacionesPaciente,
@@ -17,5 +18,7 @@ export{
     RegistroTipoActividad,
     MiPerfil,
     RegistroComentado,
-    TurnosPaciente
+    TurnosPaciente,
+    ResumenPaciente,
+    DatosPaciente
 }
