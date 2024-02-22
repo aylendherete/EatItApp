@@ -25,6 +25,65 @@ export const RegistroNutricionista=(props)=>{
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
 
+  const [email,setEmail]=React.useState("");
+  const [nombre1,setNombre]=React.useState("");
+  const [apellido1,setApellido]=React.useState("");
+  const [contrasenia1, setContrasenia]= React.useState("");
+  const [dni1,setDni]=React.useState("");
+  const [matriculaNacional1,setMatriculaNacional]=React.useState(0);
+  const [telefono1,setTelefono]=React.useState("");
+  console.log(JSON.stringify(props));
+
+  const checkContraseña=(contraseniaBackup)=>{
+    if(contrasenia1!=contraseniaBackup){
+      console.log("NO COINCIDEN")
+    }
+  }
+  async function handleCreateNutricionista(){
+    try{
+      const crearNutricionista= await fetch('http://localhost:3000/nutricionista/createNutricionista',{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify({
+          matriculaNacional:matriculaNacional1,
+          email:email,
+          contrasenia:contrasenia1,
+          nombre:nombre1,
+          apellido:apellido1,
+          telefono:telefono1,
+          fechaNacimiento:date,
+          dni:dni1
+        })
+      });
+    
+      if (crearNutricionista.ok ){
+        let data= await crearNutricionista.json();
+        console.log("crea nutricionista");
+        return props.navigation.navigate("Inicio");
+        
+      }
+      else{
+        
+        console.log(crearNutricionista.status);
+        
+        console.log(matriculaNacional1+","+email+","+contrasenia1+","+nombre1+","+apellido1+","+telefono1+","+date+","+dni1)
+
+      }
+  }
+  catch(e){
+    //console.log(e);
+    console.log(email.toString())
+      
+    console.log(matriculaNacional1+","+email+","+contrasenia1+","+nombre1+","+apellido1+","+telefono1+","+new Date(date.toLocaleDateString())+","+dni1)
+
+
+  }
+  
+  }
+
+
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShowPicker(Platform.OS === 'android' ? false : showPicker); // Oculta el selector en iOS
@@ -43,14 +102,14 @@ export const RegistroNutricionista=(props)=>{
     <View style={styles.fondoVerdeClaro}>
         <ScrollView>
         <View style={styles.inputRegistro}>
-          <TextInput placeholder="  Nombre" placeholderTextColor={"white"}></TextInput>
+          <TextInput onChangeText={setNombre} placeholder="  Nombre" placeholderTextColor={"white"}></TextInput>
         </View>
         
         <View style={styles.inputRegistro}>
-          <TextInput placeholder="  Apellido" placeholderTextColor={"white"}></TextInput>
+          <TextInput onChangeText={setApellido} placeholder="  Apellido" placeholderTextColor={"white"}></TextInput>
         </View>
         <View style={styles.inputRegistro}>
-          <TextInput placeholder="  E-mail" placeholderTextColor={"white"}></TextInput>
+          <TextInput onChangeText={setEmail} placeholder="  E-mail" placeholderTextColor={"white"}></TextInput>
         </View>
 
 
@@ -65,22 +124,22 @@ export const RegistroNutricionista=(props)=>{
 
         
         <View style={styles.inputRegistro}>
-          <TextInput keyboardType="number-pad" placeholder="  DNI" placeholderTextColor={"white"}></TextInput>
+          <TextInput onChangeText={setDni} keyboardType="number-pad" placeholder="  DNI" placeholderTextColor={"white"}></TextInput>
         </View>
         <View style={styles.inputRegistro}>
-          <TextInput keyboardType="number-pad" placeholder="  Matricula Nacional" placeholderTextColor={"white"}></TextInput>
+          <TextInput onChangeText={setMatriculaNacional} keyboardType="number-pad" placeholder="  Matricula Nacional" placeholderTextColor={"white"}></TextInput>
         </View>
         <View style={styles.inputRegistro}>
-          <TextInput keyboardType="number-pad" placeholder="  Telefono" placeholderTextColor={"white"}></TextInput>
+          <TextInput onChangeText={setTelefono} keyboardType="number-pad" placeholder="  Telefono" placeholderTextColor={"white"}></TextInput>
         </View>
         <View style={styles.inputRegistro}>
-          <TextInput secureTextEntry placeholder="  Contraseña" placeholderTextColor={"white"}></TextInput>
+          <TextInput onChangeText={setContrasenia} secureTextEntry placeholder="  Contraseña" placeholderTextColor={"white"}></TextInput>
         </View>
         <View style={styles.inputRegistro}>
-          <TextInput  secureTextEntry placeholder="  Confirmar contraseña" placeholderTextColor={"white"}></TextInput>
+          <TextInput onChangeText={checkContraseña} secureTextEntry placeholder="  Confirmar contraseña" placeholderTextColor={"white"}></TextInput>
         </View>
         <View style={styles.botonRegistrarme}>
-          <TouchableOpacity onPress={()=>props.navigation.navigate('Inicio')}>
+          <TouchableOpacity onPress={handleCreateNutricionista}>
             <Text style={styles.textoBotonRegistrarme}>Registrarme</Text>
           </TouchableOpacity>
         </View>
