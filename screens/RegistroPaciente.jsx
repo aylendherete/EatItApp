@@ -54,7 +54,9 @@ export const RegistroPaciente=(props)=> {
           fechaNacimiento:date,
           dni:dni1,
           objetivo:objetivo1,
-          antecedentes:antecedentes1
+          antecedentes:antecedentes1,
+          enviarSolicitudNutricionista:true
+          
         })
       });
     
@@ -100,7 +102,7 @@ export const RegistroPaciente=(props)=> {
     <View style={styles.fondoVerdeClaro}>
         <ScrollView>
         <View style={styles.inputRegistro}>
-          <TextInput onChangeText={setEmail}placeholder="  Nombre" placeholderTextColor={"white"}></TextInput>
+          <TextInput onChangeText={setNombre}placeholder="  Nombre" placeholderTextColor={"white"}></TextInput>
         </View>
         
         <View style={styles.inputRegistro}>
