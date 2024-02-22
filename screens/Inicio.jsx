@@ -5,7 +5,7 @@
  * @format
  */
 
-import React, {useRef} from 'react';
+import React, {useRef,createContext,useState,useContext} from 'react';
 import {
   StyleSheet,
   Text,
@@ -16,11 +16,15 @@ import {
   
 } from 'react-native';
 
+import UserContext from '../context/userContext';
 
-export const Inicio=(props)=> {
+
+export const Inicio=(props, {children})=> {
+
+  const {setUser}=useContext(UserContext);
+
   const [email,setEmail]=React.useState("");
   const [contrasenia, setContrasenia]= React.useState("");
-  console.log(JSON.stringify(props))
 
   async function handleLogin(email, contrasenia){
 
@@ -30,16 +34,38 @@ export const Inicio=(props)=> {
 
       if (loginCheckPaciente.ok ){
         let data= await loginCheckPaciente.json();
+
+        const userData={
+          id: data.id,
+          email:email,
+          contrasenia:contrasenia
+        }
+
+        setUser(userData)
+
         console.log("entra paciente");
-        if(data.enviarSolicitudNutricionista==false){
+        if(data.enviarSolicitudNutricionista==false && data.matriculaNacionalNutricionista==null){
           return props.navigation.navigate("ElegirNutricionista");
         }
-        else{
+        else if (data.enviarSolicitudNutricionista!=false && data.matriculaNacionalNutricionista!=null){
           return props.navigation.navigate("Paciente");
+        }
+        else{
+          return props.navigation.navigate("CartelSolicitud");
+        
         }
         
       }else if(loginCheckNutricionista.ok){
         let data=await loginCheckNutricionista.json();
+        
+        const userData={
+          id: data.id,
+          email:email,
+          contrasenia:contrasenia
+        }
+
+        setUser(userData)
+
         console.log("entra nutricionista");
         return props.navigation.navigate("Nutricionista");
 

@@ -73,9 +73,8 @@ export const RegistroNutricionista=(props)=>{
       }
   }
   catch(e){
-    //console.log(e);
-    console.log(email.toString())
-      
+    console.log(e);
+    
     console.log(matriculaNacional1+","+email+","+contrasenia1+","+nombre1+","+apellido1+","+telefono1+","+new Date(date.toLocaleDateString())+","+dni1)
 
 

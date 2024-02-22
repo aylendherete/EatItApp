@@ -55,7 +55,7 @@ export const RegistroPaciente=(props)=> {
           dni:dni1,
           objetivo:objetivo1,
           antecedentes:antecedentes1,
-          enviarSolicitudNutricionista:true
+          
           
         })
       });

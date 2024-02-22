@@ -5,6 +5,7 @@ import { RegistroPaciente } from "./RegistroPaciente";
 import {ElegirNutricionista} from "./ElegirNutricionista";
 import {Paciente} from "./Paciente/Paciente";
 import {Nutricionista} from "./Nutricionista/Nutricionista"
+import { CartelSolicitud } from "./CartelSolicitud";
 
 export{
     Inicio,
@@ -13,5 +14,6 @@ export{
     RegistroPaciente,
     ElegirNutricionista,
     Paciente,
-    Nutricionista
+    Nutricionista,
+    CartelSolicitud
 }
