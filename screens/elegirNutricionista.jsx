@@ -32,19 +32,34 @@ export const ElegirNutricionista=(props)=>{
       setNutricionistas(nutricionistas)
     }
   }
-  async function handleEnviarSolicitud(email){
+
+
+
+  async function handleEnviarSolicitud( matriculaNacional){
     try{
       const enviarSolicitud= await fetch('http://localhost:3000/paciente/enviarSolicitud?email='+user.email)
-        if (enviarSolicitud.ok ){
-          console.log("se envio solicitud")
-          console.log(email)
-          return props.navigation.navigate("Inicio");
-          
-        }
-        else{  
-          console.log(crearNutricionista.status);
-         
-        }
+
+      const crearNotificacion= await fetch('http://localhost:3000/notificacionesNutricionista/createNotificacionSolicitudPaciente',{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify({
+          matriculaNacional:matriculaNacional,
+          idUsuario: user.id
+        })
+      })
+      if (enviarSolicitud.ok && crearNotificacion.ok ){
+        console.log("se envio solicitud")
+        
+        return props.navigation.navigate("Inicio");
+        
+      }
+
+      else{  
+        console.log(crearNutricionista.status);
+        console.log(crearNotificacion.status);
+      }
     }
     catch(e){
       console.log(e);
@@ -72,7 +87,8 @@ export const ElegirNutricionista=(props)=>{
               </View>
             }
             renderItem={({item})=>
-              <View style={{backgroundColor:"#52B69A",borderRadius:10, padding:20, margin:15}}><TouchableOpacity onPress={()=>handleEnviarSolicitud(user.email)}>
+              <View style={{backgroundColor:"#52B69A",borderRadius:10, padding:20, margin:15}}>
+                <TouchableOpacity onPress={()=>handleEnviarSolicitud(item.matriculaNacional)}>
                 <Text style={{color:"white", fontSize:25, fontWeight:"bold"}}>{item.nombre} {item.apellido}</Text>
                 <Text style={{color:"white", fontWeight:"300", fontSize:15}}>{item.matriculaNacional}</Text>
                 </TouchableOpacity>

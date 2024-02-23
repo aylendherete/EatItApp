@@ -59,9 +59,10 @@ export const Inicio=(props, {children})=> {
         let data=await loginCheckNutricionista.json();
         
         const userData={
-          id: data.id,
+          matriculaNacional: data.matriculaNacional,
           email:email,
           contrasenia:contrasenia
+          
         }
 
         setUser(userData)
