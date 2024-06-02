@@ -19,6 +19,18 @@ export const NotificacionesPaciente=(props)=>{
 
   const[notificaciones,setNotificaciones]=React.useState([])
 
+  const [nombres, setNombres] = React.useState({});
+
+  const obtenerNombreNotificaciones=async(id)=>{
+    let nombrePaciente=await fetch('http://localhost:3000/paciente/getNombrePaciente?id='+id);
+    if(nombrePaciente.ok){
+      nombrePaciente=await nombrePaciente.json();
+      
+      console.log(nombrePaciente.apellido);
+      return {nombre: nombrePaciente.nombre,apellido:nombrePaciente.apellido};
+    }
+  }
+
   const obtenerNotificaciones=async()=>{
     console.log("AAAAAAAAAAAAAAAAA"+(user.matriculaNacional))
     var notificaciones= await fetch('http://localhost:3000/notificacionesNutricionista/notificaciones?matriculaNacional='+user.matriculaNacional);
@@ -28,6 +40,16 @@ export const NotificacionesPaciente=(props)=>{
 
       console.log(user.matriculaNacional);
       console.log(notificaciones)
+
+      const nombresPromises = notificaciones.map((item) =>
+        obtenerNombreNotificaciones(item.id)
+      );
+      const nombresResult = await Promise.all(nombresPromises);
+      const nombresMap = {};
+      notificaciones.forEach((item, index) => {
+        nombresMap[item.id] = nombresResult[index];
+      });
+      setNombres(nombresMap);
     }
   }
 
@@ -41,50 +63,37 @@ export const NotificacionesPaciente=(props)=>{
         </View>
         <View style={{flex:4}}>
           <FlatList
-          data={notificaciones}
+            data={notificaciones}
+            keyExtractor={(item)=>item.id.toString()}
           ListEmptyComponent={
             <View>
               <Text>No tienes notificaciones </Text>
             </View>
           }
           renderItem={({item})=>
-          
+            <ScrollView style={{flex:1}}> 
               <View style={styles.botonNotificacion}>
-              <Text style={styles.textoBotonNotificacion}>
-                ¡Paciente quiere iniciar un plan con vos!
-              </Text>
-              <View style={{flexDirection:"row", margin:10}}> 
-                <TouchableOpacity style={{backgroundColor:"#3B8D77",borderRadius:10, color:"white", fontWeight:"bold", marginRight:10}}><Text style={styles.textoBotonNotificacion}>Aceptar</Text></TouchableOpacity>
-                <TouchableOpacity  style={{backgroundColor:"#3B8D77",borderRadius:10, color:"white", fontWeight:"bold"}}><Text style={styles.textoBotonNotificacion}>Rechazar</Text></TouchableOpacity>
+                
+                <Text style={styles.textoBotonNotificacion}>
+                  ¡Paciente quiere iniciar un plan con vos!{' '}
+                  {nombres[item.id]?.nombre || ''}{' '}
+                  {nombres[item.id]?.apellido || ''}
+                </Text>
+                <View style={{flexDirection:"row", margin:10}}> 
+                  <TouchableOpacity style={{backgroundColor:"#3B8D77",borderRadius:10, color:"white", fontWeight:"bold", marginRight:10}}><Text style={styles.textoBotonNotificacion}>Aceptar</Text></TouchableOpacity>
+                  <TouchableOpacity  style={{backgroundColor:"#3B8D77",borderRadius:10, color:"white", fontWeight:"bold"}}><Text style={styles.textoBotonNotificacion}>Rechazar</Text></TouchableOpacity>
+                </View>
+                
               </View>
-              
-            </View>
+            </ScrollView> 
          }
 
         />
           <ScrollView>
-            <View style={styles.botonNotificacion}>
-              <Text style={styles.textoBotonNotificacion}>
-                ¡Paciente 1 quiere iniciar un plan con vos!
-              </Text>
-              <View style={{flexDirection:"row", margin:10}}> 
-                <TouchableOpacity style={{backgroundColor:"#3B8D77",borderRadius:10, color:"white", fontWeight:"bold", marginRight:10}}><Text style={styles.textoBotonNotificacion}>Aceptar</Text></TouchableOpacity>
-                <TouchableOpacity  style={{backgroundColor:"#3B8D77",borderRadius:10, color:"white", fontWeight:"bold"}}><Text style={styles.textoBotonNotificacion}>Rechazar</Text></TouchableOpacity>
-              </View>
-              
-            </View>
+           
             <View><TouchableOpacity onPress={()=>props.navigation.navigate('AnalisisRegistroPaciente')} style={styles.botonNotificacion}><Text style={styles.textoBotonNotificacion}>¡El Paciente1 ha  hecho un registro nuevo!</Text></TouchableOpacity></View>
             <View><TouchableOpacity onPress={()=>props.navigation.navigate('AnalisisRegistroPaciente')} style={styles.botonNotificacion}><Text style={styles.textoBotonNotificacion}>¡El Paciente1 ha  hecho un registro nuevo!</Text></TouchableOpacity></View>
-            <View style={styles.botonNotificacion}>
-              <Text style={styles.textoBotonNotificacion}>
-                ¡Paciente 1 quiere iniciar un plan con vos!
-              </Text>
-              <View style={{flexDirection:"row", margin:10}}> 
-                <TouchableOpacity style={{backgroundColor:"#3B8D77",borderRadius:10, color:"white", fontWeight:"bold", marginRight:10}}><Text style={styles.textoBotonNotificacion}>Aceptar</Text></TouchableOpacity>
-                <TouchableOpacity  style={{backgroundColor:"#3B8D77",borderRadius:10, color:"white", fontWeight:"bold"}}><Text style={styles.textoBotonNotificacion}>Rechazar</Text></TouchableOpacity>
-              </View>
-              
-            </View>
+            
             <View><TouchableOpacity onPress={()=>props.navigation.navigate('AnalisisRegistroPaciente')} style={styles.botonNotificacion}><Text style={styles.textoBotonNotificacion}>¡El Paciente1 ha  hecho un registro nuevo!</Text></TouchableOpacity></View>
             <View><TouchableOpacity onPress={()=>props.navigation.navigate('AnalisisRegistroPaciente')} style={styles.botonNotificacion}><Text style={styles.textoBotonNotificacion}>¡El Paciente1 ha  hecho un registro nuevo!</Text></TouchableOpacity></View>
             <View><TouchableOpacity onPress={()=>props.navigation.navigate('AnalisisRegistroPaciente')} style={styles.botonNotificacion}><Text style={styles.textoBotonNotificacion}>¡El Paciente1 ha  hecho un registro nuevo!</Text></TouchableOpacity></View>
