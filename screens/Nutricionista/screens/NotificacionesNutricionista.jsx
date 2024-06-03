@@ -37,6 +37,7 @@ export const NotificacionesPaciente=(props)=>{
     if(notificaciones.ok){
       notificaciones=await notificaciones.json();
       setNotificaciones(notificaciones)
+      
 
       console.log(user.matriculaNacional);
       console.log(notificaciones)
