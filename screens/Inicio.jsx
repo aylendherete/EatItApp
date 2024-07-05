@@ -30,8 +30,7 @@ export const Inicio=(props, {children})=> {
 
     try{
       const loginCheckPaciente= await fetch('http://localhost:3000/paciente/login?email='+email+'&contrasenia='+contrasenia)
-      const loginCheckNutricionista= await fetch('http://localhost:3000/nutricionista/login?email='+email+'&contrasenia='+contrasenia)
-
+      
       if (loginCheckPaciente.ok ){
         let data= await loginCheckPaciente.json();
 
@@ -55,29 +54,28 @@ export const Inicio=(props, {children})=> {
         
         }
         
-      }else if(loginCheckNutricionista.ok){
-        let data=await loginCheckNutricionista.json();
-        
+      }
+  }
+  catch(e){
+    const loginCheckNutricionista= await fetch('http://localhost:3000/nutricionista/login?email='+email+'&contrasenia='+contrasenia)
+
+    if(loginCheckNutricionista.ok){
+      let data=await loginCheckNutricionista.json();
+      if (data!==null){
         const userData={
           matriculaNacional: data.matriculaNacional,
           email:email,
           contrasenia:contrasenia
-          
         }
-
         setUser(userData)
-
-        console.log("entra nutricionista");
         return props.navigation.navigate("Nutricionista");
+      }
+    }
+    
+    Alert.alert("No se encontro el usuario")
 
-      }
-      else{
-        Alert.alert("No se encontro el usuario")
-        console.log(loginCheckNutricionista.status)
-      }
-  }
-  catch(e){
-    console.log(e);
+    
+
   }
   }
 
