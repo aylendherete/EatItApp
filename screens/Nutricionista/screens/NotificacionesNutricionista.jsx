@@ -55,13 +55,13 @@ export const NotificacionesPaciente = (props) => {
 
     console.log("Usuario"+ id+" MN"+ mn)
     try {
-      const asociacion = await fetch('http://localhost:3000/paciente/asociarPacienteANutricionista?id='+id+'+&matriculaNacional='+mn);
-        
+
+      const asociacion = await fetch('http://localhost:3000/paciente/asociarPacienteANutricionista?id='+id+'+&matriculaNacional='+mn, {
+        method: 'POST',
+      });     
       if (asociacion.ok) {
         let data = await asociacion.json();
         console.log("asocia");
-      } else {
-        console.log(asociacion.status);
       }
     } catch (e) {
       console.log(e);
