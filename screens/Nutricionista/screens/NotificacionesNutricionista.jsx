@@ -26,32 +26,55 @@ export const NotificacionesPaciente = (props) => {
   }
 
   const obtenerNotificaciones = async () => {
-    console.log("AAAAAAAAAAAAAAAAA" + (user.matriculaNacional));
-    var notificaciones = await fetch('http://localhost:3000/notificacionesNutricionista/notificaciones?matriculaNacional=' + user.matriculaNacional);
-    if (notificaciones.ok) {
-      notificaciones = await notificaciones.json();
-      setNotificaciones(notificaciones);
+    try {
+      let response = await fetch(`http://localhost:3000/notificacionesNutricionista/notificaciones?matriculaNacional=${user.matriculaNacional}`);
+      if (response.ok) {
+        let data = await response.json();
+        setNotificaciones(data);
 
-      console.log(user.matriculaNacional);
-      console.log(notificaciones);
+        let nombresPromises = data.map(item => {
+          return obtenerNombreNotificaciones(item.idSolicitud); // Aquí retornamos la promesa directamente
+        });
 
-      const nombresPromises = notificaciones.map((item) =>
-        obtenerNombreNotificaciones(item.id)
-      );
-      const nombresResult = await Promise.all(nombresPromises);
-      const nombresMap = {};
-      notificaciones.forEach((item, index) => {
-        nombresMap[item.id] = nombresResult[index];
-      });
-      setNombres(nombresMap);
+        let nombresResult = await Promise.all(nombresPromises);
+
+        let nombresMap = {};
+        data.forEach((item, index) => {
+          nombresMap[item.idSolicitud] = nombresResult[index]; // Usamos idSolicitud como clave en el mapa
+        });
+
+        setNombres(nombresMap);
+      } else {
+        console.error('Error al obtener notificaciones:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error de red:', error);
+    }
+  };
+
+
+  const rechazarSolicitud=async(id)=>{
+
+    console.log("ID A RECHAZAR"+id)
+    try{
+      const solicitud= await fetch("http://localhost:3000/paciente/rechazarSolicitud?id="+id)
+
+     
+      if (solicitud.ok ){
+        console.log("se rechazó solicitud")
+        await solicitud.json()
+        
+        return props.navigation.navigate("NotificacionesNutricionista");
+        
+      }
+    }
+    catch(e){
+      console.log(e);
     }
   }
 
   const asociarPaciente = async (id, mn) => {
 
-    console.log(" ")
-    
-    console.log(" ")
 
     console.log("Usuario"+ id+" MN"+ mn)
     try {
@@ -62,6 +85,7 @@ export const NotificacionesPaciente = (props) => {
       if (asociacion.ok) {
         let data = await asociacion.json();
         console.log("asocia");
+        return props.navigation.navigate("NotificacionesNutricionista")
       }
     } catch (e) {
       console.log(e);
@@ -92,8 +116,8 @@ export const NotificacionesPaciente = (props) => {
               <View style={styles.botonNotificacion}>
                 <Text style={styles.textoBotonNotificacion}>
                   ¡Paciente quiere iniciar un plan con vos!{' '}
-                  {nombres[item.id]?.nombre || ''}{' '}
-                  {nombres[item.id]?.apellido || ''}
+                  {nombres[item.idSolicitud]?.nombre || ''}{' '}
+                  {nombres[item.idSolicitud]?.apellido || ''}
                 </Text>
                 <View style={{ flexDirection: "row", margin: 10 }}>
                   <TouchableOpacity
@@ -104,7 +128,7 @@ export const NotificacionesPaciente = (props) => {
                       fontWeight: "bold",
                       marginRight: 10
                     }}
-                    onPress={() => asociarPaciente(item.id, user.matriculaNacional)}
+                    onPress={() => asociarPaciente(item.idSolicitud, user.matriculaNacional)}
                   >
                     <Text style={styles.textoBotonNotificacion}>Aceptar</Text>
                   </TouchableOpacity>
@@ -115,6 +139,8 @@ export const NotificacionesPaciente = (props) => {
                       color: "white",
                       fontWeight: "bold"
                     }}
+                  
+                    onPress={() => rechazarSolicitud(item.idSolicitud)}
                   >
                     <Text style={styles.textoBotonNotificacion}>Rechazar</Text>
                   </TouchableOpacity>

@@ -57,7 +57,7 @@ export const Inicio=(props, {children})=> {
       }
   }
   catch(e){
-    const loginCheckNutricionista= await fetch('http://localhost:3000/nutricionista/login?email='+email+'&contrasenia='+contrasenia)
+    try{const loginCheckNutricionista= await fetch('http://localhost:3000/nutricionista/login?email='+email+'&contrasenia='+contrasenia)
 
     if(loginCheckNutricionista.ok){
       let data=await loginCheckNutricionista.json();
@@ -70,9 +70,11 @@ export const Inicio=(props, {children})=> {
         setUser(userData)
         return props.navigation.navigate("Nutricionista");
       }
+    }}catch(e){
+      Alert.alert("No se encontro el usuario")
+      console.log(e)
     }
     
-    Alert.alert("No se encontro el usuario")
 
     
 
