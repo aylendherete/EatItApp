@@ -33,7 +33,10 @@ export const NotificacionesPaciente = (props) => {
         setNotificaciones(data);
 
         let nombresPromises = data.map(item => {
-          return obtenerNombreNotificaciones(item.idSolicitud); // Aquí retornamos la promesa directamente
+          if(item.idSolicitud !== null){
+            return obtenerNombreNotificaciones(item.idSolicitud);
+          }
+       // Aquí retornamos la promesa directamente
         });
 
         let nombresResult = await Promise.all(nombresPromises);
@@ -103,16 +106,17 @@ export const NotificacionesPaciente = (props) => {
         <Text style={styles.bannerNutricionista}>Nutricionista</Text>
       </View>
       <View style={{ flex: 4 }}>
-        <FlatList
-          data={notificaciones}
-          keyExtractor={(item) => item.id.toString()}
-          ListEmptyComponent={
-            <View>
-              <Text>No tienes notificaciones </Text>
-            </View>
-          }
-          renderItem={({ item }) =>
-            <ScrollView style={{ flex: 1 }}>
+      <FlatList
+        data={notificaciones}
+        keyExtractor={(item) => item.id.toString()}
+        ListEmptyComponent={
+          <View>
+            <Text>No tienes notificaciones </Text>
+          </View>
+        }
+        renderItem={({ item }) => (
+          <ScrollView style={{ flex: 1 }}>
+            {item.idSolicitud && (
               <View style={styles.botonNotificacion}>
                 <Text style={styles.textoBotonNotificacion}>
                   ¡Paciente quiere iniciar un plan con vos!{' '}
@@ -139,31 +143,30 @@ export const NotificacionesPaciente = (props) => {
                       color: "white",
                       fontWeight: "bold"
                     }}
-                  
                     onPress={() => rechazarSolicitud(item.idSolicitud)}
                   >
                     <Text style={styles.textoBotonNotificacion}>Rechazar</Text>
                   </TouchableOpacity>
                 </View>
               </View>
-            </ScrollView>
-          }
-        />
-        <ScrollView>
-          <View>
-            <TouchableOpacity
-              onPress={() => props.navigation.navigate('AnalisisRegistroPaciente')}
-              style={styles.botonNotificacion}
-            >
-              <Text style={styles.textoBotonNotificacion}>
-                ¡El Paciente1 ha hecho un registro nuevo!
-              </Text>
-            </TouchableOpacity>
-          </View>
-         
-         
-        </ScrollView>
+            )}
+            {item.idRegistroAguaPaciente && (
+              <View>
+                <TouchableOpacity
+                  onPress={() => props.navigation.navigate('AnalisisRegistroPaciente')}
+                  style={styles.botonNotificacion}
+                >
+                  <Text style={styles.textoBotonNotificacion}>
+                    ¡El Paciente1 ha hecho un registro nuevo!
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            )}
+          </ScrollView>
+        )}
+      />
       </View>
+
     </View>
   );
 }
