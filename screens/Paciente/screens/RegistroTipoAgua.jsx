@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, { useContext,useState, useRef} from 'react';
 import {
   StyleSheet,
   Text,
@@ -10,9 +10,12 @@ import {
 
 import * as Animatable from 'react-native-animatable';
 
+import UserContext from '../../../context/userContext';
 
 
 export const RegistroTipoAgua=(props)=>{
+
+  const { user } = useContext(UserContext);
   const [count, setCount] = useState(0);
 
   const incrementCount = () => {
@@ -31,12 +34,35 @@ export const RegistroTipoAgua=(props)=>{
   
   const [showTick, setShowTick] = useState(false);
 
-  const handleButtonClick = () => {
-    setShowTick(true);
-    setShowAlert(false);
-    setTimeout(() => {
-      setShowTick(false);
-    }, 1500);
+  const handleButtonClick =async () => {
+    try{
+      const registro= await fetch( "http://localhost:3000/registroAgua/createRegistroAgua",{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify({
+          idUsuario:user.id,
+          cantidadVasos:count,
+          matriculaNacional:user.matriculaNacionalNutricionista
+          
+          
+        })
+      });
+    
+      if (registro.ok ){
+        let data= await registro.json();
+        console.log("crea registro");
+        setShowTick(true);
+        setShowAlert(false);
+        setTimeout(() => {
+          setShowTick(false);
+        }, 1500);
+        
+      }
+    }catch(e){
+      console.log(e)
+    } 
   
   };
 

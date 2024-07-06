@@ -111,7 +111,7 @@ export const NotificacionesPaciente = (props) => {
         keyExtractor={(item) => item.id.toString()}
         ListEmptyComponent={
           <View>
-            <Text>No tienes notificaciones </Text>
+            <Text style={{fontSize:20, fontWeight:500 ,textAlign:"center"}}>No tienes notificaciones </Text>
           </View>
         }
         renderItem={({ item }) => (
@@ -157,7 +157,31 @@ export const NotificacionesPaciente = (props) => {
                   style={styles.botonNotificacion}
                 >
                   <Text style={styles.textoBotonNotificacion}>
-                    ¡El Paciente1 ha hecho un registro nuevo!
+                    ¡El Paciente1 ha hecho un registro de agua nuevo!
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            )}
+            {item.idRegistroActividadPaciente && (
+              <View>
+                <TouchableOpacity
+                  onPress={() => props.navigation.navigate('AnalisisRegistroPaciente')}
+                  style={styles.botonNotificacion}
+                >
+                  <Text style={styles.textoBotonNotificacion}>
+                    ¡El Paciente ha hecho un registro de actividad nuevo!
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            )}
+            {item.idRegistroComidaPaciente && (
+              <View>
+                <TouchableOpacity
+                  onPress={() => props.navigation.navigate('AnalisisRegistroPaciente')}
+                  style={styles.botonNotificacion}
+                >
+                  <Text style={styles.textoBotonNotificacion}>
+                    ¡El Paciente ha hecho un registro de comida nuevo!
                   </Text>
                 </TouchableOpacity>
               </View>

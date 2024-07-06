@@ -37,7 +37,8 @@ export const Inicio=(props, {children})=> {
         const userData={
           id: data.id,
           email:email,
-          contrasenia:contrasenia
+          contrasenia:contrasenia,
+          matriculaNacionalNutricionista:data.matriculaNacionalNutricionista
         }
 
         setUser(userData)

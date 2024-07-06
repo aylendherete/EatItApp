@@ -1,4 +1,4 @@
-import React,{ useState, useRef,useEffect }  from 'react';
+import React,{ useContext,useState, useRef,useEffect }  from 'react';
 import {
   StyleSheet,
   Text,
@@ -12,21 +12,52 @@ import DateTimePicker from '@react-native-community/datetimepicker'
 
 import * as Animatable from 'react-native-animatable';
 
+import UserContext from '../../../context/userContext';
 
 import { TextInput } from 'react-native-gesture-handler';
 
 export const RegistroTipoActividad=(props)=>{
+  const { user } = useContext(UserContext);
+
   const [showAlert, setShowAlert] = useState(false);
   const opacity = useRef(new Animated.Value(0)).current;
+
+  const [descripcion,setDescripcion]=React.useState("");
+  const [cantidadHoras,setCantidadHoras]=React.useState("");
   
   const [showTick, setShowTick] = useState(false);
 
-  const handleButtonClick = () => {
-    setShowTick(true);
-    setShowAlert(false);
-    setTimeout(() => {
-      setShowTick(false);
-    }, 1500);
+  const handleButtonClick = async() => {
+
+    try{
+      const registro= await fetch( "http://localhost:3000/registroActividad/createRegistroActividad",{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify({
+          idUsuario:user.id,
+          descripcion:descripcion,
+          tiempoTotal:cantidadHoras,
+          matriculaNacional:user.matriculaNacionalNutricionista
+          
+          
+        })
+      });
+    
+      if (registro.ok ){
+        let data= await registro.json();
+        console.log("crea registro");
+        setShowTick(true);
+        setShowAlert(false);
+        setTimeout(() => {
+          setShowTick(false);
+        }, 1500);
+        
+      }
+    }catch(e){
+      console.log(e)
+    } 
 
   };
 
@@ -89,7 +120,7 @@ export const RegistroTipoActividad=(props)=>{
           <Text style={styles.textoTipoRegistroComida}>Actividad</Text>
         </View>
         <View>
-          <TextInput  style={styles.botonTipoRegistroComida} placeholder='Descripcion' placeholderTextColor={"black"}></TextInput>
+          <TextInput onChangeText={setDescripcion} style={styles.botonTipoRegistroComida} placeholder='Descripcion' placeholderTextColor={"black"}></TextInput>
           
             <View>
             <TouchableOpacity  style={styles.botonTipoRegistroComida} onPress={showDatepicker}>
@@ -103,7 +134,7 @@ export const RegistroTipoActividad=(props)=>{
                 onChange={onChange}
             />)}
           </View>
-          <TextInput  style={styles.botonTipoRegistroComida} placeholder='Tiempo total' placeholderTextColor={"black"} keyboardType="number-pad"></TextInput>
+          <TextInput  onChangeText={setCantidadHoras} style={styles.botonTipoRegistroComida} placeholder='Tiempo total' placeholderTextColor={"black"} keyboardType="number-pad"></TextInput>
           
         </View>
         
