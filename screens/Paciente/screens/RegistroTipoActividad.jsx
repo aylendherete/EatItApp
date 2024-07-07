@@ -39,8 +39,8 @@ export const RegistroTipoActividad=(props)=>{
           idUsuario:user.id,
           descripcion:descripcion,
           tiempoTotal:cantidadHoras,
-          matriculaNacional:user.matriculaNacionalNutricionista
-          
+          matriculaNacional:user.matriculaNacionalNutricionista,
+          horaInicio:date
           
         })
       });

@@ -40,8 +40,8 @@ export const RegistroTipoComida=(props)=>{
         body:JSON.stringify({
           idUsuario:user.id,
           descripcion:descripcion,
-          matriculaNacional:user.matriculaNacionalNutricionista
-          
+          matriculaNacional:user.matriculaNacionalNutricionista,
+          hora:date
           
         })
       });

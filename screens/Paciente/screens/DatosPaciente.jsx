@@ -6,6 +6,7 @@ import {
   TouchableOpacity,FlatList,ScrollView
 } from 'react-native';
 
+import { format } from 'date-fns';
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
@@ -64,7 +65,8 @@ export const  DatosPaciente=(props)=>{
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <View style={styles.itemContainer}>
-                <Text style={{color:"black", fontWeight:"500", fontSize:15}}>Vasos de agua: {item.cantidadVasos}, {item.cantidadVasos * 250}ml</Text>
+                <Text style={{color:"black", fontWeight:"600", fontSize:16,}}>{format(item.hora, 'dd/MM/yyyy HH:mm')}</Text>
+                <Text style={{color:"black", fontWeight:"300", fontSize:15}}>Vasos de agua: {item.cantidadVasos} {"("}{item.cantidadVasos * 250} ml{")"}</Text>
               </View>
             )}
           />
@@ -74,9 +76,9 @@ export const  DatosPaciente=(props)=>{
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <View style={styles.itemContainer}>
-                <Text style={{color:"black", fontWeight:"500", fontSize:15}}>Descripción: {item.descripcion}</Text>
-                <Text style={{color:"black", fontWeight:"500", fontSize:15}}>Hora de inicio: {item.horaInicio}</Text>
-                <Text style={{color:"black", fontWeight:"500", fontSize:15}}>Tiempo Total: {item.tiempoTotal}</Text>
+                <Text style={{color:"black", fontWeight:"600", fontSize:16}}>{format(item.horaInicio, 'dd/MM/yyyy HH:mm')}</Text>
+                <Text style={{color:"black", fontWeight:"300", fontSize:15}}>Descripción: {item.descripcion}</Text>
+                <Text style={{color:"black", fontWeight:"300", fontSize:15}}>Tiempo Total: {item.tiempoTotal}</Text>
               </View>
             )}
           />
@@ -86,8 +88,9 @@ export const  DatosPaciente=(props)=>{
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <View style={styles.itemContainer}>
-                <Text style={{color:"black", fontWeight:"500", fontSize:15}}>Descripción: {item.descripcion}</Text>
-                <Text style={{color:"black", fontWeight:"500", fontSize:15}}>Hora: {item.hora}</Text>
+                <Text style={{color:"black", fontWeight:"600", fontSize:16,}}>{format(item.hora, 'dd/MM/yyyy HH:mm')}</Text>
+                <Text style={{color:"black", fontWeight:"300", fontSize:15}}>Descripción: {item.descripcion}</Text>
+                
               </View>
             )}
           />
@@ -136,7 +139,7 @@ const styles=StyleSheet.create({
   }, itemContainer: {
     backgroundColor: 'white',
     borderRadius: 10,
-    padding: 10,
+    padding: 15,
     marginVertical: 5,
   },
 })

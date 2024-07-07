@@ -14,7 +14,7 @@ import {
 import { ScatterChart } from 'react-native-svg-charts';
 
 export const PerfilPaciente=(props)=>{
-
+  const { paciente } = props.route.params;
 
 
 
@@ -79,6 +79,9 @@ export const PerfilPaciente=(props)=>{
     fadeOut();
     return(props.navigation.navigate('MisPacientes'))
   };
+
+
+  console.log(paciente)
     return(
         <View style={styles.fondoVerde}>
           <View>
@@ -86,14 +89,14 @@ export const PerfilPaciente=(props)=>{
           </View>
           <View style={{flex:4}}>
             <View>
-                <Text style={styles.textoNombreApellidoPaciente}>Nombre Apellido</Text>
+                <Text style={styles.textoNombreApellidoPaciente}>{paciente.nombre} {paciente.apellido}</Text>
             </View>
             <ScrollView>
               <View>
                   <View><TouchableOpacity onPress={()=>props.navigation.navigate('EditarPeso')} style={styles.botonDescripcionPaciente}><Text style={styles.textoDescripcionPaciente}>Peso actual</Text></TouchableOpacity></View>
-                  <View><TouchableOpacity onPress={()=>props.navigation.navigate('EditarObjetivo')} style={styles.botonDescripcionPaciente}><Text style={styles.textoDescripcionPaciente}>Objetivo</Text></TouchableOpacity></View>
-                  <View><TouchableOpacity onPress={()=>props.navigation.navigate('EditarAntecedentes')} style={styles.botonDescripcionPaciente}><Text style={styles.textoDescripcionPaciente}>Antecedentes</Text></TouchableOpacity></View>
-                  <View><TouchableOpacity onPress={()=>props.navigation.navigate('TabHistorial')} style={styles.botonDescripcionPaciente}><Text style={styles.textoDescripcionPaciente}>Historial</Text></TouchableOpacity></View>
+                  <View><TouchableOpacity onPress={()=>props.navigation.navigate('EditarObjetivo')} style={styles.botonDescripcionPaciente}><Text style={styles.textoDescripcionPaciente}>Objetivo :{paciente.objetivo}</Text></TouchableOpacity></View>
+                  <View><TouchableOpacity onPress={()=>props.navigation.navigate('EditarAntecedentes')} style={styles.botonDescripcionPaciente}><Text style={styles.textoDescripcionPaciente}>Antecedentes {paciente.antecedentes}</Text></TouchableOpacity></View>
+                  <View><TouchableOpacity onPress={()=>props.navigation.navigate('TabHistorial', { paciente })} style={styles.botonDescripcionPaciente}><Text style={styles.textoDescripcionPaciente}>Historial</Text></TouchableOpacity></View>
 
 
                  

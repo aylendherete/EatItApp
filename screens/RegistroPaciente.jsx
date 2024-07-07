@@ -137,7 +137,7 @@ export const RegistroPaciente=(props)=> {
           <TextInput onChangeText={setObjetivo} placeholder="  Escribir objetivo" placeholderTextColor={"white"}></TextInput>
         </View>
         <View style={styles.inputRegistro}>
-          <TextInput onChangeText={setAntecedentes} secureTextEntry placeholder="  Antecedentes" placeholderTextColor={"white"}></TextInput>
+          <TextInput onChangeText={setAntecedentes}  placeholder="  Antecedentes" placeholderTextColor={"white"}></TextInput>
         </View>
         <View style={styles.botonRegistrarme}>
           <TouchableOpacity onPress={handleCreatePaciente}>

@@ -22,17 +22,19 @@ const TTab = createMaterialTopTabNavigator();
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-function TabHistorial(){
-
+function TabHistorial({route}){
+  const { paciente } = route.params;
   return(
     <TTab.Navigator
-    tabBarOptions={{
-      style: { display: 'none' }, // Oculta la barra superior del Top Tab Navigator
-    }}
-  >
-    <TTab.Screen name="HistorialRegistros" component={HistorialRegistros} />
-    <TTab.Screen name="HistorialComentario" component={HistorialComentarios} />
-  </TTab.Navigator>
+      tabBarOptions={{
+        style: { display: 'none' }, // Oculta la barra superior del Top Tab Navigator
+      }}
+    >
+      <TTab.Screen name="HistorialRegistros">
+        {() => <HistorialRegistros paciente={paciente} />}
+      </TTab.Screen>
+      <TTab.Screen name="HistorialComentario" component={HistorialComentarios} />
+    </TTab.Navigator>
   );
 }
 
