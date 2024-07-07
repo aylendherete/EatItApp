@@ -1,50 +1,106 @@
-import React from 'react';
+import React , {useEffect, useState, useContext}from 'react';
 import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity,ScrollView
+  TouchableOpacity,FlatList,ScrollView
 } from 'react-native';
 
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
+import UserContext from '../../../context/userContext';
 
 const Tab = createMaterialTopTabNavigator();
 
 export const  DatosPaciente=(props)=>{
-    return(
-        <View style={styles.fondoVerde}>
-            
-            <View style={{flex:3}}>
-            
-                <View style={styles.container}>
-                    
-                <View style={{flex:4, justifyContent:"center"}}>
-                
-                <ScrollView>
+  const [registroPaciente, setRegistroPaciente] = useState(null);
+  const { user } = useContext(UserContext);
 
-                    <Text style={{color:"white", fontWeight:"200", fontSize:25, margin:10}}>Historial Comentarios</Text>
-                    
-                    <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
-                    <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
-                    <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
-                    <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
-                    <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
-                    <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
-                    <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
-                    <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
-                    <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
-                    
-                </ScrollView>
-                
-            </View>
-                </View>
-
-            </View>
+  const obtenerRegistros = async () => {
+    try {
+      console.log("Obteniendo registros para el usuario con id:", user.id); // Log adicional
+      const response = await fetch(`http://localhost:3000/paciente/getRegistros?id=${user.id}`);
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Datos obtenidos:", data); // Log adicional
+        setRegistroPaciente(data);
+     
         
-        </View>
-    );
+      } else {
+        console.log("Error en la respuesta del servidor:", response.status); // Log adicional
+      }
+    } catch (e) {
+      console.log('Error al obtener los registros del paciente:', e);
+    }
+  };
+
+
+  useEffect(() => {
+    obtenerRegistros();
+    
+  }, []);
+
+
+  useEffect(() => {
+    console.log("Registro Paciente actualizado:", registroPaciente);
+    // Aquí puedes realizar cualquier acción adicional basada en registroPaciente
+    
+  }, [registroPaciente]);
+  return(
+    <View style={styles.fondoVerde}>
+        
+      <View style={{flex:3}}>
+        
+      <View style={styles.container}>
+      <Text style={{ color: "white", fontWeight: "200", fontSize: 25, margin: 10 }}>Historial Comentarios</Text>
+
+      <ScrollView>
+ 
+      {registroPaciente && (
+        <>
+          <FlatList
+            data={registroPaciente.registrosAgua}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <View style={styles.itemContainer}>
+                <Text style={{color:"black", fontWeight:"500", fontSize:15}}>Vasos de agua: {item.cantidadVasos}, {item.cantidadVasos * 250}ml</Text>
+              </View>
+            )}
+          />
+
+          <FlatList
+            data={registroPaciente.registrosActividad}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <View style={styles.itemContainer}>
+                <Text style={{color:"black", fontWeight:"500", fontSize:15}}>Descripción: {item.descripcion}</Text>
+                <Text style={{color:"black", fontWeight:"500", fontSize:15}}>Hora de inicio: {item.horaInicio}</Text>
+                <Text style={{color:"black", fontWeight:"500", fontSize:15}}>Tiempo Total: {item.tiempoTotal}</Text>
+              </View>
+            )}
+          />
+
+          <FlatList
+            data={registroPaciente.registrosComida}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <View style={styles.itemContainer}>
+                <Text style={{color:"black", fontWeight:"500", fontSize:15}}>Descripción: {item.descripcion}</Text>
+                <Text style={{color:"black", fontWeight:"500", fontSize:15}}>Hora: {item.hora}</Text>
+              </View>
+            )}
+          />
+        </>
+      )}
+
+      </ScrollView>
+    </View>
+
+      </View>
+    
+    </View>
+  );
 
 }
 
@@ -77,5 +133,10 @@ const styles=StyleSheet.create({
       padding:15,
       margin:5,
       
-  }
+  }, itemContainer: {
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 10,
+    marginVertical: 5,
+  },
 })
