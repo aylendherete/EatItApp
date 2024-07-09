@@ -18,7 +18,7 @@ import { Dimensions } from 'react-native';
 export const EditarPeso=(props)=>{
   const { paciente } = props.route.params;
   const [pesos, setPesos] = useState([]); 
-
+  const [pesoACambiar,setPesoACambiar]=useState([])
 
 
   const data = {
@@ -49,7 +49,7 @@ export const EditarPeso=(props)=>{
       easing: Easing.linear,
       useNativeDriver: true,
     }).start(() => setShowAlert(false));
-    return(props.navigation.navigate('PerfilPaciente',{paciente}))
+    
   };
 
   const handleShowAlert=()=>{
@@ -58,11 +58,23 @@ export const EditarPeso=(props)=>{
     
   }
     
-  const handleSave = () => {
-    // Agrega aquí la lógica para guardar los cambios.
-    // Luego, cierra la alerta con una animación de salida.
-    fadeOut();
-    return(props.navigation.navigate('PerfilPaciente',{paciente}))
+  const handleSave = async() => {
+    try{
+      const response= await fetch('http://localhost:3000/pesoPaciente/createPesoPaciente',{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify({
+          id:paciente.id,
+          peso:pesoACambiar
+        })
+      })
+      fadeOut();
+      obtenerPesos()
+    }catch(e){
+      console.log(e)
+    }
   };
 
 
@@ -98,7 +110,7 @@ export const EditarPeso=(props)=>{
             <View>
                 <ScrollView>
                   <Text style={{color:"black", fontWeight:"bold", textAlign:"center", fontSize:20, margin:5}}>CAMBIAR PESO</Text>
-                  <TextInput keyboardType="decimal-pad" style ={styles.botonCambiarPaciente} placeholder="Peso actual 65kg" placeholderTextColor={"black"}></TextInput>
+                  <TextInput onChangeText={setPesoACambiar} keyboardType="decimal-pad" style ={styles.botonCambiarPaciente} placeholder={`Peso actual: ${pesos[pesos.length-1]}`} placeholderTextColor={"black"}></TextInput>
 
                   <LineChart
                     data={{
