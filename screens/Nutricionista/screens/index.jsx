@@ -9,6 +9,8 @@ import { EditarAntecedentes } from "./EditarAntecedentes";
 import { CalendarioNutricionista } from "./CalendarioNutricionista";
 import { HistorialComentarios} from "./HistorialComentarios";
 import { HistorialRegistros } from "./HistorialRegistros";
+import { AnalisisRegistroPacienteAgua } from "./AnalisisRegistroPacienteAgua";
+import { AnalisisRegistroPacienteActividad } from "./AnalisisRegistroPacienteActividad";
 
 export{NotificacionesPaciente,
     MisPacientes,
@@ -20,5 +22,7 @@ export{NotificacionesPaciente,
     EditarAntecedentes,
     CalendarioNutricionista,
     HistorialComentarios,
-    HistorialRegistros
+    HistorialRegistros,
+    AnalisisRegistroPacienteAgua,
+    AnalisisRegistroPacienteActividad
 }

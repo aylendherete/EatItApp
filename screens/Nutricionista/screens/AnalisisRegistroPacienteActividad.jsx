@@ -1,4 +1,4 @@
-import React, {useState,useRef, useEffect} from 'react';
+import React, {useState,useRef,useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -13,12 +13,10 @@ import {
 import { format } from 'date-fns';
 
 
-export const AnalisisRegistroPaciente=(props)=>{
-
+export const AnalisisRegistroPacienteActividad=(props)=>{
   const { idRegistro } = props.route.params;
   const [showAlert, setShowAlert] = useState(false);
   const opacity = useRef(new Animated.Value(0)).current;
-
   const [registro, setRegistro] = useState([]);
 
 
@@ -26,7 +24,7 @@ export const AnalisisRegistroPaciente=(props)=>{
     try {
 
       console.log("ID REGISTROOOOOO"+idRegistro)
-      let response = await fetch(`http://localhost:3000/registroComida/getRegistro?id=${idRegistro}`);
+      let response = await fetch(`http://localhost:3000/registroActividad/getRegistro?id=${idRegistro}`);
       if (response.ok) {
         let data = await response.json();
         setRegistro(data);
@@ -35,6 +33,7 @@ export const AnalisisRegistroPaciente=(props)=>{
       console.error('Error de red:', error);
     }
   }
+
 
   const fadeIn = () => {
     Animated.timing(opacity, {
@@ -67,11 +66,11 @@ export const AnalisisRegistroPaciente=(props)=>{
     fadeOut();
     return(props.navigation.navigate("NotificacionesNutricionista"))
   };
-    
 
   useEffect(() => {
     obtenerRegistro();
   }, []);
+    
     return(
         <View style={styles.fondoVerde}>
             <View>
@@ -80,22 +79,17 @@ export const AnalisisRegistroPaciente=(props)=>{
             <View style={{flex:4}}>
               <View>
                   <Text style={styles.textoNombreApellidoPaciente}>Nombre Apellido</Text>
-                  
+                 
               </View>
 
               <ScrollView>
                 <View > 
-                <Text style={styles.textoFechaRegistro}>{registro.hora}</Text>
-                  <Text style={styles.textoTipoRegistroPaciente}>Comida</Text>
+                <Text style={styles.textoFechaRegistro}>{registro.horaInicio}</Text>
+                  <Text style={styles.textoTipoRegistroPaciente}>Actividad</Text>
                   <View style={{ backgroundColor:"#52B69A", padding:25,textAlign:'center', margin:20, borderRadius:5}}>
-                    <Text style={styles.textoRegistroPaciente}>{registro.descripcion}</Text> 
-                    <View>
-                      <Image
-                        source={require('../../imgs/milanga.jpeg')}
-                        style={{alignSelf: 'center', width: 280, height: 200, borderWidth: 1,borderColor: 'black'}}
+                    <Text style={styles.textoRegistroPaciente}>Descripcion: {registro.descripcion} </Text> 
+                    <Text style={styles.textoRegistroPaciente}>Tiempo total (minutos): {registro.tiempoTotal}  </Text> 
 
-                      />
-                    </View> 
                   </View>
                 </View>
                 <View >
@@ -166,19 +160,19 @@ const styles=StyleSheet.create({
       fontWeight:"600"
     },
     textoTipoRegistroPaciente:{
-      fontSize:45,
+      fontSize:40,
       textAlign:"left",
       color:"#99D98C",
-      margin:10
+      margin:8
     },
     textoRegistroPaciente:{
       backgroundColor:"#52B69A",
       color:"black",
       fontWeight:"600",
-      padding:25,
+  
       textAlign:'center',
-      fontSize:15,
-      margin:20,
+      fontSize:18,
+      margin:10,
       borderRadius:5
     },
     inputComentarioRegistro:{

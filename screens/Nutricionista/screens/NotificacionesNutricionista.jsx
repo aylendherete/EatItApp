@@ -66,7 +66,6 @@ export const NotificacionesPaciente = (props) => {
       if (solicitud.ok ){
         console.log("se rechazó solicitud")
         await solicitud.json()
-        
         return props.navigation.navigate("NotificacionesNutricionista");
         
       }
@@ -99,6 +98,8 @@ export const NotificacionesPaciente = (props) => {
   useEffect(() => {
     obtenerNotificaciones();
   }, []);
+
+
 
   return (
     <View style={styles.fondoVerde}>
@@ -153,7 +154,7 @@ export const NotificacionesPaciente = (props) => {
             {item.idRegistroAguaPaciente && (
               <View>
                 <TouchableOpacity
-                  onPress={() => props.navigation.navigate('AnalisisRegistroPaciente')}
+                  onPress={() => props.navigation.navigate('AnalisisRegistroPacienteAgua', { idRegistro: item.idRegistroAguaPaciente })}
                   style={styles.botonNotificacion}
                 >
                   <Text style={styles.textoBotonNotificacion}>
@@ -165,7 +166,7 @@ export const NotificacionesPaciente = (props) => {
             {item.idRegistroActividadPaciente && (
               <View>
                 <TouchableOpacity
-                  onPress={() => props.navigation.navigate('AnalisisRegistroPaciente')}
+                  onPress={() => props.navigation.navigate('AnalisisRegistroPacienteActividad',{ idRegistro: item.idRegistroPaciente })}
                   style={styles.botonNotificacion}
                 >
                   <Text style={styles.textoBotonNotificacion}>
@@ -177,7 +178,7 @@ export const NotificacionesPaciente = (props) => {
             {item.idRegistroComidaPaciente && (
               <View>
                 <TouchableOpacity
-                  onPress={() => props.navigation.navigate('AnalisisRegistroPaciente')}
+                  onPress={() => props.navigation.navigate('AnalisisRegistroPaciente', { idRegistro: item.idRegistroComidaPaciente })}
                   style={styles.botonNotificacion}
                 >
                   <Text style={styles.textoBotonNotificacion}>

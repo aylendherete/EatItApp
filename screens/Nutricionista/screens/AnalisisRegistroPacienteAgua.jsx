@@ -13,12 +13,10 @@ import {
 import { format } from 'date-fns';
 
 
-export const AnalisisRegistroPaciente=(props)=>{
-
+export const AnalisisRegistroPacienteAgua=(props)=>{
   const { idRegistro } = props.route.params;
   const [showAlert, setShowAlert] = useState(false);
   const opacity = useRef(new Animated.Value(0)).current;
-
   const [registro, setRegistro] = useState([]);
 
 
@@ -26,7 +24,7 @@ export const AnalisisRegistroPaciente=(props)=>{
     try {
 
       console.log("ID REGISTROOOOOO"+idRegistro)
-      let response = await fetch(`http://localhost:3000/registroComida/getRegistro?id=${idRegistro}`);
+      let response = await fetch(`http://localhost:3000/registroAgua/getRegistro?id=${idRegistro}`);
       if (response.ok) {
         let data = await response.json();
         setRegistro(data);
@@ -35,6 +33,7 @@ export const AnalisisRegistroPaciente=(props)=>{
       console.error('Error de red:', error);
     }
   }
+
 
   const fadeIn = () => {
     Animated.timing(opacity, {
@@ -67,11 +66,15 @@ export const AnalisisRegistroPaciente=(props)=>{
     fadeOut();
     return(props.navigation.navigate("NotificacionesNutricionista"))
   };
-    
+
+  const formatearHora=(hora)=>{
+    return format(new Date(hora), "dd/MM/yyyy HH:mm").toString();
+  }
 
   useEffect(() => {
     obtenerRegistro();
   }, []);
+    
     return(
         <View style={styles.fondoVerde}>
             <View>
@@ -80,22 +83,16 @@ export const AnalisisRegistroPaciente=(props)=>{
             <View style={{flex:4}}>
               <View>
                   <Text style={styles.textoNombreApellidoPaciente}>Nombre Apellido</Text>
-                  
+                 
               </View>
 
               <ScrollView>
                 <View > 
                 <Text style={styles.textoFechaRegistro}>{registro.hora}</Text>
-                  <Text style={styles.textoTipoRegistroPaciente}>Comida</Text>
-                  <View style={{ backgroundColor:"#52B69A", padding:25,textAlign:'center', margin:20, borderRadius:5}}>
-                    <Text style={styles.textoRegistroPaciente}>{registro.descripcion}</Text> 
-                    <View>
-                      <Image
-                        source={require('../../imgs/milanga.jpeg')}
-                        style={{alignSelf: 'center', width: 280, height: 200, borderWidth: 1,borderColor: 'black'}}
-
-                      />
-                    </View> 
+                  <Text style={styles.textoTipoRegistroPaciente}>Agua</Text>
+                  <View style={{ backgroundColor:"#52B69A", padding:15,textAlign:'center', margin:10, borderRadius:5}}>
+                    <Text style={styles.textoRegistroPaciente}>Cantidad de vasos: {registro.cantidadVasos} {"("} {registro.cantidadVasos*250} ml {")"} </Text> 
+                    
                   </View>
                 </View>
                 <View >
@@ -175,10 +172,10 @@ const styles=StyleSheet.create({
       backgroundColor:"#52B69A",
       color:"black",
       fontWeight:"600",
-      padding:25,
+      padding:15,
       textAlign:'center',
-      fontSize:15,
-      margin:20,
+      fontSize:20,
+      margin:10,
       borderRadius:5
     },
     inputComentarioRegistro:{

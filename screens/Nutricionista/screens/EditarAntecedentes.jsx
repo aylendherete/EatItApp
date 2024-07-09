@@ -11,8 +11,10 @@ import {
 } from 'react-native';
 
 export const EditarAntecedentes=(props)=>{
+  const { paciente } = props.route.params;
   const [showAlert, setShowAlert] = useState(false);
   const opacity = useRef(new Animated.Value(0)).current;
+  const [antecedentes,setAntecedentes]=React.useState("");
 
 
   const fadeIn = () => {
@@ -31,7 +33,7 @@ export const EditarAntecedentes=(props)=>{
       easing: Easing.linear,
       useNativeDriver: true,
     }).start(() => setShowAlert(false));
-    return(props.navigation.navigate('PerfilPaciente'))
+    return(props.navigation.navigate('PerfilPaciente',{paciente}))
   };
 
   const handleShowAlert=()=>{
@@ -40,11 +42,22 @@ export const EditarAntecedentes=(props)=>{
     
   }
     
-  const handleSave = () => {
-    // Agrega aquí la lógica para guardar los cambios.
-    // Luego, cierra la alerta con una animación de salida.
-    fadeOut();
-    return(props.navigation.navigate('PerfilPaciente'))
+  const handleSave =async () => {
+    try{
+      const response = await fetch(`http://localhost:3000/paciente/updateAntecedentes?id=${paciente.id}&antecedentes=${antecedentes}`, {
+        method: 'POST',
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log("SE ACTUALIZÓ PACIENTE",paciente.id)
+        fadeOut();
+        return(props.navigation.navigate('PerfilPaciente',{paciente}))
+    
+      }
+
+    }catch(e){
+      console.log(e);
+    }
   };
     return(
         <View style={styles.fondoVerde}>
@@ -53,11 +66,11 @@ export const EditarAntecedentes=(props)=>{
           </View>
           <View style={{flex:4}}>
           <View>
-              <Text style={styles.textoNombreApellidoPaciente}>Nombre Apellido</Text>
+              <Text style={styles.textoNombreApellidoPaciente}>{paciente.nombre} {paciente.apellido}</Text>
           </View>
           <View>
               <Text style={{color:"black", fontWeight:"bold", textAlign:"center", fontSize:20, margin:15}}>CAMBIAR ANTECEDENTES</Text>
-              <TextInput  style ={styles.botonCambiarPaciente} placeholder="Antecedes actuales: ninguno" placeholderTextColor={"black"}></TextInput>
+              <TextInput  style ={styles.botonCambiarPaciente} onChangeText={setAntecedentes}  placeholder={`Antecedentes: ${paciente.antecedentes}`} placeholderTextColor={"black"}></TextInput>
               
           </View>
           <TouchableOpacity onPress={handleShowAlert} style={{backgroundColor:"#52B69A",borderRadius:30, padding:20, margin:25}}><Text style={{fontSize:25,textAlign:"center", fontWeight:"bold", color:"white"}}>Guardar cambios</Text></TouchableOpacity>

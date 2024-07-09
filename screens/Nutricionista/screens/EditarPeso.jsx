@@ -1,4 +1,4 @@
-import React ,{useState, useRef} from 'react';
+import React ,{useState, useRef, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -16,6 +16,10 @@ import { Dimensions } from 'react-native';
 
 
 export const EditarPeso=(props)=>{
+  const { paciente } = props.route.params;
+  const [pesos, setPesos] = useState([]); 
+
+
 
   const data = {
     datasets: [
@@ -45,7 +49,7 @@ export const EditarPeso=(props)=>{
       easing: Easing.linear,
       useNativeDriver: true,
     }).start(() => setShowAlert(false));
-    return(props.navigation.navigate('PerfilPaciente'))
+    return(props.navigation.navigate('PerfilPaciente',{paciente}))
   };
 
   const handleShowAlert=()=>{
@@ -58,8 +62,30 @@ export const EditarPeso=(props)=>{
     // Agrega aquí la lógica para guardar los cambios.
     // Luego, cierra la alerta con una animación de salida.
     fadeOut();
-    return(props.navigation.navigate('PerfilPaciente'))
+    return(props.navigation.navigate('PerfilPaciente',{paciente}))
   };
+
+
+
+  const obtenerPesos = async (id) => {
+    try {
+      let response = await fetch(`http://localhost:3000/paciente/getRegistroPesos?id=${paciente.id}`);
+      if (response.ok) {
+        let data = await response.json();
+        const pesosArray = data.map(registro => registro.peso); 
+        setPesos(pesosArray);
+      } else {
+        console.error('Error al obtener registros de peso:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error de red:', error);
+    }
+  };
+  useEffect(() => {
+   
+    obtenerPesos(); // Obtener pesos al montar el componente
+  }, []);
+
     return(
         <View style={styles.fondoVerde}>
             <View>
@@ -75,7 +101,13 @@ export const EditarPeso=(props)=>{
                   <TextInput keyboardType="decimal-pad" style ={styles.botonCambiarPaciente} placeholder="Peso actual 65kg" placeholderTextColor={"black"}></TextInput>
 
                   <LineChart
-                    data={data}
+                    data={{
+                      datasets: [
+                        {
+                          data: pesos.length ? pesos : [0], // Asegúrate de que siempre haya datos
+                        },
+                      ],
+                    }}
                     width="300"
                     height={220}
                     yAxisSuffix="kg"

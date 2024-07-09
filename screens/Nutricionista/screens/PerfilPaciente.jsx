@@ -66,18 +66,28 @@ export const PerfilPaciente=(props)=>{
     
   }
 
-  const handleSaveEliminarPaciente = () => {
-    // Agrega aquí la lógica para guardar los cambios.
-    // Luego, cierra la alerta con una animación de salida.
-    fadeOutEliminarPaciente();
-    return(props.navigation.navigate('MisPacientes'))
+  const handleSaveEliminarPaciente = async() => {
+
+    try{
+      const response = await fetch(`http://localhost:3000/paciente/deletePaciente?id=${paciente.id}`, {
+        method: 'POST',
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log("SE DESVINCULÓ PACIENTE",paciente.id)
+        fadeOutEliminarPaciente();
+        return(props.navigation.navigate('MisPacientes'))
+      }
+
+    }catch(e){
+      console.log(e);
+    }
   };
     
   const handleSave = () => {
-    // Agrega aquí la lógica para guardar los cambios.
-    // Luego, cierra la alerta con una animación de salida.
     fadeOut();
     return(props.navigation.navigate('MisPacientes'))
+    
   };
 
 
@@ -93,9 +103,9 @@ export const PerfilPaciente=(props)=>{
             </View>
             <ScrollView>
               <View>
-                  <View><TouchableOpacity onPress={()=>props.navigation.navigate('EditarPeso')} style={styles.botonDescripcionPaciente}><Text style={styles.textoDescripcionPaciente}>Peso actual</Text></TouchableOpacity></View>
-                  <View><TouchableOpacity onPress={()=>props.navigation.navigate('EditarObjetivo')} style={styles.botonDescripcionPaciente}><Text style={styles.textoDescripcionPaciente}>Objetivo :{paciente.objetivo}</Text></TouchableOpacity></View>
-                  <View><TouchableOpacity onPress={()=>props.navigation.navigate('EditarAntecedentes')} style={styles.botonDescripcionPaciente}><Text style={styles.textoDescripcionPaciente}>Antecedentes {paciente.antecedentes}</Text></TouchableOpacity></View>
+                  <View><TouchableOpacity onPress={()=>props.navigation.navigate('EditarPeso',{paciente})} style={styles.botonDescripcionPaciente}><Text style={styles.textoDescripcionPaciente}>Peso actual</Text></TouchableOpacity></View>
+                  <View><TouchableOpacity onPress={()=>props.navigation.navigate('EditarObjetivo',{paciente})} style={styles.botonDescripcionPaciente}><Text style={styles.textoDescripcionPaciente}>Objetivo :{paciente.objetivo}</Text></TouchableOpacity></View>
+                  <View><TouchableOpacity onPress={()=>props.navigation.navigate('EditarAntecedentes',{paciente})} style={styles.botonDescripcionPaciente}><Text style={styles.textoDescripcionPaciente}>Antecedentes {paciente.antecedentes}</Text></TouchableOpacity></View>
                   <View><TouchableOpacity onPress={()=>props.navigation.navigate('TabHistorial', { paciente })} style={styles.botonDescripcionPaciente}><Text style={styles.textoDescripcionPaciente}>Historial</Text></TouchableOpacity></View>
 
 

@@ -10,8 +10,12 @@ import {
 } from 'react-native';
 
 export const EditarObjetivo=(props)=>{
+
+  const { paciente } = props.route.params;
   const [showAlert, setShowAlert] = useState(false);
   const opacity = useRef(new Animated.Value(0)).current;
+
+  const [objetivo,setObjetivo]=React.useState("");
 
 
   const fadeIn = () => {
@@ -30,7 +34,7 @@ export const EditarObjetivo=(props)=>{
       easing: Easing.linear,
       useNativeDriver: true,
     }).start(() => setShowAlert(false));
-    return(props.navigation.navigate('PerfilPaciente'))
+    return(props.navigation.navigate('PerfilPaciente',{paciente}))
   };
 
   const handleShowAlert=()=>{
@@ -39,54 +43,66 @@ export const EditarObjetivo=(props)=>{
     
   }
     
-  const handleSave = () => {
-    // Agrega aquí la lógica para guardar los cambios.
-    // Luego, cierra la alerta con una animación de salida.
-    fadeOut();
-    return(props.navigation.navigate('PerfilPaciente'))
+  const handleSave = async() => {
+
+    try{
+      const response = await fetch(`http://localhost:3000/paciente/updateObjetivo?id=${paciente.id}&objetivo=${objetivo}`, {
+        method: 'POST',
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log("SE ACTUALIZÓ PACIENTE",paciente.id)
+        fadeOut();
+        return(props.navigation.navigate('PerfilPaciente',{paciente}))
+    
+      }
+
+    }catch(e){
+      console.log(e);
+    }
   };
-    
-    return(
-        <View style={styles.fondoVerde}>
-            <View>
-            <Text style={styles.bannerNutricionista}>Nutricionista</Text>
+    console.log("PACIENTEEEEEEEEEE",paciente)
+  return(
+      <View style={styles.fondoVerde}>
+          <View>
+          <Text style={styles.bannerNutricionista}>Nutricionista</Text>
+          </View>
+          <View style={{flex:4}}>
+          <View>
+              <Text style={styles.textoNombreApellidoPaciente}>{paciente.nombre} {paciente.apellido}</Text>
+          </View>
+          <View>
+              <Text style={{color:"black", fontWeight:"bold", textAlign:"center", fontSize:20, margin:15}}>CAMBIAR OBJETIVO</Text>
+              <TextInput  style ={styles.botonCambiarPaciente} onChangeText={setObjetivo}  placeholder={`Objetivo actual: ${paciente.objetivo}`} placeholderTextColor={"black"}></TextInput>
+              
+          </View>
+          <TouchableOpacity onPress={handleShowAlert} style={{backgroundColor:"#52B69A",borderRadius:30, padding:20, margin:25}}><Text style={{fontSize:25,textAlign:"center", fontWeight:"bold", color:"white"}}>Guardar cambios</Text></TouchableOpacity>
+          <Modal visible={showAlert} transparent animationType="none">
+            <View style={{flex:1, justifyContent:"center", alignContent:"center",alignItems: 'center', backgroundColor: 'rgba(0, 0, 0)'}}>
+              <Animated.View
+              style={{
+              backgroundColor:"#76C893",
+              padding: 25,
+              borderRadius: 15,
+              opacity: opacity,
+              } }
+              >
+                <Text  style={{fontSize:25, color:"white", margin:10}}>¿Deseas guardar cambios?</Text>
+                <TouchableOpacity onPress={handleSave}>
+                  <Text style={{fontSize:20, color:"white", backgroundColor:"#52B69A", textAlign:"center", padding:10, borderRadius:15, margin:10}}>Guardar</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={fadeOut}>
+                  <Text style={{fontSize:20, color:"white", backgroundColor:"#52B69A", textAlign:"center", padding:10, borderRadius:15, margin:10}}>Cancelar</Text>
+                </TouchableOpacity>
+              </Animated.View>
             </View>
-            <View style={{flex:4}}>
-            <View>
-                <Text style={styles.textoNombreApellidoPaciente}>Nombre Apellido</Text>
-            </View>
-            <View>
-                <Text style={{color:"black", fontWeight:"bold", textAlign:"center", fontSize:20, margin:15}}>CAMBIAR OBJETIVO</Text>
-                <TextInput  style ={styles.botonCambiarPaciente} placeholder="Objetivo actual: bajar peso" placeholderTextColor={"black"}></TextInput>
-                
-            </View>
-            <TouchableOpacity onPress={handleShowAlert} style={{backgroundColor:"#52B69A",borderRadius:30, padding:20, margin:25}}><Text style={{fontSize:25,textAlign:"center", fontWeight:"bold", color:"white"}}>Guardar cambios</Text></TouchableOpacity>
-            <Modal visible={showAlert} transparent animationType="none">
-              <View style={{flex:1, justifyContent:"center", alignContent:"center",alignItems: 'center', backgroundColor: 'rgba(0, 0, 0)'}}>
-                <Animated.View
-                style={{
-                backgroundColor:"#76C893",
-                padding: 25,
-                borderRadius: 15,
-                opacity: opacity,
-                } }
-                >
-                  <Text  style={{fontSize:25, color:"white", margin:10}}>¿Deseas guardar cambios?</Text>
-                  <TouchableOpacity onPress={handleSave}>
-                    <Text style={{fontSize:20, color:"white", backgroundColor:"#52B69A", textAlign:"center", padding:10, borderRadius:15, margin:10}}>Guardar</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={fadeOut}>
-                    <Text style={{fontSize:20, color:"white", backgroundColor:"#52B69A", textAlign:"center", padding:10, borderRadius:15, margin:10}}>Cancelar</Text>
-                  </TouchableOpacity>
-                </Animated.View>
-              </View>
-            </Modal>
-            </View>
-        </View>
-        
-        
-        );
-    
+          </Modal>
+          </View>
+      </View>
+      
+      
+      );
+  
 }
 
 

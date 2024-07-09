@@ -14,7 +14,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Image } from 'react-native';
 import {Icon} from 'react-native-elements';
-import { AnalisisRegistroPaciente, CalendarioNutricionista, EditarAntecedentes, EditarObjetivo, EditarPeso, MiPerfil, MisPacientes, NotificacionesPaciente, PerfilPaciente } from './screens';
+import { AnalisisRegistroPaciente,AnalisisRegistroPacienteActividad,AnalisisRegistroPacienteAgua, CalendarioNutricionista, EditarAntecedentes, EditarObjetivo, EditarPeso, MiPerfil, MisPacientes, NotificacionesPaciente, PerfilPaciente } from './screens';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { HistorialComentarios, HistorialRegistros} from './screens';
 
@@ -56,7 +56,8 @@ function StackNavigatorNotificaciones(){
     <Stack.Navigator>
         <Stack.Screen name="NotificacionesNutricionista" component={NotificacionesPaciente} options={{headerShown:false}}></Stack.Screen>
         <Stack.Screen name="AnalisisRegistroPaciente" component={AnalisisRegistroPaciente} options={{headerShown:false}}></Stack.Screen>
-        
+        <Stack.Screen name="AnalisisRegistroPacienteAgua" component={AnalisisRegistroPacienteAgua} options={{headerShown:false}}></Stack.Screen>
+        <Stack.Screen name="AnalisisRegistroPacienteActividad" component={AnalisisRegistroPacienteActividad} options={{headerShown:false}}></Stack.Screen>
     </Stack.Navigator>
   );
 }
