@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,17 +7,21 @@ import {
   ScrollView
 } from 'react-native';
 
+import UserContext from '../../../context/userContext';
+
 export const MiPerfil=(props)=>{
+  const { user } = useContext(UserContext);
+
     return(
         <View style={styles.fondoVerde}>
         <View>
           <Text style={styles.bannerNutricionista}>Nutricionista</Text>
         </View>
         <View style={{flex:4, justifyContent:"center"}}>
-            <Text style={styles.textoNombreApellidoPerfil}>Nombre Apellido</Text>
-            <Text style={styles.textoDescripcionPerfil}>Correo electronico: aaaa@gmail.com</Text>
-            <Text style={styles.textoDescripcionPerfil}>Matricula Nacional: 111111</Text>
-            <Text style={styles.textoDescripcionPerfil}>Telefono: 222222</Text>
+            <Text style={styles.textoNombreApellidoPerfil}>{user.nombre} {user.apellido}</Text>
+            <Text style={styles.textoDescripcionPerfil}>Correo electronico: {user.email}</Text>
+            <Text style={styles.textoDescripcionPerfil}>Matricula Nacional:{user.matriculaNacional} </Text>
+            <Text style={styles.textoDescripcionPerfil}>Telefono: {user.telefono}</Text>
             <TouchableOpacity  onPress={()=>props.navigation.navigate('Inicio')}><Text style={styles.botonCerrarSesion}>Cerrar Sesion</Text></TouchableOpacity>
         </View>
       </View>

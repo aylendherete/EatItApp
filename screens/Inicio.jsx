@@ -36,9 +36,12 @@ export const Inicio=(props, {children})=> {
 
         const userData={
           id: data.id,
+          nombre:data.nombre,
+          apellido:data.apellido,
           email:email,
           contrasenia:contrasenia,
-          matriculaNacionalNutricionista:data.matriculaNacionalNutricionista
+          matriculaNacionalNutricionista:data.matriculaNacionalNutricionista,
+          telefono:data.telefono
         }
 
         setUser(userData)
@@ -65,8 +68,11 @@ export const Inicio=(props, {children})=> {
       if (data!==null){
         const userData={
           matriculaNacional: data.matriculaNacional,
+          nombre:data.nombre,
+          apellido:data.apellido,
           email:email,
-          contrasenia:contrasenia
+          contrasenia:contrasenia,
+          telefono:data.telefono
         }
         setUser(userData)
         return props.navigation.navigate("Nutricionista");
