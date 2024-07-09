@@ -18,7 +18,7 @@ export const AnalisisRegistroPacienteAgua=(props)=>{
   const [showAlert, setShowAlert] = useState(false);
   const opacity = useRef(new Animated.Value(0)).current;
   const [registro, setRegistro] = useState([]);
-
+  const[dateTime,setDateTime]=useState(null)
 
   const obtenerRegistro=async()=>{
     try {
@@ -28,6 +28,7 @@ export const AnalisisRegistroPacienteAgua=(props)=>{
       if (response.ok) {
         let data = await response.json();
         setRegistro(data);
+        setDateTime(format(data.hora,'dd/MM/yyyy HH:mm'))
       }
     } catch (error) {
       console.error('Error de red:', error);
@@ -67,9 +68,6 @@ export const AnalisisRegistroPacienteAgua=(props)=>{
     return(props.navigation.navigate("NotificacionesNutricionista"))
   };
 
-  const formatearHora=(hora)=>{
-    return format(new Date(hora), "dd/MM/yyyy HH:mm").toString();
-  }
 
   useEffect(() => {
     obtenerRegistro();
@@ -88,7 +86,7 @@ export const AnalisisRegistroPacienteAgua=(props)=>{
 
               <ScrollView>
                 <View > 
-                <Text style={styles.textoFechaRegistro}>{registro.hora}</Text>
+                <Text style={styles.textoFechaRegistro}>{dateTime}</Text>
                   <Text style={styles.textoTipoRegistroPaciente}>Agua</Text>
                   <View style={{ backgroundColor:"#52B69A", padding:15,textAlign:'center', margin:10, borderRadius:5}}>
                     <Text style={styles.textoRegistroPaciente}>Cantidad de vasos: {registro.cantidadVasos} {"("} {registro.cantidadVasos*250} ml {")"} </Text> 

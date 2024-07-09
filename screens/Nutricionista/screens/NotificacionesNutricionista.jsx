@@ -166,7 +166,7 @@ export const NotificacionesPaciente = (props) => {
             {item.idRegistroActividadPaciente && (
               <View>
                 <TouchableOpacity
-                  onPress={() => props.navigation.navigate('AnalisisRegistroPacienteActividad',{ idRegistro: item.idRegistroPaciente })}
+                  onPress={() => props.navigation.navigate('AnalisisRegistroPacienteActividad',{ idRegistro: item.idRegistroActividadPaciente })}
                   style={styles.botonNotificacion}
                 >
                   <Text style={styles.textoBotonNotificacion}>

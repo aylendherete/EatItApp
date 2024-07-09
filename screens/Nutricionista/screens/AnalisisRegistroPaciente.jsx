@@ -18,7 +18,7 @@ export const AnalisisRegistroPaciente=(props)=>{
   const { idRegistro } = props.route.params;
   const [showAlert, setShowAlert] = useState(false);
   const opacity = useRef(new Animated.Value(0)).current;
-
+  const[dateTime,setDateTime]=useState(null)
   const [registro, setRegistro] = useState([]);
 
 
@@ -30,6 +30,7 @@ export const AnalisisRegistroPaciente=(props)=>{
       if (response.ok) {
         let data = await response.json();
         setRegistro(data);
+        setDateTime(format(data.hora,'dd/MM/yyyy HH:mm'))
       }
     } catch (error) {
       console.error('Error de red:', error);
@@ -68,7 +69,7 @@ export const AnalisisRegistroPaciente=(props)=>{
     return(props.navigation.navigate("NotificacionesNutricionista"))
   };
     
-
+  console.log(registro.foto)
   useEffect(() => {
     obtenerRegistro();
   }, []);
@@ -85,16 +86,15 @@ export const AnalisisRegistroPaciente=(props)=>{
 
               <ScrollView>
                 <View > 
-                <Text style={styles.textoFechaRegistro}>{registro.hora}</Text>
+                <Text style={styles.textoFechaRegistro}>{dateTime}</Text>
                   <Text style={styles.textoTipoRegistroPaciente}>Comida</Text>
                   <View style={{ backgroundColor:"#52B69A", padding:25,textAlign:'center', margin:20, borderRadius:5}}>
                     <Text style={styles.textoRegistroPaciente}>{registro.descripcion}</Text> 
                     <View>
-                      <Image
-                        source={require('../../imgs/milanga.jpeg')}
-                        style={{alignSelf: 'center', width: 280, height: 200, borderWidth: 1,borderColor: 'black'}}
 
-                      />
+                    {registro.foto&&
+                      <View style={{alignItems:"center", justifyContent:"center"}}>
+                      <Image source={{uri:(registro.foto)}} style={{alignSelf: 'center', width: 280, height: 200, borderWidth: 1,borderColor: 'black'}}/></View>} 
                     </View> 
                   </View>
                 </View>

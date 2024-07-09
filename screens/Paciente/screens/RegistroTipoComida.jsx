@@ -25,6 +25,7 @@ export const RegistroTipoComida=(props)=>{
   const [showAlertImage, setShowAlertImage] = useState(false);
   const opacity = useRef(new Animated.Value(0)).current;
   const [descripcion,setDescripcion]=React.useState("");
+  [pickedImageURI,setPickedImageURI]=useState(null);
   
   const [showTick, setShowTick] = useState(false);
 
@@ -41,8 +42,8 @@ export const RegistroTipoComida=(props)=>{
           idUsuario:user.id,
           descripcion:descripcion,
           matriculaNacional:user.matriculaNacionalNutricionista,
-          hora:date
-          
+          hora:date,
+          foto:pickedImageURI
         })
       });
     
@@ -109,7 +110,6 @@ export const RegistroTipoComida=(props)=>{
     return `${hora}:${minutos < 10 ? '0' : ''}${minutos}`;
   };
   
-  [pickedImageURI,setPickedImageURI]=useState(null);
 
   const handlePickImage=async()=>{
     
