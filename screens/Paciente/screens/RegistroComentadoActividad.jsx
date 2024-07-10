@@ -10,14 +10,14 @@ import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import { format } from 'date-fns';
 
 
-export const RegistroComentado =(props)=>{
+export const RegistroComentadoActividad =(props)=>{
 
   const [comentarios, setComentarios] = useState([]);
   const { registro } = props.route.params;
 
   const obtenerComentarios = async () => {
     try {
-      let response = await fetch(`http://localhost:3000/comentario/getComentariosRegistroComida?idRegistro=${registro.id}`);
+      let response = await fetch(`http://localhost:3000/comentario/getComentariosRegistroActividad?idRegistro=${registro.id}`);
       if (response.ok) {
         let data = await response.json();
         setComentarios(data);
@@ -40,20 +40,15 @@ export const RegistroComentado =(props)=>{
             <View style={{flex:4}}>
               <View>
                  
-                  <Text style={styles.textoFechaRegistro}>Registros del día  {format(registro.hora, 'dd/MM/yyyy HH:mm')}</Text>
+                  <Text style={styles.textoFechaRegistro}>Registros del día  {format(registro.horaInicio, 'dd/MM/yyyy HH:mm')}</Text>
               </View>
 
               <ScrollView>
                 <View > 
-                  <Text style={styles.textoTipoRegistroPaciente}>Comida</Text>
+                  <Text style={styles.textoTipoRegistroPaciente}>Actividad</Text>
                   <View style={{ backgroundColor:"#52B69A", padding:25,textAlign:'center', margin:20, borderRadius:5}}>
                     <Text style={styles.textoRegistroPaciente}>{registro.descripcion}</Text> 
-                    <View>
-                    {registro.foto&&
-                      <View style={{alignItems:"center", justifyContent:"center"}}>
-                      <Image source={{uri:(registro.foto)}} style={{alignSelf: 'center', width: 280, height: 200, borderWidth: 1,borderColor: 'black'}}/></View>} 
-                 
-                    </View> 
+                    <Text style={styles.textoRegistroPaciente}>{registro.tiempoTotal}</Text> 
                   </View>
     
                 </View>

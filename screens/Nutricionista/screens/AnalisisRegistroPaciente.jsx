@@ -1,4 +1,4 @@
-import React, {useState,useRef, useEffect} from 'react';
+import React, {useState,useRef, useEffect,useContext} from 'react';
 import {
   StyleSheet,
   Text,
@@ -12,14 +12,16 @@ import {
 
 import { format } from 'date-fns';
 
+import UserContext from '../../../context/userContext';
 
 export const AnalisisRegistroPaciente=(props)=>{
-
+  const { user } = useContext(UserContext);
   const { idRegistro } = props.route.params;
   const [showAlert, setShowAlert] = useState(false);
   const opacity = useRef(new Animated.Value(0)).current;
   const[dateTime,setDateTime]=useState(null)
   const [registro, setRegistro] = useState([]);
+  const[comentario,setComentario]=useState("");
 
 
   const obtenerRegistro=async()=>{
@@ -62,13 +64,34 @@ export const AnalisisRegistroPaciente=(props)=>{
     
   }
     
-  const handleSave = () => {
-    // Agrega aquí la lógica para guardar los cambios.
-    // Luego, cierra la alerta con una animación de salida.
-    fadeOut();
-    return(props.navigation.navigate("NotificacionesNutricionista"))
-  };
+  const handleSave = async() => {
+    try{
+      let response= await fetch( "http://localhost:3000/comentario/createComentarioRegistroComida",{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify({
+          comentario:comentario,
+          matriculaNacional:user.matriculaNacional,
+          idRegistro:idRegistro,
+          idUsuario:(registro.pacienteId)
+          
+        })
+      });
+
+      console.log("//////"+registro.pacienteId)
+      if (response.ok){
+        console.log("se comentó registro")
+        fadeOut();
+        return(props.navigation.navigate("NotificacionesNutricionista"))
+      }
+    }catch(e){
+      console.log(e)
+    }
     
+  };
+  console.log("//////"+registro.pacienteId)
   console.log(registro.foto)
   useEffect(() => {
     obtenerRegistro();
@@ -99,7 +122,7 @@ export const AnalisisRegistroPaciente=(props)=>{
                   </View>
                 </View>
                 <View >
-                  <TextInput style={styles.inputComentarioRegistro} placeholderTextColor="black" placeholder='Añadir comentario'></TextInput>
+                  <TextInput onChangeText={setComentario} style={styles.inputComentarioRegistro} placeholderTextColor="black" placeholder='Añadir comentario'></TextInput>
                 </View>
                 <TouchableOpacity onPress={handleShowAlert} style={{backgroundColor:"#52B69A",borderRadius:30, padding:20, margin:25}}><Text style={{fontSize:25,textAlign:"center", fontWeight:"bold", color:"white"}}>Guardar cambios</Text></TouchableOpacity>
                 

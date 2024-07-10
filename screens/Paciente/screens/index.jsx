@@ -9,6 +9,9 @@ import { RegistroComentado } from "./RegistroComentado";
 import { TurnosPaciente } from "./TurnosPaciente";
 import { ResumenPaciente } from "./ResumenPaciente";
 import { DatosPaciente } from "./DatosPaciente";
+import { RegistroComentadoActividad } from "./RegistroComentadoActividad";
+import { RegistroComentadoAgua } from "./RegistroComentadoAgua";
+
 export{
     RegistroComida,
     NotificacionesPaciente,
@@ -20,5 +23,7 @@ export{
     RegistroComentado,
     TurnosPaciente,
     ResumenPaciente,
-    DatosPaciente
+    DatosPaciente,
+    RegistroComentadoActividad,
+    RegistroComentadoAgua
 }

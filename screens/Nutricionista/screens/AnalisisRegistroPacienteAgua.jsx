@@ -19,6 +19,7 @@ export const AnalisisRegistroPacienteAgua=(props)=>{
   const opacity = useRef(new Animated.Value(0)).current;
   const [registro, setRegistro] = useState([]);
   const[dateTime,setDateTime]=useState(null)
+  const[comentario,setComentario]=useState("");
 
   const obtenerRegistro=async()=>{
     try {
@@ -61,11 +62,30 @@ export const AnalisisRegistroPacienteAgua=(props)=>{
     
   }
     
-  const handleSave = () => {
-    // Agrega aquí la lógica para guardar los cambios.
-    // Luego, cierra la alerta con una animación de salida.
-    fadeOut();
-    return(props.navigation.navigate("NotificacionesNutricionista"))
+  const handleSave =async () => {
+    try{
+      let response= await fetch( "http://localhost:3000/comentario/createComentarioRegistroAgua",{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify({
+          comentario:comentario,
+          idRegistro:idRegistro,
+          idUsuario:(registro.pacienteId)
+          
+        })
+      });
+
+      console.log("//////"+registro.pacienteId)
+      if (response.ok){
+        console.log("se comentó registro")
+        fadeOut();
+        return(props.navigation.navigate("NotificacionesNutricionista"))
+      }
+    }catch(e){
+      console.log(e)
+    }
   };
 
 

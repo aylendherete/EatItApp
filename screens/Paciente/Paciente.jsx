@@ -10,7 +10,7 @@ import 'react-native-gesture-handler';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { CalendarioPaciente, MiPerfil, NotificacionesPaciente, RegistroComentado, RegistroComida, RegistroTipoActividad, RegistroTipoAgua, RegistroTipoComida, TurnosPaciente, DatosPaciente } from './screens';
+import { CalendarioPaciente, MiPerfil, NotificacionesPaciente, RegistroComentado, RegistroComida, RegistroTipoActividad, RegistroTipoAgua, RegistroTipoComida, TurnosPaciente, DatosPaciente, RegistroComentadoActividad, RegistroComentadoAgua } from './screens';
 import { Image,StyleSheet,View,Text } from 'react-native';
 import { Screen } from 'react-native-screens';
 
@@ -47,6 +47,8 @@ function StackNavigationNotificaciones(){
     <Stack.Navigator>
       <Stack.Screen name="NotificacionesPaciente" component={NotificacionesPaciente} options={{headerShown:false}}/>
       <Stack.Screen name="RegistroComentado" component={RegistroComentado} options={{headerShown:false}}/>
+      <Stack.Screen name="RegistroComentadoActividad" component={RegistroComentadoActividad} options={{headerShown:false}}/>
+      <Stack.Screen name="RegistroComentadoAgua" component={RegistroComentadoAgua} options={{headerShown:false}}/>
     </Stack.Navigator>
   )
 }

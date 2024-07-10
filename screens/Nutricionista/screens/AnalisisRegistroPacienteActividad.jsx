@@ -18,7 +18,7 @@ export const AnalisisRegistroPacienteActividad=(props)=>{
   const [showAlert, setShowAlert] = useState(false);
   const opacity = useRef(new Animated.Value(0)).current;
   const [registro, setRegistro] = useState({});
-
+  const[comentario,setComentario]=useState("");
   const[dateTime,setDateTime]=useState(null)
 
   const obtenerRegistro = async () => {
@@ -67,9 +67,31 @@ export const AnalisisRegistroPacienteActividad=(props)=>{
     fadeIn();
   };
 
-  const handleSave = () => {
-    fadeOut();
-    return props.navigation.navigate("NotificacionesNutricionista");
+  const handleSave = async() => {
+
+    try{
+      let response= await fetch( "http://localhost:3000/comentario/createComentarioRegistroActividad",{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify({
+          comentario:comentario,
+          idRegistro:idRegistro,
+          idUsuario:(registro.pacienteId)
+          
+        })
+      });
+
+      console.log("//////"+registro.pacienteId)
+      if (response.ok){
+        console.log("se comentó registro")
+        fadeOut();
+        return(props.navigation.navigate("NotificacionesNutricionista"))
+      }
+    }catch(e){
+      console.log(e)
+    }
   };
 
   return (
@@ -91,7 +113,7 @@ export const AnalisisRegistroPacienteActividad=(props)=>{
             </View>
           </View>
           <View>
-            <TextInput style={styles.inputComentarioRegistro} placeholderTextColor="black" placeholder='Añadir comentario'></TextInput>
+            <TextInput onChangeText={setComentario} style={styles.inputComentarioRegistro} placeholderTextColor="black" placeholder='Añadir comentario'></TextInput>
           </View>
           <TouchableOpacity onPress={handleShowAlert} style={{ backgroundColor: "#52B69A", borderRadius: 30, padding: 20, margin: 25 }}>
             <Text style={{ fontSize: 25, textAlign: "center", fontWeight: "bold", color: "white" }}>Guardar cambios</Text>
