@@ -7,7 +7,7 @@ import {
   Modal,
   Animated, Easing,
   ScrollView,
-  TextInput, Image
+  TextInput, Image,FlatList
 } from 'react-native';
 
 import { format } from 'date-fns';
@@ -20,6 +20,21 @@ export const AnalisisRegistroPacienteAgua=(props)=>{
   const [registro, setRegistro] = useState([]);
   const[dateTime,setDateTime]=useState(null)
   const[comentario,setComentario]=useState("");
+
+  const [comentariosNutricionista,setComentarioNutricionista]=useState([])
+
+
+  const obtenerComentariosNutricionista=async()=>{
+    try{
+      let response= await fetch("http://localhost:3000/comentario/getComentariosRegistroAgua?idRegistro="+idRegistro)
+      if(response.ok){
+        let data=await response.json();
+        setComentarioNutricionista(data);
+      }
+    }catch(e){
+      console.log(e)
+    }
+  }
 
   const obtenerRegistro=async()=>{
     try {
@@ -91,6 +106,7 @@ export const AnalisisRegistroPacienteAgua=(props)=>{
 
   useEffect(() => {
     obtenerRegistro();
+    obtenerComentariosNutricionista();
   }, []);
     
     return(
@@ -113,6 +129,23 @@ export const AnalisisRegistroPacienteAgua=(props)=>{
                     
                   </View>
                 </View>
+
+                <FlatList
+                  data={comentariosNutricionista}
+                  keyExtractor={(item) => item.id.toString()}
+                  renderItem={({ item }) => (
+                    <ScrollView style={{ flex: 1 }}>
+                      {item.idRegistroAgua && (
+                          <View style={{margin:10}}>
+                          <Text style={{textAlign: "center" ,backgroundColor:"white", padding:10, fontWeight:500, fontSize:15, color:"black", borderRadius:5}}>{item.stringComentario} 
+                          </Text>
+                          </View>
+                      )}
+                      
+                    </ScrollView>
+                  )}
+                />
+
                 <View >
                   <TextInput style={styles.inputComentarioRegistro} placeholderTextColor="black" placeholder='Añadir comentario'></TextInput>
                 </View>

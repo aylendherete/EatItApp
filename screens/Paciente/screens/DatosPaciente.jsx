@@ -54,7 +54,7 @@ export const  DatosPaciente=(props)=>{
       <View style={{flex:3}}>
         
       <View style={styles.container}>
-      <Text style={{ color: "white", fontWeight: "200", fontSize: 25, margin: 10 }}>Historial Comentarios</Text>
+      <Text style={{ color: "white", fontWeight: "200", fontSize: 25, margin: 10 }}>Historial registro</Text>
 
       <ScrollView>
  
@@ -65,7 +65,7 @@ export const  DatosPaciente=(props)=>{
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <View style={styles.itemContainer}>
-                <Text style={{color:"black", fontWeight:"600", fontSize:16,}}>{format(item.hora, 'dd/MM/yyyy HH:mm')}</Text>
+                <Text style={{color:"black", fontWeight:"600", fontSize:16,}}> Registro agua {format(item.hora, 'dd/MM/yyyy HH:mm')}</Text>
                 <Text style={{color:"black", fontWeight:"300", fontSize:15}}>Vasos de agua: {item.cantidadVasos} {"("}{item.cantidadVasos * 250} ml{")"}</Text>
               </View>
             )}
@@ -76,7 +76,7 @@ export const  DatosPaciente=(props)=>{
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <View style={styles.itemContainer}>
-                <Text style={{color:"black", fontWeight:"600", fontSize:16}}>{format(item.horaInicio, 'dd/MM/yyyy HH:mm')}</Text>
+                <Text style={{color:"black", fontWeight:"600", fontSize:16}}> Registro actividad {format(item.horaInicio, 'dd/MM/yyyy HH:mm')}</Text>
                 <Text style={{color:"black", fontWeight:"300", fontSize:15}}>Descripción: {item.descripcion}</Text>
                 <Text style={{color:"black", fontWeight:"300", fontSize:15}}>Tiempo Total: {item.tiempoTotal}</Text>
               </View>
@@ -88,7 +88,7 @@ export const  DatosPaciente=(props)=>{
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <View style={styles.itemContainer}>
-                <Text style={{color:"black", fontWeight:"600", fontSize:16,}}>{format(item.hora, 'dd/MM/yyyy HH:mm')}</Text>
+                <Text style={{color:"black", fontWeight:"600", fontSize:16,}}> Registro comida {format(item.hora, 'dd/MM/yyyy HH:mm')}</Text>
                 <Text style={{color:"black", fontWeight:"300", fontSize:15}}>Descripción: {item.descripcion}</Text>
                 
               </View>

@@ -1,18 +1,18 @@
-import React ,{useState, useRef} from 'react';
+import React ,{useState, useRef, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
-  ScrollView, Modal,Animated,Easing, TextInput
+  ScrollView, Modal,Animated,Easing, TextInput,FlatList
 } from 'react-native';
 
 
-export const HistorialComentarios=(props)=>{
+export const HistorialComentarios=({paciente})=>{
 
     const [showAlert, setShowAlert] = useState(false);
     const opacity = useRef(new Animated.Value(0)).current;
-
+    const [comentariosNutricionista,setComentarioNutricionista]=useState([])
     
 
     const fadeIn = () => {
@@ -40,6 +40,27 @@ export const HistorialComentarios=(props)=>{
     fadeIn();
 
     }
+
+
+
+    const obtenerComentarios=async()=>{
+        try{
+            let idUsuario= paciente.id
+            let response= await fetch("http://localhost:3000/comentario/getHistorialComentarios?idUsuario="+idUsuario)
+            if(response.ok){
+                let data=await response.json();
+                setComentarioNutricionista(data);
+            }
+        }catch(e){
+          console.log(e)
+        }
+    }
+
+    useEffect(() => {
+        obtenerComentarios();
+        
+      }, []);
+
     return(
         <View style={styles.fondoVerde}>
             <View>
@@ -47,21 +68,25 @@ export const HistorialComentarios=(props)=>{
             </View>
             <View style={{flex:4, justifyContent:"center"}}>
                 
-                <ScrollView>
+     
 
-                    <Text style={{color:"white", fontWeight:"200", fontSize:25, margin:10}}>Historial Comentarios</Text>
-                    <TouchableOpacity onPress={handleShowAlert}><Text style={{fontSize:20, backgroundColor:"#52B69A", color:"white", fontWeight:"500", padding:20, borderRadius:10,margin:5, textAlign:"center"}}>Añadir comentario</Text></TouchableOpacity>
-                    <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
-                    <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
-                    <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
-                    <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
-                    <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
-                    <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
-                    <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
-                    <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
-                    <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:10, }}>2023-10-2 {'\n'}Comentario nutricionista</Text>
+            <Text style={{color:"white", fontWeight:"200", fontSize:25, margin:10}}>Historial Comentarios</Text>
+            <TouchableOpacity onPress={handleShowAlert}><Text style={{fontSize:20, backgroundColor:"#52B69A", color:"white", fontWeight:"500", padding:20, borderRadius:10,margin:5, textAlign:"center"}}>Añadir comentario</Text></TouchableOpacity>
+            
+            <FlatList
+                data={comentariosNutricionista}
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={({ item }) => (
+                    <ScrollView style={{ flex: 1 }}>
+                    {(
+                        <View >
+                            <Text style={{color:"black", fontWeight:"500", margin:10, fontSize:15, backgroundColor:"white", borderRadius:10, padding:15, }}>{item.stringComentario} </Text>
+                        </View>
+                    )}
                     
-                </ScrollView>
+                    </ScrollView>
+                )}
+            />
                 <Modal visible={showAlert} transparent animationType="none">
                     <View style={{flex:1, justifyContent:"center", alignContent:"center",alignItems: 'center', backgroundColor: 'rgba(0, 0, 0)', borderColor:"#52B69A"}}>
                         <Animated.View

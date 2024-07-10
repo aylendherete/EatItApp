@@ -10,7 +10,7 @@ import 'react-native-gesture-handler';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { CalendarioPaciente, MiPerfil, NotificacionesPaciente, RegistroComentado, RegistroComida, RegistroTipoActividad, RegistroTipoAgua, RegistroTipoComida, TurnosPaciente, DatosPaciente, RegistroComentadoActividad, RegistroComentadoAgua } from './screens';
+import { CalendarioPaciente, MiPerfil, NotificacionesPaciente, RegistroComentado, RegistroComida, RegistroTipoActividad, RegistroTipoAgua, RegistroTipoComida, TurnosPaciente, DatosPaciente, RegistroComentadoActividad, RegistroComentadoAgua, HistorialComentarios } from './screens';
 import { Image,StyleSheet,View,Text } from 'react-native';
 import { Screen } from 'react-native-screens';
 
@@ -69,7 +69,9 @@ export const ResumenPacientee=(props)=>{
                     <TopTab.Navigator tabBar={() => null}>
                         <TopTab.Screen name="ClendarioPaciente" component={CalendarioPaciente} options={{headerShown:false, tabBarShowLabel:false}}/>
                         <TopTab.Screen name="DatosPaciente" component={DatosPaciente} options={{headerShown:false, tabBarShowLabel:false}}/>
+                        <TopTab.Screen name="HistorialComentarios" component={HistorialComentarios} options={{headerShown:false, tabBarShowLabel:false}}/>
                         <TopTab.Screen name="TurnosPaciente" component={TurnosPaciente} options={{headerShown:false, tabBarShowLabel:false}}/>
+
                     </TopTab.Navigator>
                 
                 </View>

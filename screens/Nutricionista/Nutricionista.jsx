@@ -33,7 +33,11 @@ function TabHistorial({route}){
       <TTab.Screen name="HistorialRegistros">
         {() => <HistorialRegistros paciente={paciente} />}
       </TTab.Screen>
-      <TTab.Screen name="HistorialComentario" component={HistorialComentarios} />
+
+
+      <TTab.Screen name="HistorialComentario">
+        {() => <HistorialComentarios paciente={paciente} />}
+      </TTab.Screen>
     </TTab.Navigator>
   );
 }

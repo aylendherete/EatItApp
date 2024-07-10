@@ -7,7 +7,7 @@ import {
   Modal,
   Animated, Easing,
   ScrollView,
-  TextInput, Image
+  TextInput, Image, FlatList
 } from 'react-native';
 
 import { format } from 'date-fns';
@@ -20,6 +20,21 @@ export const AnalisisRegistroPacienteActividad=(props)=>{
   const [registro, setRegistro] = useState({});
   const[comentario,setComentario]=useState("");
   const[dateTime,setDateTime]=useState(null)
+
+  const [comentariosNutricionista,setComentarioNutricionista]=useState([])
+
+  const obtenerComentariosNutricionista=async()=>{
+    try{
+      let response= await fetch("http://localhost:3000/comentario/getComentariosRegistroActividad?idRegistro="+idRegistro)
+      if(response.ok){
+        let data=await response.json();
+        setComentarioNutricionista(data);
+      }
+    }catch(e){
+      console.log(e)
+    }
+  }
+
 
   const obtenerRegistro = async () => {
     try {
@@ -41,6 +56,7 @@ export const AnalisisRegistroPacienteActividad=(props)=>{
 
   useEffect(() => {
     obtenerRegistro();
+    obtenerComentariosNutricionista();
   }, []);
 
   const fadeIn = () => {
@@ -112,6 +128,21 @@ export const AnalisisRegistroPacienteActividad=(props)=>{
               <Text style={styles.textoRegistroPaciente}>Tiempo total (minutos): {registro.tiempoTotal} </Text>
             </View>
           </View>
+          <FlatList
+                  data={comentariosNutricionista}
+                  keyExtractor={(item) => item.id.toString()}
+                  renderItem={({ item }) => (
+                    <ScrollView style={{ flex: 1 }}>
+                      {item.idRegistroActividad && (
+                          <View style={{margin:10}}>
+                          <Text style={{textAlign: "center" ,backgroundColor:"white", padding:10, fontWeight:500, fontSize:15, color:"black", borderRadius:5}}>{item.stringComentario} 
+                          </Text>
+                          </View>
+                      )}
+                      
+                    </ScrollView>
+                  )}
+            />
           <View>
             <TextInput onChangeText={setComentario} style={styles.inputComentarioRegistro} placeholderTextColor="black" placeholder='Añadir comentario'></TextInput>
           </View>

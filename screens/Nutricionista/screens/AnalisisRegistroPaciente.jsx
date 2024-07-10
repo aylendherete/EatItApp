@@ -7,7 +7,7 @@ import {
   Modal,
   Animated, Easing,
   ScrollView,
-  TextInput, Image
+  TextInput, Image,FlatList
 } from 'react-native';
 
 import { format } from 'date-fns';
@@ -22,6 +22,20 @@ export const AnalisisRegistroPaciente=(props)=>{
   const[dateTime,setDateTime]=useState(null)
   const [registro, setRegistro] = useState([]);
   const[comentario,setComentario]=useState("");
+
+  const [comentariosNutricionista,setComentarioNutricionista]=useState([])
+
+  const obtenerComentariosNutricionista=async()=>{
+    try{
+      let response= await fetch("http://localhost:3000/comentario/getComentariosRegistroComida?idRegistro="+idRegistro)
+      if(response.ok){
+        let data=await response.json();
+        setComentarioNutricionista(data);
+      }
+    }catch(e){
+      console.log(e)
+    }
+  }
 
 
   const obtenerRegistro=async()=>{
@@ -39,6 +53,8 @@ export const AnalisisRegistroPaciente=(props)=>{
     }
   }
 
+
+
   const fadeIn = () => {
     Animated.timing(opacity, {
       toValue: 1,
@@ -55,7 +71,7 @@ export const AnalisisRegistroPaciente=(props)=>{
       easing: Easing.linear,
       useNativeDriver: true,
     }).start(() => setShowAlert(false));
-    return(props.navigation.navigate("NotificacionesNutricionista"))
+
   };
 
   const handleShowAlert=()=>{
@@ -81,6 +97,7 @@ export const AnalisisRegistroPaciente=(props)=>{
       });
 
       console.log("//////"+registro.pacienteId)
+      obtenerComentariosNutricionista()
       if (response.ok){
         console.log("se comentó registro")
         fadeOut();
@@ -95,6 +112,7 @@ export const AnalisisRegistroPaciente=(props)=>{
   console.log(registro.foto)
   useEffect(() => {
     obtenerRegistro();
+    obtenerComentariosNutricionista();
   }, []);
     return(
         <View style={styles.fondoVerde}>
@@ -121,6 +139,21 @@ export const AnalisisRegistroPaciente=(props)=>{
                     </View> 
                   </View>
                 </View>
+                <FlatList
+                  data={comentariosNutricionista}
+                  keyExtractor={(item) => item.id.toString()}
+                  renderItem={({ item }) => (
+                    <ScrollView style={{ flex: 1 }}>
+                      {item.idRegistroComida && (
+                          <View style={{margin:10}}>
+                          <Text style={{textAlign: "center" ,backgroundColor:"white", padding:10, fontWeight:500, fontSize:15, color:"black", borderRadius:5}}>{item.stringComentario} 
+                          </Text>
+                          </View>
+                      )}
+                      
+                    </ScrollView>
+                  )}
+                />
                 <View >
                   <TextInput onChangeText={setComentario} style={styles.inputComentarioRegistro} placeholderTextColor="black" placeholder='Añadir comentario'></TextInput>
                 </View>
