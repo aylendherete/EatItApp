@@ -6,7 +6,7 @@ import {
     ScrollView,
     Modal,
     Animated, Easing,
-    TouchableOpacity,FlatList
+    TouchableOpacity,FlatList,Image
   } from 'react-native';
 
   import UserContext from '../../../context/userContext';
@@ -165,7 +165,7 @@ export  const CalendarioNutricionista=(props)=> {
             }}>
             
             <View style={{ alignItems:"center"}}>
-            <Text  style={{fontSize:24, color:"white", margin:5, textAlign:"center", fontWeight:"500", margin:10}}>Fecha seleccionada: {[selectedDate]}</Text>
+            <Text  style={{fontSize:24, color:"white", margin:5, textAlign:"center", fontWeight:"500", margin:10}}> {[selectedDate]}</Text>
 
                 <ScrollView > 
 
@@ -177,10 +177,13 @@ export  const CalendarioNutricionista=(props)=> {
                         renderItem={({ item }) => (
                           format(parseISO(item.horario), 'yyyy-MM-dd') === selectedDate  &&(
                           <TouchableOpacity onPress={() => handleTurnoPress(item)}>
-                          <View style={styles.itemContainer}>
-                            <Text style={{color:"black", fontWeight:"600", fontSize:16,textAlign:"center"}}>Turno a las {format(item.horario, 'HH:mm')} con paciente {item.paciente.apellido}, {item.paciente.nombre} </Text>
-                            
-                          </View></TouchableOpacity>)
+                            <View style={styles.itemContainer}>
+                              <View style={{flexDirection: "row",justifyContent: "space-between",alignItems:"center"}}>
+                                <Text style={{color:"black", fontWeight:"600", fontSize:18,textAlign:"center", margin:5}}>{format(item.horario, 'HH:mm')}{'\n'}{item.paciente.apellido}, {item.paciente.nombre} </Text>
+                                <Image style={{width:35, height:35, margin:5}}source={{uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAACXBIWXMAAAsTAAALEwEAmpwYAAACiklEQVR4nO2dS07dQBBF7+RlFWQY8clSw1fsAiHmSZYBWQZS3oPZQypkqZkgoA2t16ds3yPV/J6qdrflQVsyxhhjdst3SdeSNqVuJO0nanr2fM1y95LiVd1L2qPDTSBfM9dvyL3UFR1uAvma2XwguKbDTSBfM1Epmuz5Zi8YyfPNXjCS55u9YCTPV+WnpDNJd5IeRwhNvR6L66mkI7Lx3yRdSnpK0JSAanC/kLQimv83QQMiSf3pPYTLBNKRrM577vlL3nbindpKOuwxgPMEspG0TnoM4F8C0Uhatz0G8JBANJLW8F1p59CSkbw8AHkA+CoMPwF8I8JbEN+MAMpngDwAfBWGnwC+EeEtiG9GAOUzQB4AvgrDTwDfiFjqFjR3gvbHA8Dg/ngAGNwfDwCD++MBYHB/PAAM7o8HgMH98QAwuD8eAAb3xwPA4P54ABjcHw8Ag/vjAWBwfzwADO6PB4DB/fEAMLg/HgAG98cDwOD+eAAY3B8PAIP74wE+ef9PLe9n7wfC/fEAX7z/p1Zj7wfC/fEADff/1OpqCv54gApjtp2W+4FwfzxAha82f2x+3B8PUMEDgAk/AR7ATvEWJJ8BH+EtCCZ8BngAiz4DNg1PwP8p+OMBKtw0DGD4jJHeHw9QYb/hY9yPKfjjAUawVz6srUfkXZeVP6b5KfzxADC4Px4ABvfHA8Dg/ngAGNwfDwCD++MBYHB/PAAM7o8HgMH9W761zL3WPQZwl0A0lnx18WkC0Uhav3oMYPhth6+v15vX1x+oExcJVlskq2Fn6Maq/LaDlo4k9Zv4j8yq/Mxhm6ABAdW2rPzuzX99JpyUN4Al/Fvgobge9/pliTHGGGOMMcYYY4zRLHgGOIO/xt8uZG8AAAAASUVORK5CYII="}}></Image>
+                              </View>
+                            </View>
+                          </TouchableOpacity>)
                         )}
                       />
                     </>
@@ -278,9 +281,9 @@ const styles = StyleSheet.create({
     }, itemContainer: {
       backgroundColor: 'white',
       borderRadius: 10,
-      padding: 10,
+      padding: 12,
       marginVertical: 3,
-      margin:8
+      margin:5
     },
   });
   

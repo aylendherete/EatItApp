@@ -241,10 +241,16 @@ export const CalendarioPaciente=(props)=>{
                         
                         format(parseISO(item.hora), 'yyyy-MM-dd') === selectedDate  &&(
                         <TouchableOpacity onPress={() => handleRegistroPress(item)}>
-                        <View style={styles.itemContainer}>
-                          <Text style={{color:"black", fontWeight:"600", fontSize:16,textAlign:"center"}}>{format(item.hora, 'HH:mm')} Agua</Text>
-                          <Text style={{color:"black", fontWeight:"300", fontSize:16,textAlign:"center", margin:5}}>Vasos de agua: {item.cantidadVasos} {"("}{item.cantidadVasos * 250} ml{")"}</Text>
-                        </View></TouchableOpacity>)
+                          <View style={styles.itemContainer}>
+                              <View style={{flexDirection: "row",justifyContent: "space-between",alignItems:"center"}}>
+                                <View>
+                                  <Text style={{color:"black", fontWeight:"600", fontSize:18,textAlign:"center"}}>{format(item.hora, 'HH:mm')} </Text>
+                                  <Text style={{color:"black", fontWeight:"300", fontSize:18,textAlign:"center"}}>Vasos de agua: {item.cantidadVasos} {"("}{item.cantidadVasos * 250} ml{")"}</Text>
+                                </View>
+                                <Image style={{width:35, height:35,margin:5}}source={{uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAEkklEQVR4nO2aXUikVRjH/5ZOrh+4Xe1FQkVQu1tttYmi4hfhhZKLhrDJQuCuGrHmjGwW5u72YbsXhRd+XnWxsMuysMrECl0VBLqC1n5UFJWkN0E3ESWBTuqceIZz4OGg4/tx3pmcOT84MDjzPuc8f5/nvM953hewWCwWi8VisVgsFosRcgB0AHhVfs463gUg5KDPWcVRABtMgBiAY8gScgF8zZxX4x6APGQBF5TTBQUFicFEoO8ymmMy3BMOj42NidHRUS7AJoDjyODQ/0Y5W11dLba3txOjrq6Oi3A/U1PhPR76y8vLQrGysiKKioq4CBeRYTzHQ398fFzoUDpoqfAiMjn0dXZJhRAygPd3C32dHVKBrt33of9vstDP5FTIBXBnr9B3kArf7tdU+NBp6DtIhQ+wz3ieh/7ExIRwC6WLlgplDuZ9SN5CwwAeQJrI46FfX18v4vG4awHomsbGRrepEGG/p7ojLQyrRRQWFroKfZ3V1VVRXFzMRaC0SsZp7YRJm3D6Qn9yclL4hdLHRSo8CGAxXWV1CMB3avKGhgZPoe8gFX4AkJ9kHYcBrKfjhDmsJqUdnHZyU+xwV6C5kjHIfksR+ULQzj/OOzxTU1PCNJROWn4/sUcNspTKZssNNVlNTY2R0Nchm2SbOXV9jzUd0VJhKCjnnwEQp0lycnLE0tKSCIrFxcXEHNKhuOwtJmNIi5pngxDgIzVJe3u7CJq2tjY3t0U9Fe4GkQq/qAlmZ2cDFyAajXIBfnawPj0VaIM0RqkyXFJSIjY2NgIXYH19XS+OaA2OG7Fys6a0NcJLynBtba1IFVVVVVwAWoPbVvwdU6nwhjLa3d2dMgE6Ozu5AGe9tOUAvGVCgHPK4ODgYMoEGBgY4AK87aUxC2ANwCG/AoSVQVpUqujv7+cC0D/BKRT2P7FrL/kV4HVlrKenJ2UCdHV1cQHedLnmk+zaFb9PpuuVscrKypQJUF5ezgVodLlmapr8xa5/0o8AD6sqkA4rsVgscOfpVqs9T/SSx1+w60/AJz8qY1SkBM309DR3/lePa/6U2ej2K8CQMtba2hq4AC0tLW6OxU4EoC6SLx4FsK0OQ3Nzc4E5v7CwwA9DNJ7yuOYvmY2XYYCrymBFRYXY2toy7vzm5qYoKyvjzk97XOsBAH+7LKX35BEA/yij4XDYuAC9vb3ceTrcPAZvnGJ2vodBzjHDYmRkxJjzZIvb9vFSVb7cOI2WwwoqKK7xhVJx5OfWSGHf19enO3/TR/HCN7/fABTBMPkA5vmCaU+Yn5937TxtplrBQ+O2zGG3FMoWGu8mvWLaeT7Z59rCRXNzs5iZmRFra2u7Ok3f0X2+qalJd5zGrLQNl7X/SdlKN3H7dAw9lzvPH5KoEQqFEk+KOzo6RCQSSQz6TGd8+m4Hx2Oyi5PsWR+9cfoVgCvygDMC4DMAv+9g73Iq30w9DOCWKpddDqotog5r9T8d2PsDwGtIE08D+ETbgXcbywA+lr08p0ST2FuVUXEQ/xNKATQD6AXwjhxn5d+8FiWUHuUAzkh7EZkWgbTBLRaLBdnGf/TMHo2mR2rVAAAAAElFTkSuQmCC"}}></Image>
+                              </View>
+                          </View>
+                        </TouchableOpacity>)
                       )}
                     />
 
@@ -255,10 +261,16 @@ export const CalendarioPaciente=(props)=>{
                         format(parseISO(item.horaInicio), 'yyyy-MM-dd') === selectedDate &&(
                           <TouchableOpacity onPress={() => handleRegistroPress(item)}>
                           <View style={styles.itemContainer}>
-                          <Text style={{color:"black", fontWeight:"600", fontSize:16,textAlign:"center"}}>{format(item.horaInicio, ' HH:mm')} Actividad</Text>
-                          <Text style={{color:"black", fontWeight:"300", fontSize:16,textAlign:"center", margin:5}}>Descripción: {item.descripcion}</Text>
-                          <Text style={{color:"black", fontWeight:"300", fontSize:16,textAlign:"center", margin:5}}>Tiempo Total: {item.tiempoTotal}</Text>
-                        </View></TouchableOpacity>)
+                            <View style={{flexDirection: "row",justifyContent: "space-between",alignItems:"center"}}>
+                              <View>
+                                <Text style={{color:"black", fontWeight:"600", fontSize:16,textAlign:"center"}}>{format(item.horaInicio, ' HH:mm')}</Text>
+                                <Text style={{color:"black", fontWeight:"300", fontSize:16,textAlign:"center", margin:5}}>Descripción: {item.descripcion}</Text>
+                                <Text style={{color:"black", fontWeight:"300", fontSize:16,textAlign:"center", margin:5}}>Tiempo Total: {item.tiempoTotal}</Text>
+                              </View>
+                              <Image style={{width:35, height:35,margin:5}}source={{uri: "data:image/png;base64,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"}}></Image>
+                            </View>
+                          </View>
+                        </TouchableOpacity>)
                       )}
                     />
 
@@ -268,10 +280,17 @@ export const CalendarioPaciente=(props)=>{
                       renderItem={({ item }) => (
                         format(parseISO(item.hora), 'yyyy-MM-dd') === selectedDate  &&(
                         <TouchableOpacity onPress={() => handleRegistroPress(item)}>
-                        <View style={styles.itemContainer}>
-                          <Text style={{color:"black", fontWeight:"600", fontSize:16,textAlign:"center"}}>{format(item.hora, 'HH:mm')} Comida</Text>
-                          <Text style={{color:"black", fontWeight:"300", fontSize:16,textAlign:"center", margin:5}}>Descripción: {item.descripcion}</Text>
-                          
+                          <View style={styles.itemContainer}>
+                            <View style={styles.itemContainer}>
+                              <View style={{flexDirection: "row",justifyContent: "space-between",alignItems:"center"}}>
+                                <View>
+                                  <Text style={{color:"black", fontWeight:"600", fontSize:16,textAlign:"center"}}>{format(item.hora, 'HH:mm')} Comida</Text>
+                                  <Text style={{color:"black", fontWeight:"300", fontSize:16,textAlign:"center", margin:5}}>Descripción: {item.descripcion}</Text>
+                                </View>
+                                <Image style={{width:35, height:35,margin:5}}source={{uri: "data:image/png;base64,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"}}></Image>
+                              </View>
+                            </View>
+                                                   
                         </View></TouchableOpacity>)
                       )}
                     />
@@ -288,10 +307,13 @@ export const CalendarioPaciente=(props)=>{
                       renderItem={({ item }) => (
                         format(parseISO(item.horario), 'yyyy-MM-dd') === selectedDate  &&(
                         <TouchableOpacity onPress={() => handleTurnoPress(item)}>
-                        <View style={styles.itemContainer}>
-                          <Text style={{color:"black", fontWeight:"600", fontSize:16,textAlign:"center"}}>Turno a las {format(item.horario, 'HH:mm')} </Text>
-                          
-                        </View></TouchableOpacity>)
+                          <View style={styles.itemContainer}>
+                              <View style={{flexDirection: "row",justifyContent: "space-between",alignItems:"center"}}>
+                              <Text style={{color:"black", fontWeight:"600", fontSize:18,textAlign:"center"}}>Turno a las {format(item.horario, 'HH:mm')} </Text>
+                                <Image style={{width:35, height:35, margin:5}}source={{uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAACXBIWXMAAAsTAAALEwEAmpwYAAACiklEQVR4nO2dS07dQBBF7+RlFWQY8clSw1fsAiHmSZYBWQZS3oPZQypkqZkgoA2t16ds3yPV/J6qdrflQVsyxhhjdst3SdeSNqVuJO0nanr2fM1y95LiVd1L2qPDTSBfM9dvyL3UFR1uAvma2XwguKbDTSBfM1Epmuz5Zi8YyfPNXjCS55u9YCTPV+WnpDNJd5IeRwhNvR6L66mkI7Lx3yRdSnpK0JSAanC/kLQimv83QQMiSf3pPYTLBNKRrM577vlL3nbindpKOuwxgPMEspG0TnoM4F8C0Uhatz0G8JBANJLW8F1p59CSkbw8AHkA+CoMPwF8I8JbEN+MAMpngDwAfBWGnwC+EeEtiG9GAOUzQB4AvgrDTwDfiFjqFjR3gvbHA8Dg/ngAGNwfDwCD++MBYHB/PAAM7o8HgMH98QAwuD8eAAb3xwPA4P54ABjcHw8Ag/vjAWBwfzwADO6PB4DB/fEAMLg/HgAG98cDwOD+eAAY3B8PAIP74wE+ef9PLe9n7wfC/fEAX7z/p1Zj7wfC/fEADff/1OpqCv54gApjtp2W+4FwfzxAha82f2x+3B8PUMEDgAk/AR7ATvEWJJ8BH+EtCCZ8BngAiz4DNg1PwP8p+OMBKtw0DGD4jJHeHw9QYb/hY9yPKfjjAUawVz6srUfkXZeVP6b5KfzxADC4Px4ABvfHA8Dg/ngAGNwfDwCD++MBYHB/PAAM7o8HgMH9W761zL3WPQZwl0A0lnx18WkC0Uhav3oMYPhth6+v15vX1x+oExcJVlskq2Fn6Maq/LaDlo4k9Zv4j8yq/Mxhm6ABAdW2rPzuzX99JpyUN4Al/Fvgobge9/pliTHGGGOMMcYYY4zRLHgGOIO/xt8uZG8AAAAASUVORK5CYII="}}></Image>
+                              </View>
+                            </View>
+                      </TouchableOpacity>)
                       )}
                     />
                   </>
@@ -353,9 +375,9 @@ export const CalendarioPaciente=(props)=>{
               alignItems: 'center'
             }}>
               <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                <Text style={{ fontSize: 24, color: "white", margin: 5, textAlign: "center", fontWeight: "500", margin: 10 }}>Detalles del Registro</Text>
+  
                 <ScrollView>
-                  <Text style={{fontSize:24, color:"white", margin:5, textAlign:"center", fontWeight:"500"}}>Fecha: {format(parseISO(selectedRegistro.hora || selectedRegistro.horaInicio), 'dd/MM/yyyy HH:mm')}</Text>
+                  <Text style={{fontSize:24, color:"white", margin:5, textAlign:"center", fontWeight:"500"}}>{format(parseISO(selectedRegistro.hora || selectedRegistro.horaInicio), 'dd/MM/yyyy HH:mm')}</Text>
                   {selectedRegistro.descripcion && (
                     <Text style={{backgroundColor:"#52B69A",fontSize:24, color:"white", margin:5, textAlign:"center", margin:10, padding:15, borderRadius:5}}>Descripción: {selectedRegistro.descripcion}</Text>
                   )}
@@ -425,8 +447,8 @@ const styles=StyleSheet.create({
   }, itemContainer: {
     backgroundColor: 'white',
     borderRadius: 10,
-    padding: 10,
-    marginVertical: 3,
-    margin:8
+    padding: 15,
+    marginVertical: 2,
+    margin:5
   },
 })
