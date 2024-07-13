@@ -1,4 +1,4 @@
-import React ,{useState, useRef} from 'react';
+import React ,{useState, useRef, useContext, useEffect} from 'react';
 import {
     StyleSheet,
     Text,
@@ -6,8 +6,13 @@ import {
     ScrollView,
     Modal,
     Animated, Easing,
-    TouchableOpacity
+    TouchableOpacity,FlatList
   } from 'react-native';
+
+  import UserContext from '../../../context/userContext';
+
+  import { format , parseISO} from 'date-fns';
+
 
 import { Calendar, LocaleConfig} from 'react-native-calendars';
 
@@ -46,11 +51,48 @@ LocaleConfig.locales['es'] = {
   LocaleConfig.defaultLocale = 'es';
   
 export  const CalendarioNutricionista=(props)=> {
+
+    const { user } = useContext(UserContext);
+
     const [selectedDate, setSelectedDate] = useState('');
     
     const [showAlert, setShowAlert] = useState(false);
     const opacity = useRef(new Animated.Value(0)).current;
+
+    
+  const [turnos,setTurnos]=useState(null);
+  const [selectedTurno, setSelectedTurno] = useState(null);
+
+    const obtenerTurnos = async () => {
+      try {
+        console.log("Obteniendo turnos para el usuario con id:", user.matriculaNacional); // Log adicional
+        const response = await fetch(`http://localhost:3000/turno/getTurnosNutricionista?matriculaNacional=${user.matriculaNacional}`);
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Datos obtenidos:", data);
+          setTurnos(data);
+        }
+      } catch (e) {
+        console.log('Error al obtener los registros del paciente:', e);
+      }
+    };
   
+
+    const cancelarTurno=async()=>{
+
+      try {
+        console.log("Obteniendo turnos para el cancelar con id:", selectedTurno.id); // Log adicional
+        const response = await fetch(`http://localhost:3000/turno/rechazarTurnoNutricionista?id=${selectedTurno.id}`, {method:'POST'});
+        if (response.ok) {
+  
+          console.log("se canceló turno")
+          setSelectedTurno(null);
+          fadeOut();
+        }
+      } catch (e) {
+        console.log('Error al obtener los registros del paciente:', e);
+      }
+    }
     const fadeIn = () => {
         Animated.timing(opacity, {
           toValue: 1,
@@ -73,6 +115,21 @@ export  const CalendarioNutricionista=(props)=> {
           useNativeDriver: true,
         }).start(() => setShowAlert(false));
       };
+    
+      const handleTurnoPress = (item) => {
+        setSelectedTurno(item);
+      };
+  
+      const handleTurnoClose = () => {
+        setSelectedTurno(null);
+        fadeOut();
+      };
+    
+
+    useEffect(() => {
+      obtenerTurnos();
+      
+    }, []);  
     return (
 
         <View style={styles.fondoVerde}>
@@ -109,29 +166,55 @@ export  const CalendarioNutricionista=(props)=> {
             
             <View style={{ alignItems:"center"}}>
             <Text  style={{fontSize:24, color:"white", margin:5, textAlign:"center", fontWeight:"500", margin:10}}>Fecha seleccionada: {[selectedDate]}</Text>
-                <ScrollView > 
-                    <Text style={styles.registroDiario}>Cita con Paciente: Nombre Apellido {'\n'}A las 19:00hs</Text>
-                    <Text style={styles.registroDiario}>Cita con Paciente: Nombre Apellido {'\n'}A las 19:00hs</Text>
-                    <Text style={styles.registroDiario}>Cita con Paciente: Nombre Apellido {'\n'}A las 19:00hs</Text>
-                    <Text style={styles.registroDiario}>Cita con Paciente: Nombre Apellido {'\n'}A las 19:00hs</Text>
-                    <Text style={styles.registroDiario}>Cita con Paciente: Nombre Apellido {'\n'}A las 19:00hs</Text>
-                    <Text style={styles.registroDiario}>Cita con Paciente: Nombre Apellido {'\n'}A las 19:00hs</Text>
-                    <Text style={styles.registroDiario}>Cita con Paciente: Nombre Apellido {'\n'}A las 19:00hs</Text>
-                    <Text style={styles.registroDiario}>Cita con Paciente: Nombre Apellido {'\n'}A las 19:00hs</Text>
-                    <Text style={styles.registroDiario}>Cita con Paciente: Nombre Apellido {'\n'}A las 19:00hs</Text>
-                    <Text style={styles.registroDiario}>Cita con Paciente: Nombre Apellido {'\n'}A las 19:00hs</Text>
-                    <Text style={styles.registroDiario}>Cita con Paciente: Nombre Apellido {'\n'}A las 19:00hs</Text>
-                    <Text style={styles.registroDiario}>Cita con Paciente: Nombre Apellido {'\n'}A las 19:00hs</Text>
-                    <Text style={styles.registroDiario}>Cita con Paciente: Nombre Apellido {'\n'}A las 19:00hs</Text>
-                    <Text style={styles.registroDiario}>Cita con Paciente: Nombre Apellido {'\n'}A las 19:00hs</Text>
-                    <Text style={styles.registroDiario}>Cita con Paciente: Nombre Apellido {'\n'}A las 19:00hs</Text>
 
-                    <Text style={styles.registroDiario}>Cita con Paciente: Nombre Apellido {'\n'}A las 19:00hs</Text>
-                    <Text style={styles.registroDiario}>Cita con Paciente: Nombre Apellido {'\n'}A las 19:00hs</Text>
-                    <Text style={styles.registroDiario}>Cita con Paciente: Nombre Apellido {'\n'}A las 19:00hs</Text>
-                    <Text style={styles.registroDiario}>Cita con Paciente: Nombre Apellido {'\n'}A las 19:00hs</Text>
-                    
+                <ScrollView > 
+
+                  {turnos && (
+                    <>
+                      <FlatList
+                        data={turnos}
+                        keyExtractor={(item) => item.id.toString()}
+                        renderItem={({ item }) => (
+                          format(parseISO(item.horario), 'yyyy-MM-dd') === selectedDate  &&(
+                          <TouchableOpacity onPress={() => handleTurnoPress(item)}>
+                          <View style={styles.itemContainer}>
+                            <Text style={{color:"black", fontWeight:"600", fontSize:16,textAlign:"center"}}>Turno a las {format(item.horario, 'HH:mm')} con paciente {item.paciente.apellido}, {item.paciente.nombre} </Text>
+                            
+                          </View></TouchableOpacity>)
+                        )}
+                      />
+                    </>
+                  )}  
+                            
                 </ScrollView>
+
+                {selectedTurno && (<Modal visible={true} transparent animationType='slide'>
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}
+                >
+                    <Animated.View style={{
+                      backgroundColor:"#76C893",
+                      padding: 30,
+                      borderRadius: 15,
+                      opacity: opacity,
+                      width:'90%',
+                      height:'100%',
+                      flex:0.45,
+                      justifyContent:"center",
+                      alignItems: 'center'
+                    }}>
+                    
+                    <View style={{ alignItems:"center"}}>
+                    <Text  style={{fontSize:24, color:"white", margin:5, textAlign:"center", fontWeight:"500"}}>Turno el dia {[selectedDate]}</Text>
+                    <TouchableOpacity onPress={cancelarTurno}><Text style={{fontSize:20, color:"white", backgroundColor:"#52B69A", textAlign:"center", padding:10, borderRadius:15, margin:15, fontWeight:"500"}}>Cancelar Turno</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={handleTurnoClose}><Text style={{fontSize:20, color:"white", backgroundColor:"#52B69A", textAlign:"center", padding:10, borderRadius:15, margin:15, fontWeight:"400"}}>Cerrar</Text></TouchableOpacity>
+                    
+                    </View>
+
+                    </Animated.View>
+
+                </View>
+                </Modal>)}      
+
             </View>
             <TouchableOpacity onPress={fadeOut}>
               <Text style={{fontSize:20, color:"white", backgroundColor:"#52B69A", textAlign:"center", padding:10, borderRadius:15, margin:15}}>Cerrar</Text>
@@ -192,6 +275,12 @@ const styles = StyleSheet.create({
         padding:15,
         margin:5,
         
-    }
+    }, itemContainer: {
+      backgroundColor: 'white',
+      borderRadius: 10,
+      padding: 10,
+      marginVertical: 3,
+      margin:8
+    },
   });
   

@@ -8,6 +8,8 @@ import {
   FlatList
 } from 'react-native';
 
+
+import { format , parseISO} from 'date-fns';
 import UserContext from '../../../context/userContext';
 
 export const NotificacionesPaciente = (props) => {
@@ -15,6 +17,8 @@ export const NotificacionesPaciente = (props) => {
 
   const [notificaciones, setNotificaciones] = useState([]);
   const [nombres, setNombres] = useState({});
+
+ 
 
   const obtenerNombreNotificaciones = async (id) => {
     try {
@@ -49,6 +53,8 @@ export const NotificacionesPaciente = (props) => {
             return obtenerNombreNotificaciones(item.registroActividadPaciente.pacienteId);
           } else if (item.idRegistroComidaPaciente !== null) {
             return obtenerNombreNotificaciones(item.registroComidaPaciente.pacienteId);
+          }else if (item.idTurno !== null){
+            return obtenerNombreNotificaciones(item.turnoPaciente.pacienteId);
           } else {
             return Promise.resolve({ nombre: '', apellido: '' });
           }
@@ -85,6 +91,31 @@ export const NotificacionesPaciente = (props) => {
     }
   }
 
+  const rechazarTurno= async (id)=>{
+    console.log(id)
+    try{
+      const turno= await fetch("http://localhost:3000/turno/rechazarTurno?id="+id, {method:'POST'});
+      if(turno.ok){
+        console.log("SE RECHAZÓ TURNOOOOOOOOOO")
+      }
+    }catch(e){
+      console.log(e)
+    }
+  }
+
+
+  const aceptarTurno= async (id)=>{
+    console.log(id)
+    try{
+      const turno= await fetch("http://localhost:3000/turno/aceptarTurno?id="+id, {method:'POST'});
+      if(turno.ok){
+        console.log("SE ACEPTO TURNOOOOOOOOOO")
+      }
+    }catch(e){
+      console.log(e)
+    }
+  }
+
   const asociarPaciente = async (id, mn) => {
     try {
       const asociacion = await fetch(`http://localhost:3000/paciente/asociarPacienteANutricionista?id=${id}&matriculaNacional=${mn}`, {
@@ -104,6 +135,8 @@ export const NotificacionesPaciente = (props) => {
 
   useEffect(() => {
     obtenerNotificaciones();
+  
+
   }, []);
 
   return (
@@ -125,9 +158,9 @@ export const NotificacionesPaciente = (props) => {
               {item.notificacionSolicitud && (
                 <View style={styles.botonNotificacion}>
                   <Text style={styles.textoBotonNotificacion}>
-                    ¡Paciente quiere iniciar un plan contigo!{' '}
-                    {nombres[item.idSolicitud]?.nombre || ''}{' '}
-                    {nombres[item.idSolicitud]?.apellido || ''}
+                    ¡Paciente {' '}
+                    {nombres[item.idSolicitud]?.nombre || ' '}{' '}
+                    {nombres[item.idSolicitud]?.apellido || ''} quiere iniciar un plan contigo!
                   </Text>
                   <View style={{ flexDirection: "row", margin: 10 }}>
                     <TouchableOpacity
@@ -156,6 +189,55 @@ export const NotificacionesPaciente = (props) => {
                   </View>
                 </View>
               )}
+              {(item.turnoPaciente && item.turnoPaciente.turnoAceptado===null)&& (
+                <View style={styles.botonNotificacion}>
+                  <Text style={styles.textoBotonNotificacion}>
+                    ¡
+                    {nombres[item.idSolicitud]?.nombre || ''}{' '}
+                    {nombres[item.idSolicitud]?.apellido || ' '} quiere un turno contigo
+                    el día {format(item.turnoPaciente.horario,'dd/MM/yyyy HH:mm')}!
+                  </Text>
+                  <View style={{ flexDirection: "row", margin: 10 }}>
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: "#3B8D77",
+                        borderRadius: 10,
+                        color: "white",
+                        fontWeight: "bold",
+                        marginRight: 10
+                      }}
+                      onPress={() => aceptarTurno(item.idTurno)}
+                    >
+                      <Text style={styles.textoBotonNotificacion}>Aceptar</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: "#3B8D77",
+                        borderRadius: 10,
+                        color: "white",
+                        fontWeight: "bold"
+                      }}
+                      onPress={() => rechazarTurno(item.idTurno)}
+                    >
+                      <Text style={styles.textoBotonNotificacion}>Rechazar</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              )}
+
+              {(item.turnoPaciente && item.turnoPaciente.turnoAceptado===false)&& (
+                <View style={styles.botonNotificacion}>
+                  <Text style={styles.textoBotonNotificacion}>
+                    ¡
+                    {nombres[item.idSolicitud]?.nombre || ''}{' '}
+                    {nombres[item.idSolicitud]?.apellido || '  '}{' '} 
+                    canceló un turno contigo el día {format(item.turnoPaciente.horario, 'dd/MM/yyyy HH:mm')}!
+                  </Text>
+                 </View> 
+                )     
+              }
+
+
               {item.idRegistroAguaPaciente && (
                 <View>
                   <TouchableOpacity
@@ -163,9 +245,9 @@ export const NotificacionesPaciente = (props) => {
                     style={styles.botonNotificacion}
                   >
                     <Text style={styles.textoBotonNotificacion}>
-                      ¡El Paciente ha registrado agua!
-                      {nombres[item.registroAguaPaciente.pacienteId]?.nombre || ''}{' '}
-                      {nombres[item.registroAguaPaciente.pacienteId]?.apellido || ''}
+                      ¡El Paciente  
+                       {' '}{nombres[item.registroAguaPaciente.pacienteId]?.nombre || ' '}{' '}
+                      {nombres[item.registroAguaPaciente.pacienteId]?.apellido || ' '} ha registrado agua!
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -177,8 +259,8 @@ export const NotificacionesPaciente = (props) => {
                     style={styles.botonNotificacion}
                   >
                     <Text style={styles.textoBotonNotificacion}>
-                      ¡El Paciente ha registrado actividad!{nombres[item.registroActividadPaciente.pacienteId]?.nombre || ''}{' '}
-                      {nombres[item.registroActividadPaciente.pacienteId]?.apellido || ''}
+                      ¡El Paciente  {nombres[item.registroActividadPaciente.pacienteId]?.nombre || ''}{' '}
+                      {nombres[item.registroActividadPaciente.pacienteId]?.apellido || ''} ha registrado actividad!
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -190,8 +272,8 @@ export const NotificacionesPaciente = (props) => {
                     style={styles.botonNotificacion}
                   >
                     <Text style={styles.textoBotonNotificacion}>
-                      ¡El Paciente ha registrado comida!{nombres[item.registroComidaPaciente.pacienteId]?.nombre || ''}{' '}
-                      {nombres[item.registroComidaPaciente.pacienteId]?.apellido || ''}
+                      ¡El Paciente {nombres[item.registroComidaPaciente.pacienteId]?.nombre || ''}{' '}
+                      {nombres[item.registroComidaPaciente.pacienteId]?.apellido || ''} ha registrado comida!
                     </Text>
                   </TouchableOpacity>
                 </View>

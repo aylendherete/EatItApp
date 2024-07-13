@@ -116,9 +116,12 @@ export const RegistroTipoActividad=(props)=>{
         <Text style={styles.bannerPaciente}>Paciente</Text>
       </View>
       <View style={{flex:4}}>
-        <View>
-          <Text style={styles.textoTipoRegistroComida}>Actividad</Text>
-        </View>
+        <View style={{alignItems: "center",justifyContent: "center",}}>
+          <View style={{flexDirection: "row",alignItems: "center",justifyContent: "space-between",}}>
+                <Text style={styles.textoTipoRegistroComida}>Actividad</Text>
+                <Image style={{width:65, height:65}} source={{uri:"data:image/png;base64,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"}}></Image>
+              </View>
+          </View>
         <View>
           <TextInput onChangeText={setDescripcion} style={styles.botonTipoRegistroComida} placeholder='Descripcion' placeholderTextColor={"black"}></TextInput>
           
@@ -187,7 +190,7 @@ const styles=StyleSheet.create({
   },
   textoTipoRegistroComida:{ 
     color:"#99D98C", 
-    fontWeight:"400",
+    fontWeight:"300",
     margin:20, 
     textAlign:"left", 
     fontSize:50, 

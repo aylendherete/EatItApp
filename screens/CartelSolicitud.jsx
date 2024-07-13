@@ -37,12 +37,12 @@ export const CartelSolicitud=(props)=>{
         </View>
           </View>
           <View style={styles.fondoVerdeClaro}>
-            <View style={{backgroundColor:"#52B69A",opacity:0.7, borderRadius:10, justifyContent:"center", padding:10, alignItems:"center", margin:30}}>
-                <Text style={{fontSize:35, fontWeight:"800", color:"white", justifyContent:"center",padding:10}}>¡Ya le enviamos al nutricionista la solicitud!</Text>
-                <Text style={{fontSize:15, fontWeight:"300", color:"white", justifyContent:"center",padding:10}}>En el caso de que rechace la solicitud deberas volver a elegir otro nutricionista</Text>
-
+            <View style={{backgroundColor:"#52B69A",opacity:0.9, borderRadius:10, justifyContent:"center", padding:10, alignItems:"center", margin:30}}>
+                <Text style={{fontSize:35, fontWeight:"800", color:"white", justifyContent:"center", textAlign:"center",padding:10}}>¡Ya le enviamos al nutricionista la solicitud!</Text>
+                <Text style={{fontSize:16, fontWeight:"300", color:"white", justifyContent:"center", textAlign:"center",padding:10}}>En el caso de que rechace la solicitud deberas volver a elegir otro nutricionista</Text>
+                <TouchableOpacity style={{backgroundColor:"#32A09B", padding:10, borderRadius:10}} onPress={logOut}><Text style={{justifyContent:"center", fontSize:25,color:"white", fontWeight:"800"}}>Cerrar Sesión</Text></TouchableOpacity>
             </View>
-            <TouchableOpacity onPress={logOut}><Text>Cerrar Sesión</Text></TouchableOpacity>
+
           </View>
             
         </View>
@@ -53,7 +53,8 @@ export const CartelSolicitud=(props)=>{
 const styles=StyleSheet.create({
   fondoVerde:{
     backgroundColor:"#99D98C", 
-    flex:1
+    flex:1,
+    justifyContent:"center"
   },
  
   fondoVerdeClaro:{

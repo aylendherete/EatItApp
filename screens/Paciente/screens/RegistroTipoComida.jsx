@@ -152,8 +152,11 @@ export const RegistroTipoComida=(props)=>{
         <Text style={styles.bannerPaciente}>Paciente</Text>
       </View>
       <View style={{flex:4}}>
-        <View>
-          <Text style={styles.textoTipoRegistroComida}>Comida</Text>
+      <View style={{alignItems: "center",justifyContent: "center",}}>
+            <View style={{flexDirection: "row",alignItems: "center",justifyContent: "space-between",}}>
+              <Text style={styles.textoTipoRegistroComida}>Comida</Text>
+              <Image style={{width:65, height:65}} source={{uri:"data:image/png;base64,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"}}></Image>
+            </View>
         </View>
         <ScrollView>
           <TextInput onChangeText={setDescripcion} style={styles.botonTipoRegistroComida} placeholder="Descripcion" placeholderTextColor={"black"}></TextInput>
@@ -244,7 +247,7 @@ const styles=StyleSheet.create({
   },
   textoTipoRegistroComida:{ 
     color:"#99D98C", 
-    fontWeight:"400",
+    fontWeight:"300",
     margin:20, 
     textAlign:"left", 
     fontSize:50, 
