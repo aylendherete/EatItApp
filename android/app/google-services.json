@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "948512844917",
+    "project_id": "eatitapptest",
+    "storage_bucket": "eatitapptest.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:948512844917:android:abb9888d77332833c21c3c",
+        "android_client_info": {
+          "package_name": "com.eatitapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFWxfawnRBiOUXgzmOmquRvFGO70Ghgb4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
