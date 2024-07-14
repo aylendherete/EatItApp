@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import UserContext from '../../../context/userContext';
-
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 
 export const MisPacientes=(props)=>{
 
@@ -16,10 +16,7 @@ export const MisPacientes=(props)=>{
 
   const [pacientes, setPacientes] = useState([]);
 
- 
-  useEffect(() => {
-    obtenerPacientes(); 
-  }, [])
+  const isFocused = useIsFocused();
 
   const obtenerPacientes = async () => {
     try {
@@ -36,6 +33,11 @@ export const MisPacientes=(props)=>{
       console.error('Error al obtener pacientes:', error);
     }
   };
+
+
+  useEffect(() => {
+    obtenerPacientes(); 
+  }, [isFocused])
 
 
   return(

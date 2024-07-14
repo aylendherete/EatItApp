@@ -55,14 +55,21 @@ export const HistorialRegistros=({paciente})=>{
                   <Image style={{width:35, height:35, margin:10,alignSelf:"center"}} source={{uri:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAH70lEQVR4nO2dW6gWVRSAt+a1fDHrQQtKLbM0L0hRWKZgZqVFdFNLQssQIaSnHjRT0bI6BRGhJUZ5Ksi0pOjJhy6aEpjXh8jy2O1omeatOkft9MXiX9J2N/P/819mZs/8//f043HvWXvW7Nvaa61tTIP8AHQFOqUtR4OCMu4DjgDHgXsbLyVlgF/4j/1py1P34BDXCwG6AyO0R84H3gI2A7uBFuB34BRwUn/vBXYBW4C3gSeB+4GRQM/cKi4uhQBdgFHAE8AG4C9qx2lgK7AMGA/0MHmhlgoBOgNjgVXAUZJDlP0OcCtwjql3hQB9gaeBH0mfA8CLwECTRdzWlFl2ILACaI/4svYBHwFNwCzgJmAo0B/orcvvrvq7v/5tDPAI8BywHvg24rP+1nlqiMm7QoCLgWZtdDFagTeBh4BLaiiz9MhpwEpVcjE6gA+AwSZvCtGvd67uWYqN52uAyTKxJ9QGWTy8BPxaRK5T+n96mTwoBBgHfFOkwd8BjwLnJduCs2TsJptb4Ksicn4P3GmyqhBdvi7Vrh/ETmCqb6sbYCLweRHFvOrlfqaYQmTcB74IadBvOtl2Nh4D3K6bzLCP6QqTBYXo6kZ2zC4durI632QEoCewCGgLaM8J4G7js0LUvNEesmoaZzIKMFh7RdBHNsf4QIBwj4fMFx8DF5qMQ6G3SA8PYpGPCnH5R42BuTovAaaE2NdeTluwYsjGb1YacphknnkdcMirnlJEGX/ICiUtOUxyzx0C/BTQ/rlJyeAKVGtaxOparRzxtDb02QN0wWLTkcrqi3j4uVo54mlt0ecPDVjmy5L4yqQFaSjk7DnlT+eF7E50Rx+DNlqyNmQ5cogV2WWFqTfwRCEqi9i5XCabegK/FNID2OaI9EOaluy6VohlZnFtX0tNvYBnChGAxY5YJ2t28iimj6RO8HKkkJ66SLFZV6vKbwP2AA/6dpjkq0IEPYp2N4xX1aLiz6xKvwZuMB6BpwoRAg7pmqut8Bq3wcC1xiPwWyEyuriekwOqqfA1p8ItxjPwWyGdApbBTZVW1kttMjZTjWfgsUIEdfS22V/RXAw84FQkVs2uxjPwXyHdAs5OJlRSkXjt2SwzHoLnChGA5VVN7sC5AbvN0cZDyIZCRjtiylTQrZwKbnEqOOjjHiRDCumkno82N5ZTgXiZ27xhPIUMKETQ2Bebp8op/KVT+B7jKWRHIWLpsPm0nJg+MYbZ9DWeQnYUcpEjanukkDrZiTsFDxqPISMKEdTT32Z4lEIznEIbjMeQLYVIFJhN6fh+4Bmn0AvGY8iWQtzF0vwohSSKyWaG8RiypRCJjyxvgwhsdAqNNR5DthQiod82G6MUksMom2QdvsoAuNRViPyb8RTgakfWnVEKuYawC4yHUAitPhQSoVX5mUOyH1BLlELiLG3jpQsL8B7hrDEeAvRxP54ohdwYcl9tWEeKKOSw8RA1xdu0Rynk7tKjWyX9UchRkyOFuONyH+MZwMwi4dbCuyZHQ5abcqJmqS0SUsYhSeFhcjSpixu9zVDjtzI6dPg6Jj3DV2VUs+x1fYnGGL+VMdNkhEo3hpIWz+bhRKQtbfDsCIjynW0yhOZ0sVkdpdACp9CziUibc2WEGBfnmQr8iNablCBHyggxv5c+idUMoDZ7EpE2h3NGhAOqYVFd6d3NYT+TIORTGZJNr/wj3BAT/LTYJc7pMHUGYLrTpk9MVDQlkc1KkwDkVBkC8LrTrgXVrJf3xZ1EJo/DlOMoJ8GfFTvK9QgIhL/exESelSFIkFNVrqRaiWR8tnmlrAqiP2dknpUhBOTZaq5F9M9hcaIru6Joz5I877maM0qEI9xcSUVdNP22TWz3hAAL89YzQjbarRUf+mkudJutNZf47OeNMDlCJ/Ptzjt8vtp8UBKoaDOxplLnGGCS8+7kePyyait1rb+bayZxzgE2lW3djZjKTiZam8RS+GUVSUvuvLOOmvm4Ae87le/1Mt22J2hIoHsUvraWDxgUkCA5/Vy1ngIsiS35TBGv+LbM3K2RIDIsBXy8S5LqhsnmFfQcNTltTyyBWcBEVZ95BUPQm3tcJpk4Cch/IkwxdQ7/D+oUlqfVLdt8cRdKA72kzE20sCux4Ry4XB3TbI7lzfRRhvNbUCLlZBc84jERYDZv9TU2I8YYFcnu45pH7kpLoNkB4+aBeugpFFKMByXjfyxtwdzzd9TXdkzO54yjAe1eaHxALjMJEK4tSW+VhFdTbd5d6FLi1M9mtWwqTcahsLqUCyaDWOar0HNCYjd2ZtnMQsEcIstYAiZwv4+b5TKTgFyNZ4awxVkytVAwFy0JuXnueGqrqXKRSxeBHSHduyULNwZQMBOFXWAsG+NBJkdjLhoYNNm3W9yA8XIqWkTubM+JwB0lrsrephdSdk9Rxu7qHeKahNyeHa+hMCnUo35hiQvtj+jXNz6pXmNd3y05JbN9fXcVc8u6ElG0aMLIVbrm71fjrG7T1fHZ9bV1ERnXZm6uqAS5JUDcKQNcjMKQQJcPxadJUxzJTnmYuin1Vu/Abvp7gP5trMb0NWnkUtjNzy6ntad6m3QnNvTlNQUY6NKgVWWpG+NoKOJaqbmCmwOS38TJCX3mBF9zuqQOBZ/iUWqK2RBiN6oUGY62iqlDFw+prewyC4X9zHBx9Nbbp5vVI3CHzguH1c3mpP7eq3/bpP93npaVOhoKaNCgQYMGJq/8C/gGcHYg46DYAAAAAElFTkSuQmCC"}}></Image>
                 </View>
               </View>
+
+
+            
+             
                 <ScrollView>
- 
+              
                 {registroPaciente && (
                   <>
                     <FlatList
                       data={registroPaciente.registrosAgua}
                       keyExtractor={(item) => item.id.toString()}
                       renderItem={({ item }) => (
+
+
+                      
                         <View style={styles.itemContainer}>
                           <View style={{flexDirection: "row",justifyContent: "space-between",}}>
                             <View>

@@ -29,6 +29,11 @@ function TabHistorial({route}){
       tabBarOptions={{
         style: { display: 'none' }, // Oculta la barra superior del Top Tab Navigator
       }}
+      screenOptions={{
+        style: { display: 'none' }
+      }
+      }
+      
     >
       <TTab.Screen name="HistorialRegistros">
         {() => <HistorialRegistros paciente={paciente} />}

@@ -19,6 +19,10 @@ export const HistorialComentarios = (props) => {
   const { user } = useContext(UserContext);
   const [comentariosNutricionista, setComentarioNutricionista] = useState([])
 
+
+
+
+
   const obtenerComentarios = async () => {
     try {
       let response = await fetch("http://localhost:3000/comentario/getHistorialComentarios?idUsuario=" + user.id)
@@ -38,8 +42,6 @@ export const HistorialComentarios = (props) => {
 
   }, []);
 
-
-
   return (
     <View style={styles.fondoVerde}>
 
@@ -57,8 +59,8 @@ export const HistorialComentarios = (props) => {
             data={comentariosNutricionista}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
-              <ScrollView style={{ flex: 1 }}>
-                {(
+              
+            
 
                   <View  style={{borderColor:"#76C893",borderWidth:1, backgroundColor: 'white',padding:15, marginVertical: 5, alignItems: "center", justifyContent: "center",alignItems:"stretch", borderRadius:25}}>
                     <View style={{flexDirection: "row",alignItems: "center",}}>
@@ -69,9 +71,9 @@ export const HistorialComentarios = (props) => {
                       
                     </View>
                   </View>
-                )}
+            
 
-              </ScrollView>
+        
             )}
           />
         </View>

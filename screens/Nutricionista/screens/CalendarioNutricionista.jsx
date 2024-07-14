@@ -167,7 +167,7 @@ export  const CalendarioNutricionista=(props)=> {
             <View style={{ alignItems:"center"}}>
             <Text  style={{fontSize:24, color:"white", margin:5, textAlign:"center", fontWeight:"500", margin:10}}> {[selectedDate]}</Text>
 
-                <ScrollView > 
+
 
                   {turnos && (
                     <>
@@ -188,8 +188,7 @@ export  const CalendarioNutricionista=(props)=> {
                       />
                     </>
                   )}  
-                            
-                </ScrollView>
+     
 
                 {selectedTurno && (<Modal visible={true} transparent animationType='slide'>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}

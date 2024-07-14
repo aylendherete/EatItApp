@@ -5,14 +5,14 @@ import {
   View,
   TouchableOpacity,
   Modal,
-  Animated, Easing, Platform, Image,ScrollView, PermissionsAndroid
+  Animated, Dimensions,Easing, Platform, Image,ScrollView, PermissionsAndroid
   
 } from 'react-native';
 
 
 import { TextInput } from 'react-native-gesture-handler';
 import DateTimePicker from '@react-native-community/datetimepicker'
-
+import { PinchGestureHandler, State } from 'react-native-gesture-handler';
 import * as Animatable from 'react-native-animatable';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import { error } from 'console';
@@ -48,14 +48,14 @@ export const RegistroTipoComida=(props)=>{
       });
     
       if (registro.ok ){
-        let data= await registro.json();
         console.log("crea registro");
         setShowTick(true);
         setShowAlert(false);
         setTimeout(() => {
+          props.navigation.navigate('RegistroComida');
           setShowTick(false);
+          return props.navigation.navigate('RegistroComida');
         }, 1500);
-        
       }
     }catch(e){
       console.log(e)
@@ -165,7 +165,7 @@ export const RegistroTipoComida=(props)=>{
           </TouchableOpacity>
           {showPicker && (<DateTimePicker
               value={date}
-              mode="time" // Puedes usar 'date' para solo fecha o 'time' para solo hora
+              mode="time" 
               is24Hour={true}
               display="default"
               onChange={onChange}
@@ -178,6 +178,8 @@ export const RegistroTipoComida=(props)=>{
           {pickedImageURI&&
           <View style={{alignItems:"center", justifyContent:"center"}}>
             <Image source={{uri:pickedImageURI}} style={{width:325, height:325,borderColor:"white",borderWidth:5,borderRadius:15}}/></View>} 
+          
+          
           <TouchableOpacity onPress={handleShowAlert} style={styles.botonAñadirRegistro}>
             <Text style={styles.textoBotonAñadirRegistro}>Añadir registro</Text>
           </TouchableOpacity>   
