@@ -22,7 +22,7 @@ messaging().getToken().then((t)=>{
 })
 
 messaging().setBackgroundMessageHandler(async remoteMessage=>{
-  console.log("Mensaje en el background: ", remot)
+  console.log("Mensaje en el background: ", remoteMessage)
 })
 
 requestMultiple([PERMISSIONS.ANDROID.POST_NOTIFICATIONS]).then((statuses)=>{

@@ -81,7 +81,7 @@ export const Inicio=(props, {children})=> {
             }
           }else{
             Alert.alert("No se encontro el usuario")
-            console.log(e)
+      
           }
       }
     
