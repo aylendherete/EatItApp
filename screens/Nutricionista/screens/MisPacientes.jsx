@@ -1,21 +1,12 @@
 import React ,{useContext, useState, useEffect}from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  ScrollView,Image
-} from 'react-native';
-
+import {StyleSheet,Text,View,TouchableOpacity,ScrollView,Image} from 'react-native';
 import UserContext from '../../../context/userContext';
-import { useNavigation, useIsFocused } from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
 
 export const MisPacientes=(props)=>{
 
   const { user } = useContext(UserContext);
-
   const [pacientes, setPacientes] = useState([]);
-
   const isFocused = useIsFocused();
 
   const obtenerPacientes = async () => {

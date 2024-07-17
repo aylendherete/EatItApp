@@ -1,24 +1,16 @@
 import React, { useContext,useState, useRef} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Modal,
-  Animated, Easing, Image
-} from 'react-native';
-
+import {StyleSheet,Text,View,TouchableOpacity,Modal,Animated, Easing, Image} from 'react-native';
 import * as Animatable from 'react-native-animatable';
-
 import UserContext from '../../../context/userContext';
 
-
 export const RegistroTipoAgua=(props)=>{
-
   const { user } = useContext(UserContext);
   const [count, setCount] = useState(0);
-
   const[animation]=useState(new Animated.Value(1))
+  const countml=count*250;
+  const [showAlert, setShowAlert] = useState(false);
+  const opacity = useRef(new Animated.Value(0)).current;
+  const [showTick, setShowTick] = useState(false);
 
   const startAnimation=()=>{
     Animated.spring(animation, {
@@ -41,13 +33,6 @@ export const RegistroTipoAgua=(props)=>{
       setCount(count -1);
     }
   };
-
-  const countml=count*250;
-
-  const [showAlert, setShowAlert] = useState(false);
-  const opacity = useRef(new Animated.Value(0)).current;
-  
-  const [showTick, setShowTick] = useState(false);
 
   const handleButtonClick =async () => {
     try{

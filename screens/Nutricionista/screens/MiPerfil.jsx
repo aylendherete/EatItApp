@@ -1,12 +1,5 @@
 import React,{useContext} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,Image,
-  ScrollView
-} from 'react-native';
-
+import {StyleSheet,Text,View,TouchableOpacity,Image,} from 'react-native';
 import UserContext from '../../../context/userContext';
 
 export const MiPerfil=(props)=>{

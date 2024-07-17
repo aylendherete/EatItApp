@@ -1,16 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  ScrollView,FlatList,Image
-} from 'react-native';
-
+import {StyleSheet,Text,View,TouchableOpacity,FlatList,Image} from 'react-native';
 import { format } from 'date-fns';
 import UserContext from '../../../context/userContext';
 
 export const NotificacionesPaciente=(props)=>{
+  
   const { user } = useContext(UserContext);
   const [notificaciones, setNotificaciones] = useState([]);
 
@@ -39,7 +33,7 @@ export const NotificacionesPaciente=(props)=>{
       <View style={{ flex: 4 }}>
         <FlatList
           data={notificaciones}
-          keyExtractor={(item) => item.id.toString()}
+          //keyExtractor={(item) => item.id.toString()}
           ListEmptyComponent={
             <View>
               <Text style={{ fontSize: 20, fontWeight: 500, textAlign: "center" }}>No tienes notificaciones</Text>

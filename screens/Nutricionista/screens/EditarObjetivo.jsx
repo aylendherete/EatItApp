@@ -1,22 +1,12 @@
 import React ,{useState, useRef} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  ScrollView,
-  TextInput,Modal,
-  Animated, Easing,Image
-} from 'react-native';
-
+import {StyleSheet,Text,View,TouchableOpacity,TextInput,Modal, Animated, Easing,Image} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
 export const EditarObjetivo=(props)=>{
 
-  const { paciente } = props.route.params;
+  const paciente  = props.route.params.paciente;
   const [showAlert, setShowAlert] = useState(false);
   const opacity = useRef(new Animated.Value(0)).current;
-  
   const [objetivo,setObjetivo]=React.useState("");
   const [showTick, setShowTick] = useState(false);
 
@@ -67,7 +57,7 @@ export const EditarObjetivo=(props)=>{
       console.log(e);
     }
   };
-    console.log("PACIENTEEEEEEEEEE",paciente)
+    
   return(
       <View style={styles.fondoVerde}>
           <View>

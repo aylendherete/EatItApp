@@ -1,41 +1,27 @@
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity
-} from 'react-native';
-
-
+import {StyleSheet,Text,View,} from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { DatosPaciente } from './DatosPaciente';
 import { TurnosPaciente } from './TurnosPaciente';
-
-
 const Tab = createMaterialTopTabNavigator();
 
 export const ResumenPaciente=(props)=>{
-    return(
-        <View style={styles.fondoVerde}>
-            <View>
-            <Text style={styles.bannerPaciente}>Paciente</Text>
-            </View>
-            <View style={{flex:4}}>
-            
-                <View style={styles.container}>
-                    <Tab.Navigator>
-                        <Tab.Screen name="ResumenPaciente" component={ResumenPaciente}/>
-                        <Tab.Screen name="DatosPaciente" component={DatosPaciente}/>
-                        <Tab.Screen name="TurnosPaciente" component={TurnosPaciente}/>
-                    </Tab.Navigator>
-                
-                </View>
-
-            </View>
-        
+  return(
+    <View style={styles.fondoVerde}>
+      <View>
+        <Text style={styles.bannerPaciente}>Paciente</Text>
+      </View>
+      <View style={{flex:4}}>
+        <View style={styles.container}>
+            <Tab.Navigator>
+                <Tab.Screen name="ResumenPaciente" component={ResumenPaciente}/>
+                <Tab.Screen name="DatosPaciente" component={DatosPaciente}/>
+                <Tab.Screen name="TurnosPaciente" component={TurnosPaciente}/>
+            </Tab.Navigator>
         </View>
+      </View>
+    </View>
     );
-
 }
 
 const styles=StyleSheet.create({

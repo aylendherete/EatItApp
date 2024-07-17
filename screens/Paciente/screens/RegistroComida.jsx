@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity
-} from 'react-native';
+import {StyleSheet,Text,View,TouchableOpacity} from 'react-native';
 import { Image } from 'react-native-animatable';
 
 export const RegistroComida=(props)=>{

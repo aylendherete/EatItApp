@@ -1,10 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React, { useState, useRef } from 'react';
 import 'react-native-gesture-handler';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -13,8 +6,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { CalendarioPaciente, MiPerfil, NotificacionesPaciente, RegistroComentado, RegistroComida, RegistroTipoActividad, RegistroTipoAgua, RegistroTipoComida, TurnosPaciente, DatosPaciente, RegistroComentadoActividad, RegistroComentadoAgua, HistorialComentarios } from './screens';
 import { Image,StyleSheet,View,Text } from 'react-native';
 import { Screen } from 'react-native-screens';
-
-
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 const Tab = createBottomTabNavigator();
@@ -31,16 +22,6 @@ function StackNavigation(){
     )
 }
 
-function StackCalendarioPaciente(){
-  return(
-    <Stack.Navigator>
-      <Stack.Screen name="CalendarioPaciente" component={CalendarioPaciente} options={{headerShown:false}}/>
-      <Stack.Screen name="TurnosPaciente" component={TurnosPaciente} options={{headerShown:false}}/>
-    </Stack.Navigator>
-  );
-}
-
-
 function StackNavigationNotificaciones(){
   
   return(
@@ -52,8 +33,6 @@ function StackNavigationNotificaciones(){
     </Stack.Navigator>
   )
 }
-
-
 
 const TopTab = createMaterialTopTabNavigator();
 
@@ -83,37 +62,7 @@ export const ResumenPacientee=(props)=>{
 
 }
 
-const styles=StyleSheet.create({
-    fondoVerde:{
-    backgroundColor:"#D9ED92",
-    flex:1
-    },
-    bannerPaciente:{
-      backgroundColor:"#76C893",
-      textAlign:'center', 
-      fontSize:35, 
-      color:"white",
-      fontFamily:"Serif-Sans", 
-      fontWeight:"600", 
-      padding:30
-    },
-   
-    container: {
-      flex: 1,
-      padding: 16,
-      justifyContent:"center"
-    },
-    registroDiario:{
-      fontSize:15, 
-      color:"black",
-      textAlign:"center",
-      borderRadius:10,
-      backgroundColor:"white",
-      padding:15,
-      margin:5,
-      
-  }
-})
+
 
 export const Paciente=()=>{
   
@@ -153,3 +102,35 @@ export const Paciente=()=>{
   )  
   
 }
+
+const styles=StyleSheet.create({
+  fondoVerde:{
+  backgroundColor:"#D9ED92",
+  flex:1
+  },
+  bannerPaciente:{
+    backgroundColor:"#76C893",
+    textAlign:'center', 
+    fontSize:35, 
+    color:"white",
+    fontFamily:"Serif-Sans", 
+    fontWeight:"600", 
+    padding:30
+  },
+ 
+  container: {
+    flex: 1,
+    padding: 16,
+    justifyContent:"center"
+  },
+  registroDiario:{
+    fontSize:15, 
+    color:"black",
+    textAlign:"center",
+    borderRadius:10,
+    backgroundColor:"white",
+    padding:15,
+    margin:5,
+    
+}
+})

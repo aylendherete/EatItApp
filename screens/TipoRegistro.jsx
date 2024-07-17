@@ -1,32 +1,18 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity
-} from 'react-native';
+import {StyleSheet,Text,View,TouchableOpacity} from 'react-native';
 
 export const TipoRegistro=(props)=>{
-    return(
-    
-        <View style={styles.fondoVerde}>
-          <View style={styles.fondoVerde}></View>
-          <View style={styles.fondoVerdeClaro}>
-            <View style={styles.botonTipo}><TouchableOpacity onPress={()=>props.navigation.navigate('RegistroNutricionista')}><Text style={styles.textoTipo}>Soy nutricionista</Text></TouchableOpacity></View>
-            <View style={styles.botonTipo}><TouchableOpacity onPress={()=>props.navigation.navigate('RegistroPaciente')}><Text style={styles.textoTipo}>Soy paciente</Text></TouchableOpacity></View>  
-          </View>
-            
-        </View>
-        );
+  return(
+    <View style={styles.fondoVerde}>
+      <View style={styles.fondoVerde}></View>
+      <View style={styles.fondoVerdeClaro}>
+        <View style={styles.botonTipo}><TouchableOpacity onPress={()=>props.navigation.navigate('RegistroNutricionista')}><Text style={styles.textoTipo}>Soy nutricionista</Text></TouchableOpacity></View>
+        <View style={styles.botonTipo}><TouchableOpacity onPress={()=>props.navigation.navigate('RegistroPaciente')}><Text style={styles.textoTipo}>Soy paciente</Text></TouchableOpacity></View>  
+      </View>
+        
+    </View>
+  );
 }
-
 
 const styles=StyleSheet.create({
   fondoVerde:{

@@ -1,26 +1,15 @@
 import React, {useState,useRef, useEffect} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Modal,
-  Animated, Easing,
-  ScrollView,
-  TextInput, Image,FlatList
-} from 'react-native';
-
+import {StyleSheet,Text,View,TouchableOpacity,Modal,Animated, Easing,ScrollView,TextInput, Image,FlatList} from 'react-native';
 import { format } from 'date-fns';
 
 
 export const AnalisisRegistroPacienteAgua=(props)=>{
-  const { idRegistro } = props.route.params;
+  const  idRegistro  = props.route.params.idRegistro;
   const [showAlert, setShowAlert] = useState(false);
   const opacity = useRef(new Animated.Value(0)).current;
   const [registro, setRegistro] = useState([]);
   const[dateTime,setDateTime]=useState(null)
   const[comentario,setComentario]=useState("");
-
   const [comentariosNutricionista,setComentarioNutricionista]=useState([])
 
 
@@ -68,7 +57,7 @@ export const AnalisisRegistroPacienteAgua=(props)=>{
       easing: Easing.linear,
       useNativeDriver: true,
     }).start(() => setShowAlert(false));
-    return(props.navigation.navigate("NotificacionesNutricionista"))
+    
   };
 
   const handleShowAlert=()=>{
@@ -93,10 +82,10 @@ export const AnalisisRegistroPacienteAgua=(props)=>{
       });
 
       console.log("//////"+registro.pacienteId)
+      obtenerComentariosNutricionista()
       if (response.ok){
         console.log("se comentó registro")
         fadeOut();
-        return(props.navigation.navigate("NotificacionesNutricionista"))
       }
     }catch(e){
       console.log(e)
@@ -128,7 +117,7 @@ export const AnalisisRegistroPacienteAgua=(props)=>{
                   
               </View>
 
-              <ScrollView>
+              <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <View > 
                 
                   <View style={{ backgroundColor:"#52B69A", padding:15,textAlign:'center', margin:10, borderRadius:5}}>
@@ -141,7 +130,7 @@ export const AnalisisRegistroPacienteAgua=(props)=>{
                   data={comentariosNutricionista}
                   keyExtractor={(item) => item.id.toString()}
                   renderItem={({ item }) => (
-                    <ScrollView style={{ flex: 1 }}>
+                    <View>
                       {item.idRegistroAgua && (
                         <View  style={{backgroundColor:"white",borderColor:"#76C893",padding:15,margin:20,borderRadius:15,borderWidth:2,padding:15, marginVertical: 5, alignItems: "center", justifyContent: "center",alignItems:"stretch", borderRadius:25}}>
                           <View style={{flexDirection: "row",alignItems: "center",}}>
@@ -152,12 +141,12 @@ export const AnalisisRegistroPacienteAgua=(props)=>{
                         </View>
                       )}
                       
-                    </ScrollView>
+                      </View>
                   )}
                 />
 
                 <View >
-                  <TextInput style={styles.inputComentarioRegistro} placeholderTextColor="black" placeholder='Añadir comentario'></TextInput>
+                  <TextInput onChangeText={setComentario}style={styles.inputComentarioRegistro} placeholderTextColor="black" placeholder='Añadir comentario'></TextInput>
                 </View>
                 <TouchableOpacity onPress={handleShowAlert} style={{backgroundColor:"#52B69A",borderRadius:30, padding:20, margin:25}}><Text style={{fontSize:25,textAlign:"center", fontWeight:"bold", color:"white"}}>Guardar cambios</Text></TouchableOpacity>
                 

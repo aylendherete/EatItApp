@@ -1,67 +1,25 @@
 import React ,{useState, useRef, useContext, useEffect} from 'react';
-import {
-    StyleSheet,
-    Text,
-    View,
-    ScrollView,
-    Modal,
-    Animated, Easing,
-    TouchableOpacity,FlatList,Image
-  } from 'react-native';
-
-  import UserContext from '../../../context/userContext';
-
-  import { format , parseISO} from 'date-fns';
-
-
+import {StyleSheet,Text,View,Modal,Animated, Easing,TouchableOpacity,FlatList,Image} from 'react-native';
+import UserContext from '../../../context/userContext';
+import { format , parseISO} from 'date-fns';
 import { Calendar, LocaleConfig} from 'react-native-calendars';
 
 LocaleConfig.locales['es'] = {
-    monthNames: [
-      'Enero',
-      'Febrero',
-      'Marzo',
-      'Abril',
-      'Mayo',
-      'Junio',
-      'Julio',
-      'Agosto',
-      'Septiembre',
-      'Octubre',
-      'Noviembre',
-      'Diciembre',
-    ],
-    monthNamesShort: [
-      'Ene.',
-      'Feb.',
-      'Mar.',
-      'Abr.',
-      'Mayo',
-      'Jun.',
-      'Jul.',
-      'Ago.',
-      'Sept.',
-      'Oct.',
-      'Nov.',
-      'Dic.',
-    ],
-    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-    dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
-  };
-  LocaleConfig.defaultLocale = 'es';
+  monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre',],
+  monthNamesShort: ['Ene.','Feb.','Mar.','Abr.','Mayo','Jun.','Jul.','Ago.','Sept.', 'Oct.','Nov.','Dic.',],
+  dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+  dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
+};
+LocaleConfig.defaultLocale = 'es';
   
 export  const CalendarioNutricionista=(props)=> {
 
     const { user } = useContext(UserContext);
-
     const [selectedDate, setSelectedDate] = useState('');
-    
     const [showAlert, setShowAlert] = useState(false);
     const opacity = useRef(new Animated.Value(0)).current;
-
-    
-  const [turnos,setTurnos]=useState(null);
-  const [selectedTurno, setSelectedTurno] = useState(null);
+    const [turnos,setTurnos]=useState(null);
+    const [selectedTurno, setSelectedTurno] = useState(null);
 
     const obtenerTurnos = async () => {
       try {
@@ -88,6 +46,7 @@ export  const CalendarioNutricionista=(props)=> {
           console.log("se canceló turno")
           setSelectedTurno(null);
           fadeOut();
+          obtenerTurnos()
         }
       } catch (e) {
         console.log('Error al obtener los registros del paciente:', e);

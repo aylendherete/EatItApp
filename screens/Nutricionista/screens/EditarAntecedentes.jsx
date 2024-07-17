@@ -1,18 +1,10 @@
 import React,{useState, useRef}  from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  ScrollView,
-  TextInput,
-  Modal,
-  Animated, Easing,Image
-} from 'react-native';
+import {StyleSheet,Text,View,TouchableOpacity,TextInput,Modal,Animated, Easing,Image} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
 export const EditarAntecedentes=(props)=>{
-  const { paciente } = props.route.params;
+  
+  const paciente  = props.route.params.paciente;
   const [showAlert, setShowAlert] = useState(false);
   const opacity = useRef(new Animated.Value(0)).current;
   const [antecedentes,setAntecedentes]=React.useState("");

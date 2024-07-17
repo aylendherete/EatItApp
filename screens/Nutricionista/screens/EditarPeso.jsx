@@ -1,35 +1,12 @@
 import React ,{useState, useRef, useEffect} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  ScrollView,
-  Image,
-  TextInput,
-  Modal,
-  Animated, Easing
-} from 'react-native';
-
+import {StyleSheet,Text,View,TouchableOpacity,ScrollView,Image,TextInput,Modal,Animated, Easing} from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
-
 import * as Animatable from 'react-native-animatable';
 
-
 export const EditarPeso=(props)=>{
-  const { paciente } = props.route.params;
+  const paciente  = props.route.params.paciente;
   const [pesos, setPesos] = useState([]); 
   const [pesoACambiar,setPesoACambiar]=useState([])
-
-
-  const data = {
-    datasets: [
-      {
-        data: [65, 75, 80, 72,73,72,69], // Pesos en el eje Y
-      },
-    ],
-  };
-
   const [showAlert, setShowAlert] = useState(false);
   const opacity = useRef(new Animated.Value(0)).current;
   const [showTick, setShowTick] = useState(false);
@@ -86,7 +63,6 @@ export const EditarPeso=(props)=>{
   };
 
 
-
   const obtenerPesos = async (id) => {
     try {
       let response = await fetch(`http://localhost:3000/paciente/getRegistroPesos?id=${paciente.id}`);
@@ -94,16 +70,15 @@ export const EditarPeso=(props)=>{
         let data = await response.json();
         const pesosArray = data.map(registro => registro.peso); 
         setPesos(pesosArray);
-      } else {
-        console.error('Error al obtener registros de peso:', response.statusText);
-      }
-    } catch (error) {
-      console.error('Error de red:', error);
+      } 
+      
+    } catch (e) {
+      console.log(e);
     }
   };
   useEffect(() => {
    
-    obtenerPesos(); // Obtener pesos al montar el componente
+    obtenerPesos(); 
   }, []);
 
     return(
@@ -122,7 +97,7 @@ export const EditarPeso=(props)=>{
                     data={{
                       datasets: [
                         {
-                          data: pesos.length ? pesos : [0], // Asegúrate de que siempre haya datos
+                          data: pesos.length ? pesos : [0], 
                         },
                       ],
                     }}
@@ -140,10 +115,10 @@ export const EditarPeso=(props)=>{
                     }}
 
                     propsForDots={{
-                      r: "6", // Tamaño del punto
-                      strokeWidth: "2", // Ancho del borde del punto
-                      stroke: "#52B69A", // Color del borde del punto
-                      fill: "#52B69A", // Color de relleno del punto
+                      r: "6", 
+                      strokeWidth: "2", 
+                      stroke: "#52B69A", 
+                      fill: "#52B69A", 
                     }}
                     propsForBackgroundLines={{
                       strokeWidth: 1,

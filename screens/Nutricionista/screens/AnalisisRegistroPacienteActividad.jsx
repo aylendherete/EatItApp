@@ -1,26 +1,15 @@
 import React, {useState,useRef,useEffect} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Modal,
-  Animated, Easing,
-  ScrollView,
-  TextInput, Image, FlatList
-} from 'react-native';
-
+import {StyleSheet,Text,View,TouchableOpacity,Modal,Animated, Easing,ScrollView,TextInput, Image, FlatList} from 'react-native';
 import { format } from 'date-fns';
 
 
 export const AnalisisRegistroPacienteActividad=(props)=>{
-  const { idRegistro } = props.route.params;
+  const  idRegistro  = props.route.params.idRegistro;
   const [showAlert, setShowAlert] = useState(false);
   const opacity = useRef(new Animated.Value(0)).current;
   const [registro, setRegistro] = useState({});
   const[comentario,setComentario]=useState("");
   const[dateTime,setDateTime]=useState(null)
-
   const [comentariosNutricionista,setComentarioNutricionista]=useState([])
 
   const obtenerComentariosNutricionista=async()=>{
@@ -75,7 +64,7 @@ export const AnalisisRegistroPacienteActividad=(props)=>{
       easing: Easing.linear,
       useNativeDriver: true,
     }).start(() => setShowAlert(false));
-    return props.navigation.navigate("NotificacionesNutricionista");
+    
   };
 
   const handleShowAlert = () => {
@@ -100,10 +89,10 @@ export const AnalisisRegistroPacienteActividad=(props)=>{
       });
 
       console.log("//////"+registro.pacienteId)
+      obtenerComentariosNutricionista()
       if (response.ok){
         console.log("se comentó registro")
         fadeOut();
-        return(props.navigation.navigate("NotificacionesNutricionista"))
       }
     }catch(e){
       console.log(e)
@@ -127,7 +116,7 @@ export const AnalisisRegistroPacienteActividad=(props)=>{
           </View>
         </View>
 
-        <ScrollView>
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <View>
             
             <View style={{ backgroundColor: "#52B69A", padding: 25, textAlign: 'center', margin: 20, borderRadius: 5 }}>
@@ -139,7 +128,7 @@ export const AnalisisRegistroPacienteActividad=(props)=>{
                   data={comentariosNutricionista}
                   keyExtractor={(item) => item.id.toString()}
                   renderItem={({ item }) => (
-                    <ScrollView style={{ flex: 1 }}>
+                   <View>
                       {item.idRegistroActividad && (
                         <View  style={{backgroundColor:"white",borderColor:"#76C893",padding:15,margin:20,borderRadius:15,borderWidth:2,padding:15, marginVertical: 5, alignItems: "center", justifyContent: "center",alignItems:"stretch", borderRadius:25}}>
                          <View style={{flexDirection: "row",alignItems: "center",}}>
@@ -149,8 +138,7 @@ export const AnalisisRegistroPacienteActividad=(props)=>{
                          </View>
                        </View>  
                       )}
-                      
-                    </ScrollView>
+                    </View>
                   )}
             />
           <View>

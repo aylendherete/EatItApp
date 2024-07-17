@@ -1,22 +1,12 @@
 import React,{ useContext,useState, useRef } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Modal,
-  Animated, Dimensions,Easing, Platform, Image,ScrollView, PermissionsAndroid
-  
-} from 'react-native';
-
-
+import {StyleSheet,Text,View,TouchableOpacity,Modal,Animated,Easing, Platform, Image,ScrollView, PermissionsAndroid} from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import DateTimePicker from '@react-native-community/datetimepicker'
-import { PinchGestureHandler, State } from 'react-native-gesture-handler';
 import * as Animatable from 'react-native-animatable';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import { error } from 'console';
 import UserContext from '../../../context/userContext';
+import { format } from 'date-fns';
+
 
 export const RegistroTipoComida=(props)=>{
 
@@ -25,9 +15,10 @@ export const RegistroTipoComida=(props)=>{
   const [showAlertImage, setShowAlertImage] = useState(false);
   const opacity = useRef(new Animated.Value(0)).current;
   const [descripcion,setDescripcion]=React.useState("");
-  [pickedImageURI,setPickedImageURI]=useState(null);
-  
+  const [pickedImageURI,setPickedImageURI]=useState(null);
   const [showTick, setShowTick] = useState(false);
+  const [date, setDate] = useState(new Date());
+  const [showPicker, setShowPicker] = useState(false);
 
   const handleButtonClick = async () => {
 
@@ -52,9 +43,7 @@ export const RegistroTipoComida=(props)=>{
         setShowTick(true);
         setShowAlert(false);
         setTimeout(() => {
-          props.navigation.navigate('RegistroComida');
           setShowTick(false);
-          return props.navigation.navigate('RegistroComida');
         }, 1500);
       }
     }catch(e){
@@ -89,13 +78,10 @@ export const RegistroTipoComida=(props)=>{
     fadeIn();
   }
 
-  
-  const [date, setDate] = useState(new Date());
-  const [showPicker, setShowPicker] = useState(false);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
-    setShowPicker(Platform.OS === 'android' ? false : showPicker); // Oculta el selector en iOS
+    setShowPicker(Platform.OS === 'android' ? false : showPicker);
     setDate(currentDate);
   };
 
@@ -103,14 +89,7 @@ export const RegistroTipoComida=(props)=>{
     setShowPicker(true);
   };
   
-  const obtenerHora = () => {
-    
-    const hora = date.getHours();
-    const minutos = date.getMinutes();
-    return `${hora}:${minutos < 10 ? '0' : ''}${minutos}`;
-  };
   
-
   const handlePickImage=async()=>{
     
     const test=await launchImageLibrary()
@@ -161,7 +140,7 @@ export const RegistroTipoComida=(props)=>{
         <ScrollView>
           <TextInput onChangeText={setDescripcion} style={styles.botonTipoRegistroComida} placeholder="Descripcion" placeholderTextColor={"black"}></TextInput>
           <TouchableOpacity  style={styles.botonTipoRegistroComida} onPress={showDatepicker}>
-            <Text style={{color:"black", textAlign:"center",fontSize:20, fontWeight:"600"}}>Seleccionar hora: {obtenerHora()}</Text>
+            <Text style={{color:"black", textAlign:"center",fontSize:20, fontWeight:"600"}}>Seleccionar hora: {format(date, 'HH:mm')}</Text>
           </TouchableOpacity>
           {showPicker && (<DateTimePicker
               value={date}

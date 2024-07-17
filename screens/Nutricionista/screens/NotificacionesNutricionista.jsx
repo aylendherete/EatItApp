@@ -1,20 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  ScrollView,
-  FlatList,Image
-} from 'react-native';
-
-
+import {StyleSheet,Text,View,TouchableOpacity,ScrollView,FlatList,Image} from 'react-native';
 import { format , parseISO} from 'date-fns';
 import UserContext from '../../../context/userContext';
 
 export const NotificacionesPaciente = (props) => {
   const { user } = useContext(UserContext);
-
   const [notificaciones, setNotificaciones] = useState([]);
 
   const obtenerNotificaciones = async () => {
@@ -23,30 +13,21 @@ export const NotificacionesPaciente = (props) => {
       if (response.ok) {
         let data = await response.json();
         setNotificaciones(data);
+        console.log("Se llama al obtenerNotificaciones"+data)
    
-      } else {
-        console.error('Error al obtener notificaciones:', response.statusText);
       }
-    } catch (error) {
-      console.error('Error de red:', error);
+    } catch (e) {
+      console.log(e);
     }
   };
 
   const rechazarSolicitud = async (id) => {
     try {
       const solicitud = await fetch(`http://localhost:3000/paciente/rechazarSolicitud?id=${id}`);
-
+      obtenerNotificaciones();
       if (solicitud.ok) {
         console.log("Se rechazó la solicitud");
-        
-        const updatedNotificaciones = notificaciones.filter(item => item.idSolicitud !== id);
-        setNotificaciones(updatedNotificaciones);
-
-        // Obtener notificaciones actualizadas
-        obtenerNotificaciones();
-       
-      } else {
-        console.error('Error al rechazar la solicitud:', solicitud.statusText);
+     
       }
     } catch (error) {
       console.error('Error de red:', error);
@@ -57,13 +38,9 @@ export const NotificacionesPaciente = (props) => {
     console.log(id)
     try{
       const turno= await fetch("http://localhost:3000/turno/rechazarTurno?id="+id, {method:'POST'});
+      obtenerNotificaciones();
       if(turno.ok){
         console.log("SE RECHAZÓ TURNOOOOOOOOOO")
-        const updatedNotificaciones = notificaciones.filter(item => item.idTurno !== id);
-        setNotificaciones(updatedNotificaciones);
-
-        // Obtener notificaciones actualizadas
-        obtenerNotificaciones();
       }
     }catch(e){
       console.log(e)
@@ -75,18 +52,9 @@ export const NotificacionesPaciente = (props) => {
     console.log(id)
     try{
       const turno= await fetch("http://localhost:3000/turno/aceptarTurno?id="+id, {method:'POST'});
+      obtenerNotificaciones()
       if(turno.ok){
         console.log("SE ACEPTO TURNOOOOOOOOOO")
-        const updatedNotificaciones = notificaciones.map(item => {
-          if (item.idTurno === id) {
-            return { ...item, turnoPaciente: { ...item.turnoPaciente, turnoAceptado: true } };
-          }
-          return item;
-        });
-        setNotificaciones(updatedNotificaciones);
-  
-        // Obtener notificaciones actualizadas
-        obtenerNotificaciones();
       }
     }catch(e){
       console.log(e)
@@ -98,25 +66,17 @@ export const NotificacionesPaciente = (props) => {
       const asociacion = await fetch(`http://localhost:3000/paciente/asociarPacienteANutricionista?id=${id}&matriculaNacional=${mn}`, {
         method: 'POST',
       });
-
+      obtenerNotificaciones();
       if (asociacion.ok) {
         console.log("Paciente asociado correctamente");
-        const updatedNotificaciones = notificaciones.filter(item => item.idSolicitud !== id);
-        setNotificaciones(updatedNotificaciones);
-
-        // Obtener notificaciones actualizadas
-        obtenerNotificaciones();
-      } else {
-        console.error('Error al asociar paciente:', asociacion.statusText);
       }
-    } catch (error) {
-      console.error('Error de red:', error);
+    } catch (e) {
+      console.log(e);
     }
   }
 
   useEffect(() => {
     obtenerNotificaciones();
-   
   }, []);
 
   return (
@@ -130,11 +90,11 @@ export const NotificacionesPaciente = (props) => {
           keyExtractor={(item) => item.id.toString()}
           ListEmptyComponent={
             <View>
-              <Text style={{ fontSize: 20, fontWeight: 500, textAlign: "center" }}>No tienes notificaciones</Text>
+              <Text style={{ fontSize: 20, fontWeight: 500, textAlign: "center" ,color:"white"}}>😞 No tienes notificaciones 😞</Text>
             </View>
           }
           renderItem={({ item }) => (
-            <ScrollView style={{ flex: 1 }}>
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
               
               {item.notificacionSolicitud && (
                 <View style={styles.botonNotificacion}>

@@ -1,20 +1,13 @@
-
 import React ,{useState, useRef, useEffect} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
+import {StyleSheet,Text,View,TouchableOpacity,
   ScrollView,
   Modal,
   Animated, Easing,Image
 } from 'react-native';
-
-import { ScatterChart } from 'react-native-svg-charts';
 import * as Animatable from 'react-native-animatable';
 
 export const PerfilPaciente=(props)=>{
-  const { paciente } = props.route.params;
+  const paciente  = props.route.params.paciente;
   const [showAlert, setShowAlert] = useState(false);
   const opacity = useRef(new Animated.Value(0)).current;
   const [showAlertElimnarPaciente, setShowAlertEliminarPaciente] = useState(false);

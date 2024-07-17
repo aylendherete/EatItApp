@@ -1,19 +1,12 @@
 import React,{useState,useEffect} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,FlatList
-} from 'react-native';
+import {StyleSheet,Text,View,Image,FlatList} from 'react-native';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
-
 import { format } from 'date-fns';
-
 
 export const RegistroComentadoActividad =(props)=>{
 
   const [comentarios, setComentarios] = useState([]);
-  const { registro } = props.route.params;
+  const registro = props.route.params.registro;
 
   const obtenerComentarios = async () => {
     try {

@@ -1,71 +1,30 @@
 import React,{useState, useRef,useContext,useEffect}  from 'react';
 import { Calendar,LocaleConfig} from 'react-native-calendars';
-
-import {
-    StyleSheet,
-    Text,
-    View,
-    TouchableOpacity,
-    ScrollView,
-    Modal,
-    Animated, Easing,FlatList,Image
-  } from 'react-native';
-
-  LocaleConfig.locales['es'] = {
-    monthNames: [
-      'Enero',
-      'Febrero',
-      'Marzo',
-      'Abril',
-      'Mayo',
-      'Junio',
-      'Julio',
-      'Agosto',
-      'Septiembre',
-      'Octubre',
-      'Noviembre',
-      'Diciembre',
-    ],
-    monthNamesShort: [
-      'Ene.',
-      'Feb.',
-      'Mar.',
-      'Abr.',
-      'Mayo',
-      'Jun.',
-      'Jul.',
-      'Ago.',
-      'Sept.',
-      'Oct.',
-      'Nov.',
-      'Dic.',
-    ],
-    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-    dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
-  };
-  LocaleConfig.defaultLocale = 'es';
-
+import {StyleSheet,Text,View,TouchableOpacity,ScrollView,Modal,Animated, Easing,FlatList,Image} from 'react-native';
 import { format , parseISO} from 'date-fns';
-
 import UserContext from '../../../context/userContext';
+import {useIsFocused } from '@react-navigation/native';
 
+LocaleConfig.locales['es'] = {
+  monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre',],
+  monthNamesShort: ['Ene.','Feb.','Mar.','Abr.','Mayo','Jun.','Jul.','Ago.','Sept.','Oct.','Nov.','Dic.',],
+  dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+  dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
+  };
+
+LocaleConfig.defaultLocale = 'es';
 
 export const CalendarioPaciente=(props)=>{
-  const [selectedDate, setSelectedDate] = useState('');
-    
-  const [showAlert, setShowAlert] = useState(false);
-
-  const [showAlertTurno, setShowAlertTurno]=useState(false);
-
-  const [selectedRegistro, setSelectedRegistro] = useState(null);
-
-  const [registroPaciente, setRegistroPaciente] = useState(null);
   const { user } = useContext(UserContext);
 
+  const [selectedDate, setSelectedDate] = useState('');  
+  const [showAlert, setShowAlert] = useState(false);
+  const [selectedRegistro, setSelectedRegistro] = useState(null);
+  const [registroPaciente, setRegistroPaciente] = useState(null);
   const [turnos,setTurnos]=useState(null);
-
   const [selectedTurno, setSelectedTurno] = useState(null);
-
+  const isFocused = useIsFocused();
+  const opacity = useRef(new Animated.Value(0)).current;
 
   const cancelarTurno=async()=>{
 
@@ -77,6 +36,7 @@ export const CalendarioPaciente=(props)=>{
         console.log("se canceló turno")
         setSelectedTurno(null);
         fadeOut();
+        obtenerTurnos()
       }
     } catch (e) {
       console.log('Error al obtener los registros del paciente:', e);
@@ -115,8 +75,7 @@ export const CalendarioPaciente=(props)=>{
       console.log('Error al obtener los registros del paciente:', e);
     }
   };
-
-  const opacity = useRef(new Animated.Value(0)).current;
+  
   const fadeIn = () => {
     Animated.timing(opacity, {
       toValue: 1,
@@ -167,7 +126,7 @@ export const CalendarioPaciente=(props)=>{
     obtenerRegistros();
     obtenerTurnos();
     
-  }, []);
+  }, [isFocused]);
     
   return(
       <View style={styles.fondoVerde}>
@@ -230,7 +189,7 @@ export const CalendarioPaciente=(props)=>{
             <View style={{ alignItems:"center"}}>
             <Text  style={{fontSize:24, color:"white", margin:5, textAlign:"center", fontWeight:"500", margin:10}}>Fecha seleccionada: {[selectedDate]}</Text>
                 
-                <ScrollView > 
+              <ScrollView contentContainerStyle={{ flexGrow: 1 }}> 
 
                 {registroPaciente && (
                   <>
@@ -286,6 +245,7 @@ export const CalendarioPaciente=(props)=>{
                                 <View>
                                   <Text style={{color:"black", fontWeight:"600", fontSize:16,textAlign:"center"}}>{format(item.hora, 'HH:mm')} Comida</Text>
                                   <Text style={{color:"black", fontWeight:"300", fontSize:16,textAlign:"center", margin:5}}>Descripción: {item.descripcion}</Text>
+                                  {item.foto && <Image style={{borderColor:"black", borderWidth:2, width:120, height:120,alignSelf:"center"}} source={{uri:item.foto}}></Image>}
                                 </View>
                                 <Image style={{width:35, height:35,margin:5}}source={{uri: "data:image/png;base64,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"}}></Image>
                               </View>
@@ -369,7 +329,7 @@ export const CalendarioPaciente=(props)=>{
               padding: 30,
               borderRadius: 15,
               opacity: opacity,
-              width: '90%',
+              width: '95%',
               height: '50%',
               justifyContent: "center",
               alignItems: 'center'
@@ -379,7 +339,7 @@ export const CalendarioPaciente=(props)=>{
                 <ScrollView>
                   <Text style={{fontSize:24, color:"white", margin:5, textAlign:"center", fontWeight:"500"}}>{format(parseISO(selectedRegistro.hora || selectedRegistro.horaInicio), 'dd/MM/yyyy HH:mm')}</Text>
                   {selectedRegistro.descripcion && (
-                    <Text style={{backgroundColor:"#52B69A",fontSize:24, color:"white", margin:5, textAlign:"center", margin:10, padding:15, borderRadius:5}}>Descripción: {selectedRegistro.descripcion}</Text>
+                    <Text style={{backgroundColor:"#52B69A",fontSize:20, color:"white", margin:5, textAlign:"center", margin:10, padding:10, borderRadius:5}}>Descripción: {selectedRegistro.descripcion}</Text>
                   )}
                   {selectedRegistro.cantidadVasos && (
                     <Text style={{backgroundColor:"#52B69A",fontSize:24, color:"white", margin:5, textAlign:"center", margin:10, padding:15, borderRadius:5}}>Vasos de agua: {selectedRegistro.cantidadVasos} {"("}{selectedRegistro.cantidadVasos * 250} ml{")"}</Text>
@@ -387,6 +347,7 @@ export const CalendarioPaciente=(props)=>{
                   {selectedRegistro.tiempoTotal && (
                     <Text style={{backgroundColor:"#52B69A",fontSize:24, color:"white", margin:5, textAlign:"center", margin:10, padding:15, borderRadius:5}}>Tiempo Total: {selectedRegistro.tiempoTotal}</Text>
                   )}
+                  {selectedRegistro.foto && <Image style={{borderColor:"black", borderWidth:2, width:220, height:220,alignSelf:"center"}} source={{uri:selectedRegistro.foto}}></Image>}
                 </ScrollView>
               </View>
               <TouchableOpacity onPress={handleModalClose}>

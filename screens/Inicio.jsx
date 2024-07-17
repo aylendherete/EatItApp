@@ -1,89 +1,69 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import React, {useRef,createContext,useState,useContext, useEffect} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-  Alert, Image,
-  
-} from 'react-native';
-
+import React from 'react';
+import {StyleSheet,Text,View,TextInput,TouchableOpacity,Alert, Image,} from 'react-native';
 import UserContext from '../context/userContext';
-
 import messaging from '@react-native-firebase/messaging'
 
-export const Inicio=(props, {children})=> {
+export const Inicio=(props)=> {
 
-  const {setUser}=useContext(UserContext);
-  const [fcnToken,setfcnToken]=useState(null);
+  const {setUser}=React.useContext(UserContext);
   const [email,setEmail]=React.useState("");
   const [contrasenia, setContrasenia]= React.useState("");
 
   async function handleLogin(email, contrasenia){
     const token= await messaging().getToken();
-      console.log("TOKEN EN USE EFFECT",token);
-      setfcnToken(token);
-  
-      const loginCheckPaciente= await fetch('http://localhost:3000/paciente/login?email='+email+'&contrasenia='+contrasenia+'&token='+token)
-      
-      if (loginCheckPaciente.ok ){
-        let data= await loginCheckPaciente.json();
+    console.log("TOKEN",token);
 
-        const userData={
-          id: data.id,
-          nombre:data.nombre,
-          apellido:data.apellido,
-          email:email,
-          contrasenia:contrasenia,
-          matriculaNacionalNutricionista:data.matriculaNacionalNutricionista,
-          telefono:data.telefono
-        }
+    const loginCheckPaciente= await fetch('http://localhost:3000/paciente/login?email='+email+'&contrasenia='+contrasenia+'&token='+token)
 
-        setUser(userData)
+    if (loginCheckPaciente.ok ){
+      let data= await loginCheckPaciente.json();
+      const userData={
+        id: data.id,
+        nombre:data.nombre,
+        apellido:data.apellido,
+        email:email,
+        contrasenia:contrasenia,
+        matriculaNacionalNutricionista:data.matriculaNacionalNutricionista,
+        telefono:data.telefono
+      }
+      setUser(userData)
+      console.log("entra paciente");
 
-        console.log("entra paciente");
-        if(data.enviarSolicitudNutricionista==false && data.matriculaNacionalNutricionista==null){
-          return props.navigation.navigate("ElegirNutricionista");
-        }
-        else if (data.enviarSolicitudNutricionista!=false && data.matriculaNacionalNutricionista!=null){
-          return props.navigation.navigate("Paciente");
-        }
-        else{
-          return props.navigation.navigate("CartelSolicitud");
-        
-        }
-        
+      //se ve estado del paciente
+      if(data.enviarSolicitudNutricionista==false && data.matriculaNacionalNutricionista==null){
+        return props.navigation.navigate("ElegirNutricionista");
+      }
+      else if (data.enviarSolicitudNutricionista!=false && data.matriculaNacionalNutricionista!=null){
+        return props.navigation.navigate("Paciente");
       }
       else{
-        const loginCheckNutricionista= await fetch('http://localhost:3000/nutricionista/login?email='+email+'&contrasenia='+contrasenia+'&token='+token)
-
-        if(loginCheckNutricionista.ok){
-            let data=await loginCheckNutricionista.json();
-            if (data!==null){
-              const userData={
-                matriculaNacional: data.matriculaNacional,
-                nombre:data.nombre,
-                apellido:data.apellido,
-                email:email,
-                contrasenia:contrasenia,
-                telefono:data.telefono
-              }
-              setUser(userData)
-              return props.navigation.navigate("Nutricionista");
-            }
-          }else{
-            Alert.alert("No se encontro el usuario")
-      
-          }
+        return props.navigation.navigate("CartelSolicitud");
       }
+      
+    }
+    else{
+      const loginCheckNutricionista= await fetch('http://localhost:3000/nutricionista/login?email='+email+'&contrasenia='+contrasenia+'&token='+token)
+
+      if(loginCheckNutricionista.ok){
+          let data=await loginCheckNutricionista.json();
+         
+          const userData={
+            matriculaNacional: data.matriculaNacional,
+            nombre:data.nombre,
+            apellido:data.apellido,
+            email:email,
+            contrasenia:contrasenia,
+            telefono:data.telefono
+          }
+          setUser(userData)
+          console.log("entra nutricionista")
+          return props.navigation.navigate("Nutricionista");
+          
+        }else{
+          Alert.alert("No se encontro el usuario")
+    
+        }
+    }
     
   }
 
@@ -93,8 +73,8 @@ export const Inicio=(props, {children})=> {
       <View style={styles.fondoVerde}>
         <View style={{flex: 1,justifyContent: 'center',alignItems: 'center',}}>
           <Image
-              source={require('./imgs/logo.png')} // Ruta de la imagen en la carpeta assets
-              style={{alignSelf: 'center', width: 150, height: 150, marginTop:70}}
+              source={require('./imgs/logo.png')} 
+              style={styles.logo}
             />
         </View>
       </View>
@@ -116,8 +96,6 @@ export const Inicio=(props, {children})=> {
 }
 
 const styles=StyleSheet.create({
-
-  
   fondoVerde:{
     backgroundColor:'#99D98C',
     flex:1
@@ -161,5 +139,10 @@ const styles=StyleSheet.create({
     borderRadius:20,
     margin:15,
     padding:20
+  },logo:{
+    alignSelf: 'center', 
+    width: 150, 
+    height: 150, 
+
   }
 })

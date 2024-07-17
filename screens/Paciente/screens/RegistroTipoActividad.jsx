@@ -1,31 +1,19 @@
 import React,{ useContext,useState, useRef,useEffect }  from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Modal,
-  Animated, Easing, Image
-} from 'react-native';
-
+import {StyleSheet,Text,View,TouchableOpacity,Modal,Animated, Easing, Image} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker'
-
 import * as Animatable from 'react-native-animatable';
-
 import UserContext from '../../../context/userContext';
-
 import { TextInput } from 'react-native-gesture-handler';
 
 export const RegistroTipoActividad=(props)=>{
   const { user } = useContext(UserContext);
-
   const [showAlert, setShowAlert] = useState(false);
   const opacity = useRef(new Animated.Value(0)).current;
-
   const [descripcion,setDescripcion]=React.useState("");
   const [cantidadHoras,setCantidadHoras]=React.useState("");
-  
   const [showTick, setShowTick] = useState(false);
+  const [date, setDate] = useState(new Date());
+  const [showPicker, setShowPicker] = useState(false);
 
   const handleButtonClick = async() => {
 
@@ -86,12 +74,6 @@ export const RegistroTipoActividad=(props)=>{
     fadeIn();
   };
 
-
-
-
-  const [date, setDate] = useState(new Date());
-  const [showPicker, setShowPicker] = useState(false);
-
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShowPicker(Platform.OS === 'android' ? false : showPicker); // Oculta el selector en iOS
@@ -102,8 +84,7 @@ export const RegistroTipoActividad=(props)=>{
     setShowPicker(true);
   };
   
-  const obtenerHora = () => {
-    
+  const obtenerHora = () => {  
     const hora = date.getHours();
     const minutos = date.getMinutes();
     return `${hora}:${minutos < 10 ? '0' : ''}${minutos}`;

@@ -1,15 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity, FlatList, ScrollView, Image
-} from 'react-native';
-
-import { format } from 'date-fns';
-
+import {StyleSheet,Text,View,FlatList,Image} from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-
 import UserContext from '../../../context/userContext';
 
 const Tab = createMaterialTopTabNavigator();
@@ -18,10 +9,6 @@ export const HistorialComentarios = (props) => {
 
   const { user } = useContext(UserContext);
   const [comentariosNutricionista, setComentarioNutricionista] = useState([])
-
-
-
-
 
   const obtenerComentarios = async () => {
     try {

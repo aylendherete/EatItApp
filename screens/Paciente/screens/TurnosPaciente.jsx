@@ -1,54 +1,18 @@
 import React, { useState, useRef, useContext } from 'react';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {
-  StyleSheet, Text,
-  View,
-  TouchableOpacity,
-  ScrollView,
-  Modal,
-  Animated,
-  Easing,
-  Image,
-  Platform,
-} from 'react-native';
+import {StyleSheet, Text,View,TouchableOpacity,Modal,Animated,Easing,Image,Platform,} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { format } from 'date-fns';
+import UserContext from '../../../context/userContext';
+
 LocaleConfig.locales['es'] = {
-  monthNames: [
-    'Enero',
-    'Febrero',
-    'Marzo',
-    'Abril',
-    'Mayo',
-    'Junio',
-    'Julio',
-    'Agosto',
-    'Septiembre',
-    'Octubre',
-    'Noviembre',
-    'Diciembre',
-  ],
-  monthNamesShort: [
-    'Ene.',
-    'Feb.',
-    'Mar.',
-    'Abr.',
-    'Mayo',
-    'Jun.',
-    'Jul.',
-    'Ago.',
-    'Sept.',
-    'Oct.',
-    'Nov.',
-    'Dic.',
-  ],
+  monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre',],
+  monthNamesShort: ['Ene.','Feb.','Mar.','Abr.','Mayo','Jun.','Jul.','Ago.','Sept.','Oct.','Nov.','Dic.',],
   dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
   dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
 };
 LocaleConfig.defaultLocale = 'es';
-
-import UserContext from '../../../context/userContext';
 
 export const TurnosPaciente = (props) => {
   const { user } = useContext(UserContext);
@@ -57,8 +21,7 @@ export const TurnosPaciente = (props) => {
   const [showAlertTurno, setShowAlertTurno] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedTime, setSelectedTime] = useState(new Date());
-  const [selectedDateTime, setSelectedDateTime] = useState('');
-
+  const [showTick, setShowTick] = useState(false);
   const opacity = useRef(new Animated.Value(0)).current;
 
   const fadeIn = () => {
@@ -92,16 +55,6 @@ export const TurnosPaciente = (props) => {
     setShowDatePicker(false)
   };
 
-  const fadeOutReservarTurno = () => {
-    fadeOut();
-    Animated.timing(opacity, {
-      toValue: 0,
-      duration: 150,
-      easing: Easing.linear,
-      useNativeDriver: true,
-    }).start(() => setShowAlert(false));
-  };
-
   const fadeOut = () => {
     Animated.timing(opacity, {
       toValue: 0,
@@ -110,8 +63,6 @@ export const TurnosPaciente = (props) => {
       useNativeDriver: true,
     }).start(() => setShowAlert(false));
   };
-
-  const [showTick, setShowTick] = useState(false);
 
   const handleButtonClick = async () => {
 
@@ -125,7 +76,6 @@ export const TurnosPaciente = (props) => {
     );
 
 
-    console.log("fecha completa" + combinedDateTime)
     try {
       const turno = await fetch('http://localhost:3000/turno/createTurno', {
         method: 'POST',

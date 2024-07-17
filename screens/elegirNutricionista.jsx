@@ -1,29 +1,10 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import React, { useContext } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  ScrollView,FlatList
-} from 'react-native';
-
-
+import React from 'react';
+import {StyleSheet,Text,View,TouchableOpacity,FlatList} from 'react-native';
 import UserContext from '../context/userContext';
 
-
-
 export const ElegirNutricionista=(props)=>{
-  const {user}= useContext(UserContext)
-  
+  const {user}= React.useContext(UserContext)
   const [nutricionistas,setNutricionistas]=React.useState([])
-
 
   const obtenerNutricionistas=async ()=>{
     var nutricionistas=await fetch('http://localhost:3000/nutricionista/')
@@ -33,12 +14,9 @@ export const ElegirNutricionista=(props)=>{
     }
   }
 
-
-
   async function handleEnviarSolicitud( matriculaNacional){
     try{
       const enviarSolicitud= await fetch('http://localhost:3000/paciente/enviarSolicitud?email='+user.email)
-
       const crearNotificacion= await fetch('http://localhost:3000/notificacionesNutricionista/createNotificacionSolicitudPaciente',{
         method:'POST',
         headers:{
@@ -55,57 +33,51 @@ export const ElegirNutricionista=(props)=>{
         return props.navigation.navigate("Inicio");
         
       }
-
-      else{  
-        console.log(crearNutricionista.status);
-        console.log(crearNotificacion.status);
-      }
     }
     catch(e){
       console.log(e);
     }
   }
 
-
   React.useEffect(()=>{
     obtenerNutricionistas()
   },[])
+
   return(
-   
+    <View style={styles.fondoVerde}>
       <View style={styles.fondoVerde}>
-      <View style={styles.fondoVerde}>
-          <Text style={{fontWeight:"500", fontSize:35, textAlign:"center", color:"white"}}>Elegi el nutricionista!</Text>
+          <Text style={styles.titleElegir}>Elegi el nutricionista!</Text>
       </View>
       <View style={styles.fondoVerdeClaro}>
-          
-
-          <FlatList
-            data={nutricionistas}
-            ListEmptyComponent={
-              <View>
-                <Text>No hay nutricionistas</Text>
-              </View>
-            }
-            renderItem={({item})=>
-              <View style={{backgroundColor:"#52B69A",borderRadius:10, padding:20, margin:15}}>
-                <TouchableOpacity onPress={()=>handleEnviarSolicitud(item.matriculaNacional)}>
-                <Text style={{color:"white", fontSize:25, fontWeight:"bold"}}>{item.nombre} {item.apellido}</Text>
-                <Text style={{color:"white", fontWeight:"300", fontSize:15}}>{item.matriculaNacional}</Text>
-                </TouchableOpacity>
-              </View>
-            }
-          />
-
-        
-          </View>  
-        
-          
-      </View>
-      );
+        <FlatList
+          data={nutricionistas}
+          ListEmptyComponent={
+            <View>
+              <Text styles={styles.noInformation}>No hay nutricionistas</Text>
+            </View>
+          }
+          renderItem={({item})=>
+            <View style={styles.container}>
+              <TouchableOpacity onPress={()=>handleEnviarSolicitud(item.matriculaNacional)}>
+              <Text style={styles.nombreApellidoNutricionista}>{item.nombre} {item.apellido}</Text>
+              <Text style={styles.matriculaNacionalTexto}>MN: {item.matriculaNacional}</Text>
+              </TouchableOpacity>
+            </View>
+          }
+        />
+      </View>  
+    </View>
+  );
 }
 
 
 const styles=StyleSheet.create({
+  container:{
+    backgroundColor:"#52B69A",
+    borderRadius:10, 
+    padding:20, 
+    margin:15
+  },
   fondoVerde:{
     backgroundColor:"#99D98C", 
     flex:1,
@@ -133,5 +105,22 @@ const styles=StyleSheet.create({
     borderRadius:20, 
     margin:5,
     padding:15
+  },titleElegir:{
+    fontWeight:"500", 
+    fontSize:35, 
+    textAlign:"center", 
+    color:"white"
+  },noInformation:{
+    fontSize:15,
+    fontWeight:"500",
+    textAlign:"center"
+  },nombreApellidoNutricionista:{
+    color:"white", 
+    fontSize:25, 
+    fontWeight:"bold"
+  },matriculaNacionalTexto:{
+    color:"white", 
+    fontWeight:"300", 
+    fontSize:15
   }
 })

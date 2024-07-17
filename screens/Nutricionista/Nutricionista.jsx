@@ -1,19 +1,9 @@
-
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from 'react';
-
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Image } from 'react-native';
-import {Icon} from 'react-native-elements';
 import { AnalisisRegistroPaciente,AnalisisRegistroPacienteActividad,AnalisisRegistroPacienteAgua, CalendarioNutricionista, EditarAntecedentes, EditarObjetivo, EditarPeso, MiPerfil, MisPacientes, NotificacionesPaciente, PerfilPaciente } from './screens';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { HistorialComentarios, HistorialRegistros} from './screens';
@@ -27,7 +17,7 @@ function TabHistorial({route}){
   return(
     <TTab.Navigator
       tabBarOptions={{
-        style: { display: 'none' }, // Oculta la barra superior del Top Tab Navigator
+        style: { display: 'none' }, 
       }}
       screenOptions={{
         style: { display: 'none' }
